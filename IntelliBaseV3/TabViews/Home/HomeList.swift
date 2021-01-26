@@ -15,9 +15,14 @@ struct HomeList: View {
     var courses = coursesData
     @State var showContent = false
     
-    init(accountId: Int) {
+    init() {
         let coreData = CoreDataOperation()
         
+        // ログイン中のアカウントを取得
+        let accounts: Array<Account> = coreData.select(entity: .account, conditionStr: "login = true")
+        let accountId = accounts[0].id as! Int
+        
+        // ログイン中のアカウントが所持している本を取得
         for purchase:Purchase in coreData.select(entity: .purchase, conditionStr: "account_id = \(accountId)", sort: ["id":false]) {
             recentlyPurchasedBooks.append([purchase.book_id as! Int])
         }
@@ -121,7 +126,7 @@ struct HomeList: View {
 #if DEBUG
 struct HomeList_Previews: PreviewProvider {
    static var previews: some View {
-    HomeList(accountId: 1)
+    HomeList()
    }
 }
 #endif

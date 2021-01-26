@@ -19,7 +19,7 @@ struct HomeTabView: View {
     
     var body: some View {
         ZStack(alignment: .top) {
-            HomeList(accountId: 1)
+            HomeList()
                 .blur(radius: show ? 20 : 0)
                 .scaleEffect(showProfile ? 0.95 : 1)
                 .animation(.default)
