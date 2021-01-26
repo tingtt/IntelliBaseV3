@@ -28,7 +28,7 @@ struct ContentView: View {
         }
 //        _ = coreData.delete(entity: .book)
 //        _ = coreData.delete(entity: .purchase)
-//        _ = coreData.delete(entity: .account)
+        _ = coreData.delete(entity: .account)
         _ = coreData.save()
         
         // get genres from api.

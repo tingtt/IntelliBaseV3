@@ -63,7 +63,7 @@ struct LoginView: View {
                 }
                 NavigationLink(
                     destination:
-                        HomeTabView()
+                        Application()
                         .navigationBarBackButtonHidden(true),
                     isActive:
                         $navActive
