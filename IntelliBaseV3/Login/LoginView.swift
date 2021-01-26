@@ -1,8 +1,8 @@
 //
 //  LoginView.swift
-//  IntelliBaseV3
+//  IntelliBaseV2
 //
-//  Created by 二宮良太 on 2021/01/25.
+//  Created by てぃん on 2020/12/15.
 //
 
 import SwiftUI
@@ -63,7 +63,7 @@ struct LoginView: View {
                 }
                 NavigationLink(
                     destination:
-                        Application()
+                        Application(id: self.accountId)
                         .navigationBarBackButtonHidden(true),
                     isActive:
                         $navActive

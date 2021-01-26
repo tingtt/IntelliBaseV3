@@ -8,9 +8,28 @@
 import SwiftUI
 
 struct HomeList: View {
+    
+    var recentlyNotes: Array<Array<Any>> = []
+    var recentlyPurchasedBooks: Array<Array<Any>> = []
+    var recommandBooks: Array<Array<Any>> = []
+    var courses = coursesData
+    @State var showContent = false
+    
+    init() {
+        let coreData = CoreDataOperation()
+        
+        // ログイン中のアカウントを取得
+        let accounts: Array<Account> = coreData.select(entity: .account, conditionStr: "login = true")
+        let accountId = accounts[0].id as! Int
+        
+        // ログイン中のアカウントが所持している本を取得
+        for purchase:Purchase in coreData.select(entity: .purchase, conditionStr: "account_id = \(accountId)", sort: ["id":false]) {
+            recentlyPurchasedBooks.append([purchase.book_id as! Int])
+        }
+    }
 
-   var courses = coursesData
-   @State var showContent = false
+//   var courses = coursesData
+//   @State var showContent = false
 
    var body: some View {
       ScrollView {
@@ -32,28 +51,15 @@ struct HomeList: View {
             }
             
             ScrollView(.horizontal, showsIndicators: false) {
-               HStack(spacing: 20.0) {
-                  ForEach(courses) { item in
-                     Button(action: { self.showContent.toggle() }) {
-                        GeometryReader { geometry in
-                           CourseView(//title: item.title,
-                                      image: item.image,
-                                      shadowColor: item.shadowColor)
-                              .rotation3DEffect(Angle(degrees:
-                                 Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
-                              .sheet(isPresented: self.$showContent) {
-                                Text("None")
-                              }
-                        }
-                        .frame(width: 246, height: 360)
-                     }
-                  }
-               }
-               .padding(.leading, 30)
-               .padding(.top, 30)
-               .padding(.bottom, 40)
-               Spacer()
+                HStack(spacing: 20.0) {
+                    SectionOfBookShelfView(ids: self.recentlyPurchasedBooks, partition: false)
+                }
+                .padding(.leading, 30)
+                .padding(.top, 30)
+                .padding(.bottom, 40)
+                Spacer()
             }
+        
             
             HStack {
                 Text("最近購入した本")

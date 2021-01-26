@@ -62,7 +62,7 @@ struct LibraryList: View {
 #if DEBUG
 struct LibraryList_Previews: PreviewProvider {
    static var previews: some View {
-        HomeList()
+        LibraryList()
    }
 }
 #endif
