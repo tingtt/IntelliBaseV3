@@ -8,9 +8,23 @@
 import SwiftUI
 
 struct HomeList: View {
+    
+    var recentlyNotes: Array<Array<Any>> = []
+    var recentlyPurchasedBooks: Array<Array<Any>> = []
+    var recommandBooks: Array<Array<Any>> = []
+    var courses = coursesData
+    @State var showContent = false
+    
+    init(accountId: Int) {
+        let coreData = CoreDataOperation()
+        
+        for purchase:Purchase in coreData.select(entity: .purchase, conditionStr: "account_id = \(accountId)", sort: ["id":false]) {
+            recentlyPurchasedBooks.append([purchase.book_id as! Int])
+        }
+    }
 
-   var courses = coursesData
-   @State var showContent = false
+//   var courses = coursesData
+//   @State var showContent = false
 
    var body: some View {
       ScrollView {
@@ -32,26 +46,15 @@ struct HomeList: View {
             }
             
             ScrollView(.horizontal, showsIndicators: false) {
-               HStack(spacing: 20.0) {
-                  ForEach(courses) { item in
-                     Button(action: { self.showContent.toggle() }) {
-                        GeometryReader { geometry in
-                           CourseView(//title: item.title,
-                                      image: item.image,
-                                      shadowColor: item.shadowColor)
-                              .rotation3DEffect(Angle(degrees:
-                                 Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
-                              .sheet(isPresented: self.$showContent) { ContentView() }
-                        }
-                        .frame(width: 246, height: 360)
-                     }
-                  }
-               }
-               .padding(.leading, 30)
-               .padding(.top, 30)
-               .padding(.bottom, 40)
-               Spacer()
+                HStack(spacing: 20.0) {
+                    SectionOfBookShelfView(ids: self.recentlyPurchasedBooks, partition: false)
+                }
+                .padding(.leading, 30)
+                .padding(.top, 30)
+                .padding(.bottom, 40)
+                Spacer()
             }
+        
             
             HStack {
                 Text("最近購入した本")
@@ -118,7 +121,7 @@ struct HomeList: View {
 #if DEBUG
 struct HomeList_Previews: PreviewProvider {
    static var previews: some View {
-        HomeList()
+    HomeList(accountId: 1)
    }
 }
 #endif

@@ -19,7 +19,7 @@ struct HomeTabView: View {
     
     var body: some View {
         ZStack(alignment: .top) {
-            HomeList()
+            HomeList(accountId: 1)
                 .blur(radius: show ? 20 : 0)
                 .scaleEffect(showProfile ? 0.95 : 1)
                 .animation(.default)
@@ -46,7 +46,7 @@ struct HomeTabView: View {
 #if DEBUG
 struct HomeTabView_Previews: PreviewProvider {
     static var previews: some View {
-        Application()
+        HomeTabView()
             .previewDevice("iPhone X")
     }
 }

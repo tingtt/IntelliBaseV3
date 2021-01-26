@@ -13,10 +13,29 @@ import SwiftUI
 //let screen = UIScreen.main.bounds
 
 struct Application: View {
-
-   @State var show = false
-   @State var showProfile = false
-
+    
+    @State var show = false
+    @State var showProfile = false
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    var accountId: Int = 0
+    
+    init(id: Int) {
+        let coreData = CoreDataOperation()
+        let accounts: Array<Account> = coreData.select(entity: .account, conditionStr: "login = true")
+        if accounts.count == 0 {
+            // Back to login view.
+            self.mode.wrappedValue.dismiss()
+        } else {
+            self.accountId = accounts[0].id as! Int
+        }
+        
+        print("Debug : Menu loaded. id = \(accountId).")
+        
+        // get purchased books
+        let dataGetter = GetNewData(entity: .book, id: self.accountId)
+        while dataGetter.interface!.isDownloading {}
+    }
+    
     var body: some View {
         TabView{
             HomeTabView()
