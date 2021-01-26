@@ -39,7 +39,9 @@ struct ContentView: View {
             alreadyGetId = "\((savedData[0]).id as! Int)"
         }
         print("Debug : Saved Genre -> ~\(alreadyGetId)")
-        let dataGetter = GetNewData(entity: entity)
+        let dataGetter = GetNewData()
+        _ = dataGetter.download(entity: entity)
+        // wait download
         while dataGetter.interface!.isDownloading {}
     }
     

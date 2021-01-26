@@ -63,7 +63,7 @@ struct LoginView: View {
                 }
                 NavigationLink(
                     destination:
-                        Application(id: self.accountId)
+                        Application()
                         .navigationBarBackButtonHidden(true),
                     isActive:
                         $navActive

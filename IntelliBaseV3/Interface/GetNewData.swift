@@ -13,7 +13,9 @@ class GetNewData {
     var status = true
     var interface: Interface? = nil
     
-    init (entity: CoreDataEnumManager.EntityName, id: Int? = nil) {
+    init() {}
+    
+    func download(entity: CoreDataEnumManager.EntityName, id: Int? = nil) -> Bool {
         // get saved data id desc
         var savedData:Array<Any> = []
         // get new data info
@@ -29,11 +31,11 @@ class GetNewData {
                 if let id = id {
                     paramArray["id"] = "\(id)"
                     savedData = coreData.select(entity: .purchase, conditionStr: "account_id == \(id)", sort: ["id":false])
-                    _ = GetNewData(entity:.purchase, id: id)
+                    _ = GetNewData().download(entity:.purchase, id: id)
                 } else {
                     status = false
                     print("Debug : Parameter user id does not exists. GetNewData(entityName: \"Book\", id: ?")
-                    return
+                    return false
                 }
                 break
         case .purchase:
@@ -44,7 +46,7 @@ class GetNewData {
                 } else {
                     status = false
                     print("Debug : Parameter user id does not exists. GetNewData(entityName: \"Purchase\", id: ?")
-                    return
+                    return false
                 }
                 break
             default:
@@ -56,15 +58,15 @@ class GetNewData {
             case .genre:
                 alreadyGetId = "\((savedData[0] as! Genre).id as! Int)"
                 break
-                
+
             case .book:
-                alreadyGetId = "\((savedData[0] as! Book).id as! Int)"
+                alreadyGetId = "\((savedData[0] as! Purchase).id as! Int)"
                 break
-                
+
             case .purchase:
                 alreadyGetId = "\((savedData[0] as! Purchase).id as! Int)"
                 break
-                
+
             default : break
             }
         }
@@ -113,45 +115,7 @@ class GetNewData {
         } else {
             status = false
         }
+        
+        return status
     }
-    
-//    init (entity: Entity, id: Int? = nil) {
-//        // get saved data id desc
-//        let savedData:Array<Any> = coreData.select(entityEnum: entity, sort: ["id":false])
-//        var alreadyGetId = "0"
-//        if savedData.count != 0 {
-//            alreadyGetId = "\((savedData[0] as AnyObject).id as! Int)"
-//        }
-//        // get new data info
-//        var apiFileName = ""
-//        var paramArray = ["already_get":alreadyGetId]
-//        switch entity {
-//            case .genre:
-//                apiFileName = "get_genres"
-//                break
-//            case .book:
-//                apiFileName = "get_purchased_books"
-//                if let id = id {
-//                    paramArray["id"] = "\(id)"
-//                    _ = GetNewData(entityName:"Purchase", id: id)
-//                } else {
-//                    status = false
-//                    print("Debug : Parameter user id does not exists. GetNewData(entityName: \"Book\", id: ?")
-//                    return
-//                }
-//                break
-//            case .purchase:
-//                apiFileName = "get_purchases"
-//                if let id = id {
-//                    paramArray["id"] = "\(id)"
-//                } else {
-//                    status = false
-//                    print("Debug : Parameter user id does not exists. GetNewData(entityName: \"Purchase\", id: ?")
-//                    return
-//                }
-//                break
-//            default:
-//                apiFileName = "get_genres"
-//        }
-//    }
 }
