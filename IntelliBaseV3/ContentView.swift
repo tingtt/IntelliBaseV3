@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ContentView: View {
     
@@ -17,18 +18,66 @@ struct ContentView: View {
     init() {
         // init coreData (debug)
         let coreData = CoreDataOperation()
+        
+        // log to check saved data.
+        print("Debug : Saved accounts.")
         for account: Account in coreData.select(entity: .account) {
-            print("AccoID: \(String(describing: account.id as! Int))")
+            print([
+                "id":account.id!,
+                "email":account.email!,
+                "name":account.name!,
+                "login":account.login
+            ])
         }
+        print("Debug : Saved purchase infomations.")
         for purchase: Purchase in coreData.select(entity: .purchase) {
-            print("PurcID: \(String(describing: purchase.id as! Int)), AccID: \(String(describing: purchase.account_id as! Int))")
+            print([
+                "id":purchase.id!,
+                "account":purchase.account_id!,
+                "book":purchase.book_id!
+            ])
         }
+        print("Debug : Saved books.")
         for book: Book in coreData.select(entity: .book) {
-            print("BookID: \(String(describing: book.id as! Int))")
+            print([
+                "id":book.id!,
+                "title":book.title!,
+                "author":book.author_id!,
+                "genre":book.genre_id!
+            ])
         }
+        print("Debug : Seved authors.")
+        for author:Author in coreData.select(entity: .author) {
+            print([
+                "id":author.id!,
+                "name":author.name!
+            ])
+        }
+        print("Debug : Saved notes.")
+        for note: Note in coreData.select(entity: .note) {
+            print([
+                "id":note.id!,
+                "book":note.book_id!,
+                "title":note.title!,
+                "account":note.account_id!,
+                "update":note.update_date!
+            ])
+        }
+        
+        // delete book data
 //        _ = coreData.delete(entity: .book)
+        // delete purchase info data
 //        _ = coreData.delete(entity: .purchase)
+        // delete author info data
+//        _ = coreData.delete(entity: .author)
+        // delete gerne data
+//        _ = coreData.delete(entity: .genre)
+        // delete note info and drawing data
+//        _ = coreData.delete(entity: .note)
+        // delete account data
 //        _ = coreData.delete(entity: .account)
+        
+        // commit
         _ = coreData.save()
         
         // get genres from api.
