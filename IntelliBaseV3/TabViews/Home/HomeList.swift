@@ -41,7 +41,9 @@ struct HomeList: View {
                                       shadowColor: item.shadowColor)
                               .rotation3DEffect(Angle(degrees:
                                  Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
-                              .sheet(isPresented: self.$showContent) { ContentView() }
+                              .sheet(isPresented: self.$showContent) {
+                                Text("None")
+                              }
                         }
                         .frame(width: 246, height: 360)
                      }
@@ -68,7 +70,9 @@ struct HomeList: View {
                                       shadowColor: item.shadowColor)
                               .rotation3DEffect(Angle(degrees:
                                  Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
-                              .sheet(isPresented: self.$showContent) { ContentView() }
+                              .sheet(isPresented: self.$showContent) {
+                                Text("None")
+                              }
                         }
                         .frame(width: 246, height: 360)
                      }
@@ -96,7 +100,9 @@ struct HomeList: View {
                                       shadowColor: item.shadowColor)
                               .rotation3DEffect(Angle(degrees:
                                  Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
-                              .sheet(isPresented: self.$showContent) { ContentView() }
+                              .sheet(isPresented: self.$showContent) {
+                                Text("None")
+                              }
                         }
                         .frame(width: 246, height: 360)
                      }

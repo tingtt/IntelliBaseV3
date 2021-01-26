@@ -16,6 +16,9 @@
 		25C33AA925BEA57D00F61530 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25C33AA725BEA57D00F61530 /* LaunchScreen.storyboard */; };
 		25C33AB425BEA57D00F61530 /* IntelliBaseV3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33AB325BEA57D00F61530 /* IntelliBaseV3Tests.swift */; };
 		25C33ABF25BEA57D00F61530 /* IntelliBaseV3UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33ABE25BEA57D00F61530 /* IntelliBaseV3UITests.swift */; };
+		25C33B3C25C0514200F61530 /* DocumentRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33B3B25C0514100F61530 /* DocumentRootView.swift */; };
+		25C33B4825C053E700F61530 /* PDFKitRepresentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33B4725C053E700F61530 /* PDFKitRepresentedView.swift */; };
+		25C33B5D25C0581600F61530 /* PDFKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33B5C25C0581400F61530 /* PDFKitView.swift */; };
 		3F88919225BEA7EB0052442D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88919125BEA7EB0052442D /* LoginView.swift */; };
 		3F88919B25BEA8400052442D /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88919A25BEA8400052442D /* CustomButton.swift */; };
 		3F8891A425BEA86C0052442D /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8891A325BEA86C0052442D /* CustomTextField.swift */; };
@@ -83,6 +86,9 @@
 		25C33ABA25BEA57D00F61530 /* IntelliBaseV3UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntelliBaseV3UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		25C33ABE25BEA57D00F61530 /* IntelliBaseV3UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntelliBaseV3UITests.swift; sourceTree = "<group>"; };
 		25C33AC025BEA57D00F61530 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25C33B3B25C0514100F61530 /* DocumentRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentRootView.swift; sourceTree = "<group>"; };
+		25C33B4725C053E700F61530 /* PDFKitRepresentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PDFKitRepresentedView.swift; path = ../../../../../../../Documents/PDFKitRepresentedView.swift; sourceTree = "<group>"; };
+		25C33B5C25C0581400F61530 /* PDFKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFKitView.swift; sourceTree = "<group>"; };
 		3F88919125BEA7EB0052442D /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3F88919A25BEA8400052442D /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		3F8891A325BEA86C0052442D /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -165,6 +171,7 @@
 		25C33A9825BEA57B00F61530 /* IntelliBaseV3 */ = {
 			isa = PBXGroup;
 			children = (
+				25C33B2F25C0503300F61530 /* Document */,
 				3F88922A25BEB4B90052442D /* CoreData */,
 				3F88920925BEB2940052442D /* Interface */,
 				3F88919025BEA7C20052442D /* Login */,
@@ -205,6 +212,40 @@
 				25C33AC025BEA57D00F61530 /* Info.plist */,
 			);
 			path = IntelliBaseV3UITests;
+			sourceTree = "<group>";
+		};
+		25C33B2F25C0503300F61530 /* Document */ = {
+			isa = PBXGroup;
+			children = (
+				25C33B3B25C0514100F61530 /* DocumentRootView.swift */,
+				25C33B4325C0534700F61530 /* include */,
+			);
+			path = Document;
+			sourceTree = "<group>";
+		};
+		25C33B4325C0534700F61530 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				25C33B4625C053C200F61530 /* Editor */,
+				25C33B5C25C0581400F61530 /* PDFKitView.swift */,
+				25C33B4425C0539600F61530 /* Viewer */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		25C33B4425C0539600F61530 /* Viewer */ = {
+			isa = PBXGroup;
+			children = (
+				25C33B4725C053E700F61530 /* PDFKitRepresentedView.swift */,
+			);
+			path = Viewer;
+			sourceTree = "<group>";
+		};
+		25C33B4625C053C200F61530 /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Editor;
 			sourceTree = "<group>";
 		};
 		3F88918F25BEA79C0052442D /* TabViews */ = {
@@ -453,6 +494,7 @@
 				3F8891A425BEA86C0052442D /* CustomTextField.swift in Sources */,
 				3F8891F525BEAE450052442D /* Settings.swift in Sources */,
 				3F88925425BEB5A90052442D /* GenreStruct.swift in Sources */,
+				25C33B5D25C0581600F61530 /* PDFKitView.swift in Sources */,
 				25C33A9A25BEA57B00F61530 /* AppDelegate.swift in Sources */,
 				3F8891FA25BEAE970052442D /* CertificateRow.swift in Sources */,
 				25C33A9C25BEA57B00F61530 /* SceneDelegate.swift in Sources */,
@@ -467,6 +509,7 @@
 				3F88927725BEC53B0052442D /* MenuButton.swift in Sources */,
 				3F88926325BEB90D0052442D /* MenuView.swift in Sources */,
 				25C33A9E25BEA57B00F61530 /* ContentView.swift in Sources */,
+				25C33B4825C053E700F61530 /* PDFKitRepresentedView.swift in Sources */,
 				3F88926D25BEC2910052442D /* HomeTabView.swift in Sources */,
 				3F88919225BEA7EB0052442D /* LoginView.swift in Sources */,
 				3F88925925BEB5C70052442D /* DocumentStruct.swift in Sources */,
@@ -480,6 +523,7 @@
 				3F88924A25BEB57D0052442D /* AuthorStruct.swift in Sources */,
 				3F88921125BEB3460052442D /* GetNewData.swift in Sources */,
 				3F88925E25BEB6640052442D /* NoteStruct.swift in Sources */,
+				25C33B3C25C0514200F61530 /* DocumentRootView.swift in Sources */,
 				3F88921725BEB3940052442D /* Interface.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
