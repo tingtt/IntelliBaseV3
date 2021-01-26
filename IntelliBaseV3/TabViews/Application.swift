@@ -12,7 +12,7 @@ import SwiftUI
 //let statusBarHeight = window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
 //let screen = UIScreen.main.bounds
 
-struct Home: View {
+struct Application: View {
 
    @State var show = false
    @State var showProfile = false

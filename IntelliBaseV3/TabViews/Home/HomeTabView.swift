@@ -51,9 +51,9 @@ struct HomeTabView: View {
 }
 
 #if DEBUG
-struct Home_Previews: PreviewProvider {
+struct HomeTabView_Previews: PreviewProvider {
     static var previews: some View {
-        Home()
+        Application()
             .previewDevice("iPhone X")
     }
 }

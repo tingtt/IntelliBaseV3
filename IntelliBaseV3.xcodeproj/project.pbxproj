@@ -41,7 +41,7 @@
 		3F88925925BEB5C70052442D /* DocumentStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88925825BEB5C70052442D /* DocumentStruct.swift */; };
 		3F88925E25BEB6640052442D /* NoteStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88925D25BEB6640052442D /* NoteStruct.swift */; };
 		3F88926325BEB90D0052442D /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88926225BEB90D0052442D /* MenuView.swift */; };
-		3F88926825BEC20F0052442D /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88926725BEC20E0052442D /* Home.swift */; };
+		3F88926825BEC20F0052442D /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88926725BEC20E0052442D /* Application.swift */; };
 		3F88926D25BEC2910052442D /* HomeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88926C25BEC2910052442D /* HomeTabView.swift */; };
 		3F88927225BEC3420052442D /* LibraryTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88927125BEC3420052442D /* LibraryTabView.swift */; };
 		3F88927725BEC53B0052442D /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88927625BEC53B0052442D /* MenuButton.swift */; };
@@ -113,7 +113,7 @@
 		3F88925825BEB5C70052442D /* DocumentStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentStruct.swift; sourceTree = "<group>"; };
 		3F88925D25BEB6640052442D /* NoteStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteStruct.swift; sourceTree = "<group>"; };
 		3F88926225BEB90D0052442D /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
-		3F88926725BEC20E0052442D /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		3F88926725BEC20E0052442D /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		3F88926C25BEC2910052442D /* HomeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabView.swift; sourceTree = "<group>"; };
 		3F88927125BEC3420052442D /* LibraryTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTabView.swift; sourceTree = "<group>"; };
 		3F88927625BEC53B0052442D /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
@@ -224,7 +224,7 @@
 				3F8891C525BEACC90052442D /* Library */,
 				3F8891FE25BEB03D0052442D /* Home */,
 				3F8891E125BEAD9C0052442D /* Include */,
-				3F88926725BEC20E0052442D /* Home.swift */,
+				3F88926725BEC20E0052442D /* Application.swift */,
 			);
 			path = TabViews;
 			sourceTree = "<group>";
@@ -507,7 +507,7 @@
 				3F88928625BEC60B0052442D /* MenuRight.swift in Sources */,
 				3F88927225BEC3420052442D /* LibraryTabView.swift in Sources */,
 				3F8891DD25BEAD7C0052442D /* LibraryList.swift in Sources */,
-				3F88926825BEC20F0052442D /* Home.swift in Sources */,
+				3F88926825BEC20F0052442D /* Application.swift in Sources */,
 				3F88924525BEB55E0052442D /* CoreDataOperation.swift in Sources */,
 				25C33AA125BEA57B00F61530 /* IntelliBaseV3.xcdatamodeld in Sources */,
 				3F88920525BEB0C50052442D /* CertificateView.swift in Sources */,
