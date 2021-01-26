@@ -33,10 +33,10 @@ struct ContentView: View {
         
         // get genres from api.
         let entity: CoreDataEnumManager.EntityName = .genre
-        let savedData:Array<Any> = coreData.select(entity: entity, sort: ["id":false])
+        let savedData:Array<Genre> = coreData.select(entity: entity, sort: ["id":false])
         var alreadyGetId = "0"
         if savedData.count != 0 {
-            alreadyGetId = "\((savedData[0] as AnyObject).id as! Int)"
+            alreadyGetId = "\((savedData[0]).id as! Int)"
         }
         print("Debug : Saved Genre -> ~\(alreadyGetId)")
         let dataGetter = GetNewData(entity: entity)
