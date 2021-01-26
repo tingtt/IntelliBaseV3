@@ -37,6 +37,7 @@
         <attribute name="public_share" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="share" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="update_date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <entity name="Purchase" representedClassName="Purchase" syncable="YES" codeGenerationType="class">
         <attribute name="account_id" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
@@ -47,9 +48,9 @@
         <element name="Account" positionX="-63" positionY="-18" width="128" height="118"/>
         <element name="Author" positionX="-54" positionY="27" width="128" height="73"/>
         <element name="Book" positionX="-36" positionY="36" width="128" height="133"/>
-        <element name="Genre" positionX="-18" positionY="81" width="128" height="88"/>
-        <element name="Note" positionX="0" positionY="90" width="128" height="148"/>
-        <element name="Purchase" positionX="18" positionY="135" width="128" height="88"/>
         <element name="DrawingDoc" positionX="-18" positionY="90" width="128" height="88"/>
+        <element name="Genre" positionX="-18" positionY="81" width="128" height="88"/>
+        <element name="Note" positionX="0" positionY="90" width="128" height="163"/>
+        <element name="Purchase" positionX="18" positionY="135" width="128" height="88"/>
     </elements>
 </model>

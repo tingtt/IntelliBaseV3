@@ -69,7 +69,7 @@ struct CoreDataOperation {
         for (columnName, value) in values {
 //            print("Debug : Set value -> \(columnName) : \(value) type: \(String(describing: type(of: value)))")
 //            print("Debug: \(String(describing: type(of: value)) == "NSTaggedPointerString" || columnName != "login_date" && columnName.contains("_date"))")
-            if String(describing: type(of: value)) == "NSTaggedPointerString" || columnName != "login_date" && columnName.contains("_date") {
+            if String(describing: type(of: value)) == "NSTaggedPointerString" || columnName != "login_date" && columnName.contains("_date") && columnName != "update_date" {
 //                print("Debug : Cast on.")
                 if columnName.contains("_id") || columnName == "id" || columnName.contains("_date") {
                     if String(describing: type(of: value)) == "Int" {
@@ -114,6 +114,30 @@ struct CoreDataOperation {
         do {
             let result = try managedContext.fetch(fetchRequest)
             for record in result {
+                // ノートを削除する場合に書き込みデータも削除する
+                if entity == .note {
+                    let container = NSPersistentContainer(name: "IntelliBaseV2")
+                    container.loadPersistentStores { (storeDesc, error) in
+                        if let error = error as NSError? {
+                            fatalError("Unresolved error \(error), \(error.userInfo)")
+                        }
+                    }
+                    let request: NSFetchRequest<DrawingDoc> = DrawingDoc.fetchRequest()
+                    request.includesPropertyValues = false
+                    // ノートIDで絞り込み
+                    request.predicate = NSPredicate(format: "name CONTAINS %@","_note\(String(describing: (record as! Note).id))_page")
+                    // ページ番号で昇順にソート
+                    request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+                    
+                    do {
+                        let results = try container.viewContext.fetch(request)
+                        for item in results {
+                            container.viewContext.delete(item)
+                        }
+                    } catch {
+                        print("Error deleting document from database")
+                    }
+                }
                 managedContext.delete(record)
             }
             try managedContext.save()

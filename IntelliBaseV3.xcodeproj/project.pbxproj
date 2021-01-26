@@ -19,6 +19,12 @@
 		25C33B3C25C0514200F61530 /* DocumentRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33B3B25C0514100F61530 /* DocumentRootView.swift */; };
 		25C33B4825C053E700F61530 /* PDFKitRepresentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33B4725C053E700F61530 /* PDFKitRepresentedView.swift */; };
 		25C33B5D25C0581600F61530 /* PDFKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33B5C25C0581400F61530 /* PDFKitView.swift */; };
+		25C33B6825C0731C00F61530 /* DocumentEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33B6725C0731C00F61530 /* DocumentEditView.swift */; };
+		25C33B7825C08BF000F61530 /* DrawingDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33B7725C08BF000F61530 /* DrawingDocument.swift */; };
+		25C33B7D25C08C1800F61530 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33B7C25C08C1800F61530 /* CoreDataManager.swift */; };
+		25C33B8225C08CB000F61530 /* DrawingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33B8125C08CB000F61530 /* DrawingManager.swift */; };
+		25C33B8725C08CCA00F61530 /* DrawingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33B8625C08CCA00F61530 /* DrawingViewController.swift */; };
+		25C33B8C25C08CE500F61530 /* DrawingWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33B8B25C08CE500F61530 /* DrawingWrapper.swift */; };
 		3F88919225BEA7EB0052442D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88919125BEA7EB0052442D /* LoginView.swift */; };
 		3F88919B25BEA8400052442D /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88919A25BEA8400052442D /* CustomButton.swift */; };
 		3F8891A425BEA86C0052442D /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8891A325BEA86C0052442D /* CustomTextField.swift */; };
@@ -51,11 +57,6 @@
 		3F88927C25BEC58F0052442D /* MenuRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88927B25BEC58F0052442D /* MenuRow.swift */; };
 		3F88928125BEC5D90052442D /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88928025BEC5D90052442D /* CircleButton.swift */; };
 		3F88928625BEC60B0052442D /* MenuRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88928525BEC60B0052442D /* MenuRight.swift */; };
-		3F88928C25C001DE0052442D /* DocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88928B25C001DE0052442D /* DocumentView.swift */; };
-		3F88929225C0020B0052442D /* PDFInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88929125C0020B0052442D /* PDFInfo.swift */; };
-		3F88929725C002220052442D /* PDFInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88929625C002220052442D /* PDFInfoView.swift */; };
-		3F88929C25C002370052442D /* PDFViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88929B25C002370052442D /* PDFViewer.swift */; };
-		3F8892A125C002560052442D /* ShowPDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8892A025C002560052442D /* ShowPDFView.swift */; };
 		3F8892BB25C016B10052442D /* SectionOfBookShelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8892BA25C016B00052442D /* SectionOfBookShelfView.swift */; };
 		3F8892C025C016E20052442D /* DocumentThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8892BF25C016E20052442D /* DocumentThumbnailView.swift */; };
 		3F8892C525C0170C0052442D /* DocumentPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8892C425C0170C0052442D /* DocumentPopup.swift */; };
@@ -97,6 +98,12 @@
 		25C33B3B25C0514100F61530 /* DocumentRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentRootView.swift; sourceTree = "<group>"; };
 		25C33B4725C053E700F61530 /* PDFKitRepresentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PDFKitRepresentedView.swift; path = ../../../../../../../Documents/PDFKitRepresentedView.swift; sourceTree = "<group>"; };
 		25C33B5C25C0581400F61530 /* PDFKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFKitView.swift; sourceTree = "<group>"; };
+		25C33B6725C0731C00F61530 /* DocumentEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DocumentEditView.swift; path = ../../../../../../Documents/DocumentEditView.swift; sourceTree = "<group>"; };
+		25C33B7725C08BF000F61530 /* DrawingDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DrawingDocument.swift; path = ../../../../../../../Documents/DrawingDocument.swift; sourceTree = "<group>"; };
+		25C33B7C25C08C1800F61530 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoreDataManager.swift; path = ../../../../../../../Documents/CoreDataManager.swift; sourceTree = "<group>"; };
+		25C33B8125C08CB000F61530 /* DrawingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DrawingManager.swift; path = ../../../../../../../Documents/DrawingManager.swift; sourceTree = "<group>"; };
+		25C33B8625C08CCA00F61530 /* DrawingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DrawingViewController.swift; path = ../../../../../../../Documents/DrawingViewController.swift; sourceTree = "<group>"; };
+		25C33B8B25C08CE500F61530 /* DrawingWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DrawingWrapper.swift; path = ../../../../../../../Documents/DrawingWrapper.swift; sourceTree = "<group>"; };
 		3F88919125BEA7EB0052442D /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3F88919A25BEA8400052442D /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		3F8891A325BEA86C0052442D /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -129,11 +136,6 @@
 		3F88927B25BEC58F0052442D /* MenuRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRow.swift; sourceTree = "<group>"; };
 		3F88928025BEC5D90052442D /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		3F88928525BEC60B0052442D /* MenuRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRight.swift; sourceTree = "<group>"; };
-		3F88928B25C001DE0052442D /* DocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentView.swift; sourceTree = "<group>"; };
-		3F88929125C0020B0052442D /* PDFInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFInfo.swift; sourceTree = "<group>"; };
-		3F88929625C002220052442D /* PDFInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFInfoView.swift; sourceTree = "<group>"; };
-		3F88929B25C002370052442D /* PDFViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewer.swift; sourceTree = "<group>"; };
-		3F8892A025C002560052442D /* ShowPDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPDFView.swift; sourceTree = "<group>"; };
 		3F8892BA25C016B00052442D /* SectionOfBookShelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionOfBookShelfView.swift; sourceTree = "<group>"; };
 		3F8892BF25C016E20052442D /* DocumentThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentThumbnailView.swift; sourceTree = "<group>"; };
 		3F8892C425C0170C0052442D /* DocumentPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPopup.swift; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 		25C33B4325C0534700F61530 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				25C33B6725C0731C00F61530 /* DocumentEditView.swift */,
 				25C33B4625C053C200F61530 /* Editor */,
 				25C33B5C25C0581400F61530 /* PDFKitView.swift */,
 				25C33B4425C0539600F61530 /* Viewer */,
@@ -260,6 +263,11 @@
 		25C33B4625C053C200F61530 /* Editor */ = {
 			isa = PBXGroup;
 			children = (
+				25C33B7725C08BF000F61530 /* DrawingDocument.swift */,
+				25C33B7C25C08C1800F61530 /* CoreDataManager.swift */,
+				25C33B8125C08CB000F61530 /* DrawingManager.swift */,
+				25C33B8625C08CCA00F61530 /* DrawingViewController.swift */,
+				25C33B8B25C08CE500F61530 /* DrawingWrapper.swift */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -533,19 +541,25 @@
 				3F88926D25BEC2910052442D /* HomeTabView.swift in Sources */,
 				3F88919225BEA7EB0052442D /* LoginView.swift in Sources */,
 				3F8892BB25C016B10052442D /* SectionOfBookShelfView.swift in Sources */,
+				25C33B6825C0731C00F61530 /* DocumentEditView.swift in Sources */,
 				3F88925925BEB5C70052442D /* DocumentStruct.swift in Sources */,
 				3F88928625BEC60B0052442D /* MenuRight.swift in Sources */,
 				3F88927225BEC3420052442D /* LibraryTabView.swift in Sources */,
 				3F8891DD25BEAD7C0052442D /* LibraryList.swift in Sources */,
+				25C33B8725C08CCA00F61530 /* DrawingViewController.swift in Sources */,
+				25C33B7D25C08C1800F61530 /* CoreDataManager.swift in Sources */,
 				3F88926825BEC20F0052442D /* Application.swift in Sources */,
 				3F8892C025C016E20052442D /* DocumentThumbnailView.swift in Sources */,
 				3F88924525BEB55E0052442D /* CoreDataOperation.swift in Sources */,
 				25C33AA125BEA57B00F61530 /* IntelliBaseV3.xcdatamodeld in Sources */,
 				3F88920525BEB0C50052442D /* CertificateView.swift in Sources */,
 				3F88924A25BEB57D0052442D /* AuthorStruct.swift in Sources */,
+				25C33B7825C08BF000F61530 /* DrawingDocument.swift in Sources */,
 				3F88921125BEB3460052442D /* GetNewData.swift in Sources */,
 				3F88925E25BEB6640052442D /* NoteStruct.swift in Sources */,
+				25C33B8C25C08CE500F61530 /* DrawingWrapper.swift in Sources */,
 				25C33B3C25C0514200F61530 /* DocumentRootView.swift in Sources */,
+				25C33B8225C08CB000F61530 /* DrawingManager.swift in Sources */,
 				3F88921725BEB3940052442D /* Interface.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

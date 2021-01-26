@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct HomeList: View {
-    
-    var recentlyNotes: Array<Array<Any>> = []
+    let accountId: Int
+    @State var recentlyNotes: Array<Array<Any>> = []
     var recentlyPurchasedBooks: Array<Array<Any>> = []
     var recommandBooks: Array<Array<Any>> = []
     var courses = coursesData
@@ -20,9 +20,14 @@ struct HomeList: View {
         
         // ログイン中のアカウントを取得
         let accounts: Array<Account> = coreData.select(entity: .account, conditionStr: "login = true")
-        let accountId = accounts[0].id as! Int
+        accountId = accounts[0].id as! Int
         
-        // ログイン中のアカウントが所持している本を取得
+        // 最近開いたノートを表示
+        for note:Note in coreData.select(entity: .note, conditionStr: "account_id = \(accountId)", sort: ["update_date":false]) {
+            recentlyNotes.append([note.id as! Int, true])
+        }
+        
+        // 最近購入された本を取得
         for purchase:Purchase in coreData.select(entity: .purchase, conditionStr: "account_id = \(accountId)", sort: ["id":false]) {
             recentlyPurchasedBooks.append([purchase.book_id as! Int])
         }
@@ -45,14 +50,14 @@ struct HomeList: View {
             .padding(.leading, 60.0)
             
             HStack {
-                Text("最近読んだ本")
+                Text("最近のノート")
                     .font(.largeTitle)
                     .fontWeight(.heavy)
             }
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20.0) {
-                    SectionOfBookShelfView(ids: self.recentlyPurchasedBooks, partition: false)
+                    SectionOfBookShelfView(ids: self.recentlyNotes, partition: false)
                 }
                 .padding(.leading, 30)
                 .padding(.top, 30)
@@ -67,27 +72,13 @@ struct HomeList: View {
                     .fontWeight(.heavy)
             }
             ScrollView(.horizontal, showsIndicators: false) {
-               HStack(spacing: 20.0) {
-                  ForEach(courses) { item in
-                     Button(action: { self.showContent.toggle() }) {
-                        GeometryReader { geometry in
-                           CourseView(//title: item.title,
-                                      image: item.image,
-                                      shadowColor: item.shadowColor)
-                              .rotation3DEffect(Angle(degrees:
-                                 Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
-                              .sheet(isPresented: self.$showContent) {
-                                Text("None")
-                              }
-                        }
-                        .frame(width: 246, height: 360)
-                     }
-                  }
-               }
-               .padding(.leading, 30)
-               .padding(.top, 30)
-               .padding(.bottom, 40)
-               Spacer()
+                HStack(spacing: 20.0) {
+                    SectionOfBookShelfView(ids: self.recentlyPurchasedBooks, partition: false)
+                }
+                .padding(.leading, 30)
+                .padding(.top, 30)
+                .padding(.bottom, 40)
+                Spacer()
             }
             
             HStack {

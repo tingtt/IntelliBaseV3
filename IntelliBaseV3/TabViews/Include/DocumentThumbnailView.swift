@@ -36,8 +36,7 @@ struct DocumentThumbnailView: View {
     }
     
     var body: some View {
-//        NavigationLink(destination: <#T##_#>, isActive: <#T##Binding<Bool>#>, label: <#T##() -> _#>)
-        NavigationLink(destination: DocumentView(document: self.document), tag: 0, selection: $navSelection) {
+        NavigationLink(destination: DocumentRootView(documentId: self.document.id, isNote: self.document.isNote), tag: 0, selection: $navSelection) {
             Group {
                 // Thumbnail
                 if let image = uiImage {
