@@ -24,13 +24,6 @@ struct HomeTabView: View {
                 .scaleEffect(showProfile ? 0.95 : 1)
                 .animation(.default)
             
-            ContentView()
-                .frame(minWidth: 0, maxWidth: 712)
-                .cornerRadius(30)
-                .shadow(radius: 20)
-                .animation(.spring())
-                .offset(y: showProfile ? statusBarHeight + 40 : UIScreen.main.bounds.height)
-            
             HStack {
                 MenuButton(show: $show)
                     .offset(x: -40)
