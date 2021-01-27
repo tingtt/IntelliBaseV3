@@ -226,7 +226,6 @@
 		3F88918F25BEA79C0052442D /* TabViews */ = {
 			isa = PBXGroup;
 			children = (
-				3F88928A25C001BA0052442D /* Document */,
 				3F8891C525BEACC90052442D /* Library */,
 				3F8891FE25BEB03D0052442D /* Home */,
 				3F8891E125BEAD9C0052442D /* Include */,
@@ -333,26 +332,6 @@
 				3F88925D25BEB6640052442D /* NoteStruct.swift */,
 			);
 			path = OriginalStruct;
-			sourceTree = "<group>";
-		};
-		3F88928A25C001BA0052442D /* Document */ = {
-			isa = PBXGroup;
-			children = (
-				3F88929025C001EE0052442D /* Include */,
-				3F88928B25C001DE0052442D /* DocumentView.swift */,
-			);
-			path = Document;
-			sourceTree = "<group>";
-		};
-		3F88929025C001EE0052442D /* Include */ = {
-			isa = PBXGroup;
-			children = (
-				3F88929125C0020B0052442D /* PDFInfo.swift */,
-				3F88929625C002220052442D /* PDFInfoView.swift */,
-				3F88929B25C002370052442D /* PDFViewer.swift */,
-				3F8892A025C002560052442D /* ShowPDFView.swift */,
-			);
-			path = Include;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -497,7 +476,6 @@
 				3F8892C525C0170C0052442D /* DocumentPopup.swift in Sources */,
 				3F8891FA25BEAE970052442D /* CertificateRow.swift in Sources */,
 				25C33A9C25BEA57B00F61530 /* SceneDelegate.swift in Sources */,
-				3F8892A125C002560052442D /* ShowPDFView.swift in Sources */,
 				3F8891F025BEAE150052442D /* UpdateStore.swift in Sources */,
 				3F88927C25BEC58F0052442D /* MenuRow.swift in Sources */,
 				3F88924F25BEB5950052442D /* BookStruct.swift in Sources */,
@@ -507,10 +485,8 @@
 				3F88922625BEB4340052442D /* Download.swift in Sources */,
 				3F88920C25BEB2D10052442D /* LoginVerify.swift in Sources */,
 				3F88927725BEC53B0052442D /* MenuButton.swift in Sources */,
-				3F88929225C0020B0052442D /* PDFInfo.swift in Sources */,
 				3F88926325BEB90D0052442D /* MenuView.swift in Sources */,
 				25C33A9E25BEA57B00F61530 /* ContentView.swift in Sources */,
-				3F88928C25C001DE0052442D /* DocumentView.swift in Sources */,
 				3F88926D25BEC2910052442D /* HomeTabView.swift in Sources */,
 				3F88919225BEA7EB0052442D /* LoginView.swift in Sources */,
 				3F8892BB25C016B10052442D /* SectionOfBookShelfView.swift in Sources */,
@@ -524,10 +500,8 @@
 				25C33AA125BEA57B00F61530 /* IntelliBaseV3.xcdatamodeld in Sources */,
 				3F88920525BEB0C50052442D /* CertificateView.swift in Sources */,
 				3F88924A25BEB57D0052442D /* AuthorStruct.swift in Sources */,
-				3F88929725C002220052442D /* PDFInfoView.swift in Sources */,
 				3F88921125BEB3460052442D /* GetNewData.swift in Sources */,
 				3F88925E25BEB6640052442D /* NoteStruct.swift in Sources */,
-				3F88929C25C002370052442D /* PDFViewer.swift in Sources */,
 				3F88921725BEB3940052442D /* Interface.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

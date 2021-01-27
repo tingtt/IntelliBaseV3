@@ -52,7 +52,21 @@ class GetNewData {
         }
         var alreadyGetId = "0"
         if savedData.count != 0 {
-            alreadyGetId = "\((savedData[0] as AnyObject).id as! Int)"
+            switch entity {
+            case .genre:
+                alreadyGetId = "\((savedData[0] as! Genre).id as! Int)"
+                break
+                
+            case .book:
+                alreadyGetId = "\((savedData[0] as! Book).id as! Int)"
+                break
+                
+            case .purchase:
+                alreadyGetId = "\((savedData[0] as! Purchase).id as! Int)"
+                break
+                
+            default : break
+            }
         }
         paramArray["already_get"] = alreadyGetId
         let interface = Interface(apiFileName: apiFileName, parameter: paramArray, sync: true)
