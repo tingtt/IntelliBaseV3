@@ -22,16 +22,16 @@ struct SectionOfBookShelfView: View {
     }
     
     var body: some View {
-        ScrollView(.horizontal) {
-            HStack {
-                ForEach(0..<self.ids.count) {i in
-                    if ids[i].count == 2 {
-                        DocumentThumbnailView(id: ids[i][0] as! Int, isNote: ids[i][1] as! Bool)
-                    } else {
-                        DocumentThumbnailView(id: ids[i][0] as! Int)
-                    }
-                    //Divider()
-                }
+        ForEach(0..<self.ids.count) {i in
+            if ids[i].count == 2 {
+//                GeometryReader { geometry in
+                    DocumentThumbnailView(id: ids[i][0] as! Int, isNote: ids[i][1] as! Bool)
+//                        .rotation3DEffect(Angle(degrees:
+//                                                    Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
+//                }
+//                .frame(width: 246, height: 360)
+            } else {
+                DocumentThumbnailView(id: ids[i][0] as! Int)
             }
         }
     }

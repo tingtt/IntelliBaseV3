@@ -41,10 +41,21 @@ struct DocumentThumbnailView: View {
             Group {
                 // Thumbnail
                 if let image = uiImage {
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 210, height: 297, alignment: .center)
+                    VStack(alignment: .leading) {
+                        GeometryReader { geometry in
+                            Image(uiImage: image)
+                                .resizable()
+                                .renderingMode(.original)
+                                //.aspectRatio(contentMode: .fit)
+                                .frame(width: 260, height: 360, alignment: .leading)
+                                .padding(.bottom, 30)
+                                .rotation3DEffect(Angle(degrees:
+                                                            Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
+                        }
+                        .frame(width: 246, height: 360)
+                    }
+                    .frame(width: 250, height: 360)
+                    .shadow(color: Color("backgroundShadow3"), radius: 20, x: 0, y: 20)
                 } else {
                     Text("\(document.book.id)")
                         .frame(width: 210, height: 297, alignment: .center)

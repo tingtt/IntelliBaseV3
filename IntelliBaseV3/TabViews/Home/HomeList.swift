@@ -12,7 +12,7 @@ struct HomeList: View {
     var recentlyNotes: Array<Array<Any>> = []
     var recentlyPurchasedBooks: Array<Array<Any>> = []
     var recommandBooks: Array<Array<Any>> = []
-    var courses = coursesData
+    //var courses = coursesData
     @State var showContent = false
     
     init() {
@@ -49,9 +49,8 @@ struct HomeList: View {
                     .font(.largeTitle)
                     .fontWeight(.heavy)
             }
-            
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 20.0) {
+                HStack(spacing: 18.0) {
                     SectionOfBookShelfView(ids: self.recentlyPurchasedBooks, partition: false)
                 }
                 .padding(.leading, 30)
@@ -67,25 +66,13 @@ struct HomeList: View {
                     .fontWeight(.heavy)
             }
             ScrollView(.horizontal, showsIndicators: false) {
-               HStack(spacing: 20.0) {
-                  ForEach(courses) { item in
-                     Button(action: { self.showContent.toggle() }) {
-                        GeometryReader { geometry in
-                           CourseView(//title: item.title,
-                                      image: item.image,
-                                      shadowColor: item.shadowColor)
-                              .rotation3DEffect(Angle(degrees:
-                                 Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
-                              .sheet(isPresented: self.$showContent) { ContentView() }
-                        }
-                        .frame(width: 246, height: 360)
-                     }
-                  }
-               }
-               .padding(.leading, 30)
-               .padding(.top, 30)
-               .padding(.bottom, 40)
-               Spacer()
+                HStack(spacing: 18.0) {
+                    SectionOfBookShelfView(ids: self.recentlyPurchasedBooks, partition: false)
+                }
+                .padding(.leading, 30)
+                .padding(.top, 30)
+                .padding(.bottom, 40)
+                Spacer()
             }
             
             HStack {
@@ -95,25 +82,13 @@ struct HomeList: View {
             }
             
             ScrollView(.horizontal, showsIndicators: false) {
-               HStack(spacing: 20.0) {
-                  ForEach(courses) { item in
-                     Button(action: { self.showContent.toggle() }) {
-                        GeometryReader { geometry in
-                           CourseView(//title: item.title,
-                                      image: item.image,
-                                      shadowColor: item.shadowColor)
-                              .rotation3DEffect(Angle(degrees:
-                                 Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
-                              .sheet(isPresented: self.$showContent) { ContentView() }
-                        }
-                        .frame(width: 246, height: 360)
-                     }
-                  }
-               }
-               .padding(.leading, 30)
-               .padding(.top, 30)
-               .padding(.bottom, 40)
-               Spacer()
+                HStack(spacing: 18.0) {
+                    SectionOfBookShelfView(ids: self.recentlyPurchasedBooks, partition: false)
+                }
+                .padding(.leading, 30)
+                .padding(.top, 30)
+                .padding(.bottom, 40)
+                Spacer()
             }
             
             CertificateRow()
@@ -131,25 +106,6 @@ struct HomeList_Previews: PreviewProvider {
 }
 #endif
 
-struct CourseView: View {
-
-   var image = "Book1"
-   var shadowColor = Color("backgroundShadow3")
-
-   var body: some View {
-      return VStack(alignment: .leading) {
-         Image(image)
-            .resizable()
-            .renderingMode(.original)
-            .aspectRatio(contentMode: .fit)
-            .frame(width: 440, height: 340)
-            .padding(.bottom, 30)
-      }
-      .frame(width: 250, height: 360)
-      .shadow(color: shadowColor, radius: 20, x: 0, y: 20)
-
-   }
-}
 
 struct Course: Identifiable {
    var id = UUID()
