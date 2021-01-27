@@ -25,6 +25,7 @@
 		25C33B8225C08CB000F61530 /* DrawingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33B8125C08CB000F61530 /* DrawingManager.swift */; };
 		25C33B8725C08CCA00F61530 /* DrawingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33B8625C08CCA00F61530 /* DrawingViewController.swift */; };
 		25C33B8C25C08CE500F61530 /* DrawingWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33B8B25C08CE500F61530 /* DrawingWrapper.swift */; };
+		25C3B2D125C1175B00A139E3 /* NoteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C3B2D025C1175B00A139E3 /* NoteManager.swift */; };
 		3F88919225BEA7EB0052442D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88919125BEA7EB0052442D /* LoginView.swift */; };
 		3F88919B25BEA8400052442D /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88919A25BEA8400052442D /* CustomButton.swift */; };
 		3F8891A425BEA86C0052442D /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8891A325BEA86C0052442D /* CustomTextField.swift */; };
@@ -104,6 +105,7 @@
 		25C33B8125C08CB000F61530 /* DrawingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DrawingManager.swift; path = ../../../../../../../Documents/DrawingManager.swift; sourceTree = "<group>"; };
 		25C33B8625C08CCA00F61530 /* DrawingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DrawingViewController.swift; path = ../../../../../../../Documents/DrawingViewController.swift; sourceTree = "<group>"; };
 		25C33B8B25C08CE500F61530 /* DrawingWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DrawingWrapper.swift; path = ../../../../../../../Documents/DrawingWrapper.swift; sourceTree = "<group>"; };
+		25C3B2D025C1175B00A139E3 /* NoteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteManager.swift; sourceTree = "<group>"; };
 		3F88919125BEA7EB0052442D /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3F88919A25BEA8400052442D /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		3F8891A325BEA86C0052442D /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				3F8892BA25C016B00052442D /* SectionOfBookShelfView.swift */,
 				3F8892BF25C016E20052442D /* DocumentThumbnailView.swift */,
 				3F8892C425C0170C0052442D /* DocumentPopup.swift */,
+				25C3B2D025C1175B00A139E3 /* NoteManager.swift */,
 			);
 			path = Include;
 			sourceTree = "<group>";
@@ -521,6 +524,7 @@
 				3F8891A425BEA86C0052442D /* CustomTextField.swift in Sources */,
 				3F8891F525BEAE450052442D /* Settings.swift in Sources */,
 				3F88925425BEB5A90052442D /* GenreStruct.swift in Sources */,
+				25C3B2D125C1175B00A139E3 /* NoteManager.swift in Sources */,
 				25C33B5D25C0581600F61530 /* PDFKitView.swift in Sources */,
 				25C33A9A25BEA57B00F61530 /* AppDelegate.swift in Sources */,
 				3F8892C525C0170C0052442D /* DocumentPopup.swift in Sources */,

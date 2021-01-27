@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 import UIKit
+import SwiftUI
 
 struct BookStruct: Identifiable {
     // Book info
@@ -16,8 +17,7 @@ struct BookStruct: Identifiable {
     var auther: AuthorStruct
     var genre: GenreStruct
     // Note info
-    var noted: Bool
-    var notes: Array<String>? = nil
+    var notes: [NoteStruct] = []
     
     init(id: Int){
         let entity: CoreDataEnumManager.EntityName = .book
@@ -86,8 +86,10 @@ struct BookStruct: Identifiable {
         self.auther = AuthorStruct(id: authorId)
         self.genre = GenreStruct(id: genreId)
         
-        // ノートを取っているか確認してBool値を代入
-        self.noted = false
+        // ノートを取得
+        for note:Note in coreData.select(entity: .note, conditionStr: "book_id = \(id)", sort: ["update_date":false]) {
+            notes.append(NoteStruct(id: note.id as! Int))
+        }
         
         return
     }

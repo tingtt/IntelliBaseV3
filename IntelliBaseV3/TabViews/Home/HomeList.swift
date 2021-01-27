@@ -9,9 +9,10 @@ import SwiftUI
 
 struct HomeList: View {
     let accountId: Int
-    @State var recentlyNotes: Array<Array<Any>> = []
-    var recentlyPurchasedBooks: Array<Array<Any>> = []
-    var recommandBooks: Array<Array<Any>> = []
+    @State var noteManager:NoteManager = NoteManager()
+    var recentlyNotes: [[Any]] = []
+    var recentlyPurchasedBooks: [[Any]] = []
+    var recommandBooks: [[Any]] = []
     var courses = coursesData
     @State var showContent = false
     
@@ -22,12 +23,12 @@ struct HomeList: View {
         let accounts: Array<Account> = coreData.select(entity: .account, conditionStr: "login = true")
         accountId = accounts[0].id as! Int
         
-        // 最近開いたノートを表示
-        for note:Note in coreData.select(entity: .note, conditionStr: "account_id = \(accountId)", sort: ["update_date":false]) {
-            recentlyNotes.append([note.id as! Int, true])
-        }
+        // 最近開いたノートを取得
+//        print("Debug : Load recently updated notes.")
+//        noteManager.fetch()
         
         // 最近購入された本を取得
+//        print("Debug : Load recently purchased books.")
         for purchase:Purchase in coreData.select(entity: .purchase, conditionStr: "account_id = \(accountId)", sort: ["id":false]) {
             recentlyPurchasedBooks.append([purchase.book_id as! Int])
         }
@@ -53,11 +54,16 @@ struct HomeList: View {
                 Text("最近のノート")
                     .font(.largeTitle)
                     .fontWeight(.heavy)
+                Button("Dump"){
+                    print("Debug : \(noteManager.mappedIds)")
+                }
             }
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20.0) {
-                    SectionOfBookShelfView(ids: self.recentlyNotes, partition: false)
+//                    SectionOfBookShelfView(ids: self.recentlyNotes, partition: false)
+//                    SectionOfBookShelfView(ids: noteManager.mappedIds, partition: false)
+                    SectionOfBookShelfView(noteManager: noteManager, ids: noteManager.mappedIds, partition: false)
                 }
                 .padding(.leading, 30)
                 .padding(.top, 30)
@@ -73,7 +79,7 @@ struct HomeList: View {
             }
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20.0) {
-                    SectionOfBookShelfView(ids: self.recentlyPurchasedBooks, partition: false)
+                    SectionOfBookShelfView(noteManager: noteManager, ids: self.recentlyPurchasedBooks, partition: false)
                 }
                 .padding(.leading, 30)
                 .padding(.top, 30)

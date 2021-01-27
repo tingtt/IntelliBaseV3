@@ -10,19 +10,23 @@ import SwiftUI
 struct DocumentRootView: View {
     
     @State var document: DocumentStruct
-        
+    @State var notes: [NoteStruct]
+    
+    // use in HomeList()
+    var allNoteManager: NoteManager
+    
     let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     let dataPath: URL
     
     // pdf viewer
     var pdfKitView: PDFKitView
-    // note editor
-//    var editor: DocumentEditView
     
-    init(documentId: Int, isNote: Bool = false) {
+    init(noteManager: NoteManager, documentId: Int, isNote: Bool = false) {
+        self.allNoteManager = noteManager
         // PDFデータのパスを取得
         let document = DocumentStruct(id: documentId, isNote: isNote)
         self._document = State(initialValue: document)
+        self._notes = State(initialValue: document.book.notes)
         self.dataPath = documentDirectory.appendingPathComponent("book_\(document.book.id).pdf")
         
         self.pdfKitView = PDFKitView(url: dataPath)
@@ -39,6 +43,7 @@ struct DocumentRootView: View {
     // new note sheet.
     @State private var documentName: String = ""
     @State var addShown: Bool = false
+    @State var sheetNavigated: Bool = false
     
     var body: some View {
         Group {
@@ -58,7 +63,7 @@ struct DocumentRootView: View {
                 .alert(isPresented: $closeNoteAlertShown, content: {
                     Alert(
                         title: Text("ノートを閉じますか？"),
-                        message: Text("※一度閉じるとundo/redoできなくなります。"),
+                        message: Text("※一度閉じるとundoできなくなります。"),
                         primaryButton: .cancel(Text("No")),
                         secondaryButton: .default(
                             Text("Yes"),
@@ -75,27 +80,66 @@ struct DocumentRootView: View {
                     .navigationBarItems(
                         trailing:
                             HStack {
-                                Button("Open note") {
-                                    
-                                }
-                                Button("New note") {
-                                    addShown.toggle()
+                                if notes.count == 0 {
+                                    Button("New note") {
+                                        sheetNavigated.toggle()
+                                        addShown.toggle()
+                                    }
+                                } else {
+                                    Button("Open note") {
+                                        addShown.toggle()
+                                    }
                                 }
                             }
                     )
                     .sheet(isPresented: $addShown, content: {
-                        VStack {
-                            Text("Enter note title:")
-                            
-                            TextField("Enter note title here...", text: $documentName, onCommit: {
-                                save(fileName: documentName)
-                            })
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            
-                            Button("Create") {
-                                save(fileName: documentName)
+                        NavigationView(content: {
+                            List {
+                                ForEach(0..<notes.count) { index in
+                                    if index < notes.count {
+                                        Button(
+                                            action: {
+                                                document.note = NoteStruct(id: notes[index].id)
+                                                document.isNote = true
+                                            },
+                                            label: {
+                                                Text(notes[index].title)
+                                            }
+                                        )
+                                    }
+                                }
+                                .onDelete(perform: { indexSet in
+                                    // TODO: show alert
+                                    let mapedIndexSet: [Int] = indexSet.map({$0})
+                                    mapedIndexSet.forEach({ index in
+                                        // HomeListの表示を同期
+                                        allNoteManager.deleteNote(id: notes[index].id)
+                                        
+                                        notes[index].delete()
+                                        notes.remove(at: index)
+                                    })
+                                })
+                                NavigationLink(
+                                    destination:
+                                        VStack {
+                                            Text("Enter note title:")
+                                            
+                                            TextField("Enter note title here...", text: $documentName, onCommit: {
+                                                save(noteTitle: documentName)
+                                            })
+                                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                                            
+                                            Button("Create") {
+                                                save(noteTitle: documentName)
+                                            }
+                                        }.padding(),
+                                    isActive: $sheetNavigated,
+                                    label: {
+                                        Text("新規ノート")
+                                    }
+                                )
                             }
-                        }.padding()
+                        })
                     })
             }
         }
@@ -107,18 +151,18 @@ struct DocumentRootView: View {
             self.showingMenu.toggle()
         })
         // zoom in/out
-//        .gesture(MagnificationGesture(minimumScaleDelta: 0.1)
-//            .onChanged { val in
-//                self.nowScalingValue = self.lastScaleValue * val
-//
-//            //... anything else e.g. clamping the newScale
-//            }.onEnded{ val in
-//                self.lastScaleValue *= val
-//            }
-//        )
+        //        .gesture(MagnificationGesture(minimumScaleDelta: 0.1)
+        //            .onChanged { val in
+        //                self.nowScalingValue = self.lastScaleValue * val
+        //
+        //            //... anything else e.g. clamping the newScale
+        //            }.onEnded{ val in
+        //                self.lastScaleValue *= val
+        //            }
+        //        )
     }
     
-    private func save(fileName: String) {
+    private func save(noteTitle: String) {
         // Noteの登録
         // 使用済みのノートIDの最大値＋1
         let coreData = CoreDataOperation()
@@ -136,7 +180,7 @@ struct DocumentRootView: View {
                 "id":noteId,
                 "account_id": (coreData.select(entity: .account, conditionStr: "login = true")[0] as Account).id!,
                 "book_id": document.book.id,
-                "title": fileName,
+                "title": noteTitle,
                 "share": false,
                 "public_share": false,
                 "update_date": Date()
@@ -147,21 +191,26 @@ struct DocumentRootView: View {
         let pageCount: Int = self.pdfKitView.pdfKitRepresentedView.pdfView.document!.pageCount
         for pageNum in 1..<pageCount+1 {
             // coreDataに追加
-            CoreDataManager.shared.addData(doc: DrawingDocument(id: UUID(), data: Data(), name: "\(fileName)_note\(String(describing: noteId))_page\(pageNum)"))
-            print("Debug: drawing document added. Name: \(fileName)_note\(String(describing: noteId))_page\(pageNum)")
+            CoreDataManager.shared.addData(doc: DrawingDocument(id: UUID(), data: Data(), name: "\(noteTitle)_note\(String(describing: noteId))_page\(pageNum)"))
+            print("Debug: drawing document added. Name: \(noteTitle)_note\(String(describing: noteId))_page\(pageNum)")
         }
         
         // Documentのフィールドを変更
         document.note = NoteStruct(id: noteId)
         document.isNote = true
+        self.notes.append(document.note!)
         
         // canvasを変更
         addShown.toggle()
+        sheetNavigated.toggle()
+        
+        // HomeListの表示を同期
+        allNoteManager.addNote(note: document.note!)
     }
 }
 
 struct DocumentRootView_Previews: PreviewProvider {
     static var previews: some View {
-        DocumentRootView(documentId: 1, isNote: false)
+        DocumentRootView(noteManager: NoteManager(), documentId: 1, isNote: false)
     }
 }
