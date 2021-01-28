@@ -13,7 +13,7 @@ struct DocumentRootView: View {
     @State var notes: [NoteStruct]
     
     // use in HomeList()
-    var allNoteManager: NoteManager
+    var allNoteManager: NoteManager = NoteManager.shared
     
     let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     let dataPath: URL
@@ -21,8 +21,7 @@ struct DocumentRootView: View {
     // pdf viewer
     var pdfKitView: PDFKitView
     
-    init(noteManager: NoteManager, documentId: Int, isNote: Bool = false) {
-        self.allNoteManager = noteManager
+    init(documentId: Int, isNote: Bool = false) {
         // PDFデータのパスを取得
         let document = DocumentStruct(id: documentId, isNote: isNote)
         self._document = State(initialValue: document)
@@ -227,6 +226,6 @@ struct DocumentRootView: View {
 
 struct DocumentRootView_Previews: PreviewProvider {
     static var previews: some View {
-        DocumentRootView(noteManager: NoteManager(), documentId: 1, isNote: false)
+        DocumentRootView(documentId: 1, isNote: false)
     }
 }

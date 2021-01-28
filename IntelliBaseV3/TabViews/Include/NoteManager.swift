@@ -27,10 +27,12 @@ class NoteManager: ObservableObject {
     func addNote(note: NoteStruct) {
         // 先頭に追加したい
 //        notes.append(note)
-        notes.insert(note, at: 0)
-        mappedIds.insert([note.id, true], at: 0)
+//        notes.insert(note, at: 0)
+//        mappedIds.insert([note.id, true], at: 0)
+        notes.append(note)
+        mappedIds.append([note.id, true])
         print("Debug : note added! \(mappedIds)")
-        self.objectWillChange.send()
+//        self.objectWillChange.send()
     }
     
     func moveToFirst(noteId: Int) {

@@ -58,7 +58,7 @@ struct HomeList: View {
                 // ノートがあったら
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 18.0) {
-                        SectionOfBookShelfView(noteManager: noteManager, ids: noteManager.mappedIds, partition: false)
+                        SectionOfBookShelfView(ids: noteManager.mappedIds, partition: false)
                     }
                     .padding(.leading, 30)
                     .padding(.top, 30)
@@ -78,7 +78,7 @@ struct HomeList: View {
                 // 購入した本が
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 20.0) {
-                        SectionOfBookShelfView(noteManager: noteManager, ids: self.recentlyPurchasedBooks, partition: false)
+                        SectionOfBookShelfView(ids: self.recentlyPurchasedBooks, partition: false)
                     }
                     .padding(.leading, 30)
                     .padding(.top, 30)
@@ -97,7 +97,7 @@ struct HomeList: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 18.0) {
-                    SectionOfBookShelfView(noteManager: noteManager, ids: self.recommandBooks, partition: false)
+                    SectionOfBookShelfView(ids: self.recommandBooks, partition: false)
                 }
                 .padding(.leading, 30)
                 .padding(.top, 30)

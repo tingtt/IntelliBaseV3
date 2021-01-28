@@ -9,7 +9,7 @@ import SwiftUI
 import UIKit
 
 struct DocumentThumbnailView: View {
-    var noteManager: NoteManager
+    var noteManager: NoteManager = NoteManager.shared
     var id: Int
     @State var navSelection: Int? = nil
     @State var showingPopover: Bool = false
@@ -21,8 +21,7 @@ struct DocumentThumbnailView: View {
     
     @State private var popoverWidth = CGFloat(500)
     
-    init(noteManager: NoteManager, id: Int, isNote: Bool = false) {
-        self.noteManager = noteManager
+    init(id: Int, isNote: Bool = false) {
         self.id = id
         self.document = DocumentStruct(id: id, isNote: isNote)
         
@@ -38,7 +37,7 @@ struct DocumentThumbnailView: View {
     }
     
     var body: some View {
-        NavigationLink(destination: DocumentRootView(noteManager: noteManager, documentId: self.document.id, isNote: self.document.isNote), tag: 0, selection: $navSelection) {
+        NavigationLink(destination: DocumentRootView(documentId: self.document.id, isNote: self.document.isNote), tag: 0, selection: $navSelection) {
             Group {
                 // Thumbnail
                 if let image = uiImage {
@@ -111,6 +110,6 @@ struct DocumentThumbnailView: View {
 
 struct DocumentThumbnailView_Previews: PreviewProvider {
     static var previews: some View {
-        DocumentThumbnailView(noteManager: NoteManager(), id: 1)
+        DocumentThumbnailView(id: 1)
     }
 }
