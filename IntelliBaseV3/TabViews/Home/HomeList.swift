@@ -54,9 +54,6 @@ struct HomeList: View {
                 Text("最近のノート")
                     .font(.largeTitle)
                     .fontWeight(.heavy)
-                Button("Dump"){
-                    print("Debug : \(noteManager.mappedIds)")
-                }
             }
             if noteManager.mappedIds.count > 0 {
                 // ノートがあったら
@@ -79,7 +76,7 @@ struct HomeList: View {
                     .fontWeight(.heavy)
             }
             if recentlyPurchasedBooks.count > 0 {
-                // 購入した本があったら
+                // 購入した本が
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 20.0) {
                         SectionOfBookShelfView(noteManager: noteManager, ids: self.recentlyPurchasedBooks, partition: false)
@@ -90,7 +87,7 @@ struct HomeList: View {
                     Spacer()
                 }
             } else {
-                // 本がない場合
+                // 本がない場合、
             }
             
             HStack {
