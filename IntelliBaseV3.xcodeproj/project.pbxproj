@@ -51,11 +51,6 @@
 		3F8892BB25C016B10052442D /* SectionOfBookShelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8892BA25C016B00052442D /* SectionOfBookShelfView.swift */; };
 		3F8892C025C016E20052442D /* DocumentThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8892BF25C016E20052442D /* DocumentThumbnailView.swift */; };
 		3F8892C525C0170C0052442D /* DocumentPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8892C425C0170C0052442D /* DocumentPopup.swift */; };
-		3F88930525C233B50052442D /* PDFInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88930425C233B50052442D /* PDFInfo.swift */; };
-		3F88930A25C233E50052442D /* PDFInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88930925C233E50052442D /* PDFInfoView.swift */; };
-		3F88930F25C2340B0052442D /* PDFViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88930E25C2340B0052442D /* PDFViewer.swift */; };
-		3F88931425C234340052442D /* ShowPDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88931325C234340052442D /* ShowPDFView.swift */; };
-		3F88931925C2344E0052442D /* DocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88931825C2344E0052442D /* DocumentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,11 +121,6 @@
 		3F8892BA25C016B00052442D /* SectionOfBookShelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionOfBookShelfView.swift; sourceTree = "<group>"; };
 		3F8892BF25C016E20052442D /* DocumentThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentThumbnailView.swift; sourceTree = "<group>"; };
 		3F8892C425C0170C0052442D /* DocumentPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPopup.swift; sourceTree = "<group>"; };
-		3F88930425C233B50052442D /* PDFInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFInfo.swift; sourceTree = "<group>"; };
-		3F88930925C233E50052442D /* PDFInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PDFInfoView.swift; path = ../../../../../../../PDFInfoView.swift; sourceTree = "<group>"; };
-		3F88930E25C2340B0052442D /* PDFViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewer.swift; sourceTree = "<group>"; };
-		3F88931325C234340052442D /* ShowPDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPDFView.swift; sourceTree = "<group>"; };
-		3F88931825C2344E0052442D /* DocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,7 +216,6 @@
 		3F88918F25BEA79C0052442D /* TabViews */ = {
 			isa = PBXGroup;
 			children = (
-				3F88930225C2330E0052442D /* Document */,
 				3F8891C525BEACC90052442D /* Library */,
 				3F8891FE25BEB03D0052442D /* Home */,
 				3F8891E125BEAD9C0052442D /* Include */,
@@ -333,26 +322,6 @@
 				3F88925D25BEB6640052442D /* NoteStruct.swift */,
 			);
 			path = OriginalStruct;
-			sourceTree = "<group>";
-		};
-		3F88930225C2330E0052442D /* Document */ = {
-			isa = PBXGroup;
-			children = (
-				3F88930325C2338F0052442D /* Include */,
-				3F88931825C2344E0052442D /* DocumentView.swift */,
-			);
-			path = Document;
-			sourceTree = "<group>";
-		};
-		3F88930325C2338F0052442D /* Include */ = {
-			isa = PBXGroup;
-			children = (
-				3F88930425C233B50052442D /* PDFInfo.swift */,
-				3F88930925C233E50052442D /* PDFInfoView.swift */,
-				3F88930E25C2340B0052442D /* PDFViewer.swift */,
-				3F88931325C234340052442D /* ShowPDFView.swift */,
-			);
-			path = Include;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -492,12 +461,10 @@
 				3F88924025BEB5420052442D /* CoreDataEnum.swift in Sources */,
 				3F8891A425BEA86C0052442D /* CustomTextField.swift in Sources */,
 				3F8891F525BEAE450052442D /* Settings.swift in Sources */,
-				3F88931925C2344E0052442D /* DocumentView.swift in Sources */,
 				3F88925425BEB5A90052442D /* GenreStruct.swift in Sources */,
 				25C33A9A25BEA57B00F61530 /* AppDelegate.swift in Sources */,
 				3F8892C525C0170C0052442D /* DocumentPopup.swift in Sources */,
 				3F8891FA25BEAE970052442D /* CertificateRow.swift in Sources */,
-				3F88931425C234340052442D /* ShowPDFView.swift in Sources */,
 				25C33A9C25BEA57B00F61530 /* SceneDelegate.swift in Sources */,
 				3F8891F025BEAE150052442D /* UpdateStore.swift in Sources */,
 				3F88927C25BEC58F0052442D /* MenuRow.swift in Sources */,
@@ -513,13 +480,10 @@
 				3F88926D25BEC2910052442D /* HomeTabView.swift in Sources */,
 				3F88919225BEA7EB0052442D /* LoginView.swift in Sources */,
 				3F8892BB25C016B10052442D /* SectionOfBookShelfView.swift in Sources */,
-				3F88930F25C2340B0052442D /* PDFViewer.swift in Sources */,
 				3F88925925BEB5C70052442D /* DocumentStruct.swift in Sources */,
 				3F88928625BEC60B0052442D /* MenuRight.swift in Sources */,
 				3F88927225BEC3420052442D /* LibraryTabView.swift in Sources */,
 				3F8891DD25BEAD7C0052442D /* LibraryList.swift in Sources */,
-				3F88930525C233B50052442D /* PDFInfo.swift in Sources */,
-				3F88930A25C233E50052442D /* PDFInfoView.swift in Sources */,
 				3F88926825BEC20F0052442D /* Application.swift in Sources */,
 				3F8892C025C016E20052442D /* DocumentThumbnailView.swift in Sources */,
 				3F88924525BEB55E0052442D /* CoreDataOperation.swift in Sources */,
