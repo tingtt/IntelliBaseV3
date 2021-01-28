@@ -63,6 +63,7 @@
 		3F8892C525C0170C0052442D /* DocumentPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8892C425C0170C0052442D /* DocumentPopup.swift */; };
 		3F88933925C2D9260052442D /* IndexLibraryBooks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88933825C2D9260052442D /* IndexLibraryBooks.swift */; };
 		3F88933E25C2D98F0052442D /* LibraryBooksThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88933D25C2D98F0052442D /* LibraryBooksThumbnail.swift */; };
+		3F88934925C2F14D0052442D /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88934825C2F14D0052442D /* BackButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,6 +146,7 @@
 		3F8892C425C0170C0052442D /* DocumentPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPopup.swift; sourceTree = "<group>"; };
 		3F88933825C2D9260052442D /* IndexLibraryBooks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexLibraryBooks.swift; sourceTree = "<group>"; };
 		3F88933D25C2D98F0052442D /* LibraryBooksThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryBooksThumbnail.swift; sourceTree = "<group>"; };
+		3F88934825C2F14D0052442D /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,6 +337,7 @@
 				25C3B2D025C1175B00A139E3 /* NoteManager.swift */,
 				3F88933825C2D9260052442D /* IndexLibraryBooks.swift */,
 				3F88933D25C2D98F0052442D /* LibraryBooksThumbnail.swift */,
+				3F88934825C2F14D0052442D /* BackButton.swift */,
 			);
 			path = Include;
 			sourceTree = "<group>";
@@ -546,6 +549,7 @@
 				3F88920C25BEB2D10052442D /* LoginVerify.swift in Sources */,
 				3F88927725BEC53B0052442D /* MenuButton.swift in Sources */,
 				3F88926325BEB90D0052442D /* MenuView.swift in Sources */,
+				3F88934925C2F14D0052442D /* BackButton.swift in Sources */,
 				25C33A9E25BEA57B00F61530 /* ContentView.swift in Sources */,
 				25C33B4825C053E700F61530 /* PDFKitRepresentedView.swift in Sources */,
 				3F88926D25BEC2910052442D /* HomeTabView.swift in Sources */,

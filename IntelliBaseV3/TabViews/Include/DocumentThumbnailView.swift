@@ -19,6 +19,8 @@ struct DocumentThumbnailView: View {
     var thumbnailDataPath: URL
     var uiImage: UIImage? = nil
     
+    //UINavigationBar.appearance().
+    
     @State private var popoverWidth = CGFloat(500)
     
     init(id: Int, isNote: Bool = false) {

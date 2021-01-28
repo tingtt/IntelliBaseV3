@@ -58,8 +58,10 @@ struct DocumentRootView: View {
                 .scaleEffect(self.nowScalingValue)
                 .navigationBarItems(
                     trailing:
-                        Button("Close note") {
+                        Button(action: {
                             closeNoteAlertShown.toggle()
+                        }) {
+                            CircleButton(icon: "text.badge.xmark")
                         }
                 )
                 .alert(isPresented: $closeNoteAlertShown, content: {
@@ -81,15 +83,20 @@ struct DocumentRootView: View {
                     .scaleEffect(self.nowScalingValue)
                     .navigationBarItems(
                         trailing:
-                            HStack {
+                            ZStack(alignment: .topLeading) {
                                 if notes.count == 0 {
-                                    Button("New note") {
+                                    Button(action: {
                                         sheetNavigated.toggle()
                                         addShown.toggle()
+                                    }) {
+                                        CircleButton(icon: "note.text.badge.plus")
                                     }
+                                    
                                 } else {
-                                    Button("Open note") {
+                                    Button(action: {
                                         addShown.toggle()
+                                    }) {
+                                        CircleButton(icon: "note.text.badge.plus")
                                     }
                                 }
                             }
@@ -157,6 +164,7 @@ struct DocumentRootView: View {
                     })
             }
         }
+        .background(Color("background1"))
         .navigationBarHidden(!showingMenu)
         .edgesIgnoringSafeArea([.top, .bottom])
         .statusBar(hidden: !showingMenu)
