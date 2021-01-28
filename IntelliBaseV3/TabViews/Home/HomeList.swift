@@ -13,6 +13,7 @@ struct HomeList: View {
     var recentlyNotes: [[Any]] = []
     var recentlyPurchasedBooks: [[Any]] = []
     var recommandBooks: [[Any]] = []
+    //var courses = coursesData
     @State var showContent = false
     
     init() {
@@ -28,6 +29,9 @@ struct HomeList: View {
             recentlyPurchasedBooks.append([purchase.book_id as! Int])
         }
     }
+
+//   var courses = coursesData
+//   @State var showContent = false
 
    var body: some View {
       ScrollView {
@@ -112,3 +116,28 @@ struct HomeList_Previews: PreviewProvider {
    }
 }
 #endif
+
+
+struct Course: Identifiable {
+   var id = UUID()
+   var image: String
+   var shadowColor: Color
+}
+
+let coursesData = [
+   Course(//title: "Build an app with SwiftUI",
+          image: "Book1",
+          shadowColor: Color("backgroundShadow3")),
+   Course(//title: "Design and animate your UI",
+          image: "Book2",
+          shadowColor: Color("backgroundShadow3")),
+   Course(//title: "Swift UI Advanced",
+          image: "Book3",
+          shadowColor: Color(hue: 0.677, saturation: 0.701, brightness: 0.788, opacity: 0.5)),
+   Course(//title: "Framer Playground",
+          image: "Book4",
+          shadowColor: Color(hue: 0.677, saturation: 0.701, brightness: 0.788, opacity: 0.5)),
+   Course(//title: "Flutter for Designers",
+          image: "Book5",
+          shadowColor: Color(hue: 0.677, saturation: 0.701, brightness: 0.788, opacity: 0.5)),
+]
