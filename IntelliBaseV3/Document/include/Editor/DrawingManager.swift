@@ -32,6 +32,8 @@ class DrawingManager: ObservableObject {
             let noteId: String = String(name[name.range(of: "_note")!.upperBound..<name.range(of: "_page")!.lowerBound])
             // update note info
             _ = CoreDataOperation().update(entity: .note, conditionStr: "id = \(noteId)", values: ["update_date":Date()])
+            
+            NoteManager.shared.moveToFirst(noteId: Int(noteId)!)
         }
     }
     

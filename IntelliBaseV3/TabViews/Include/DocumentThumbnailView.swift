@@ -95,12 +95,12 @@ struct DocumentThumbnailView: View {
         }
         .popover(isPresented: $showingPopover) {
             NavigationView {
-                DocumentPopup(document: self.document)
+                DocumentPopup(showing: $showingSheet,document: self.document)
             }
         }
         .sheet(isPresented: $showingSheet) {
             NavigationView {
-                DocumentPopup(document: self.document)
+                DocumentPopup(showing: $showingSheet,document: self.document)
             }
         }
         .onAppear(perform: {

@@ -38,6 +38,9 @@ struct DocumentRootView: View {
     @State var nowScalingValue: CGFloat = 1.0
     @State var lastScaleValue: CGFloat = 1.0
     
+    // note delete alert
+    @State var deleteNoteAlert = false
+    @State var deleteIndexSet: IndexSet = IndexSet(integer: 0)
     // note editor alert
     @State var closeNoteAlertShown: Bool = false
     // new note sheet.
@@ -109,16 +112,28 @@ struct DocumentRootView: View {
                                     }
                                 }
                                 .onDelete(perform: { indexSet in
-                                    // TODO: show alert
-                                    let mapedIndexSet: [Int] = indexSet.map({$0})
-                                    mapedIndexSet.forEach({ index in
-                                        // HomeListの表示を同期
-                                        allNoteManager.deleteNote(id: notes[index].id)
-                                        
-                                        notes[index].delete()
-                                        notes.remove(at: index)
-                                    })
+                                    deleteIndexSet = indexSet
+                                    deleteNoteAlert.toggle()
                                 })
+                                .alert(isPresented: $deleteNoteAlert) {
+                                    Alert(
+                                        title: Text("ノートを削除しますか？"),
+                                        message: Text("\(allNoteManager.notes[deleteIndexSet.first!].title)"),
+                                        primaryButton: .cancel(Text("No")),
+                                        secondaryButton: .default(Text("Yes"),
+                                            action: {// TODO: show alert
+                                                let mapedIndexSet: [Int] = deleteIndexSet.map({$0})
+                                                mapedIndexSet.forEach({ index in
+                                                    // HomeListの表示を同期
+                                                    allNoteManager.deleteNote(id: notes[index].id)
+                                                    
+                                                    notes[index].delete()
+                                                    notes.remove(at: index)
+                                                })
+                                            }
+                                        )
+                                    )
+                                }
                                 NavigationLink(
                                     destination:
                                         VStack {
@@ -197,15 +212,16 @@ struct DocumentRootView: View {
         
         // Documentのフィールドを変更
         document.note = NoteStruct(id: noteId)
-        document.isNote = true
         self.notes.append(document.note!)
+        
+        // HomeListの表示を同期
+        allNoteManager.addNote(note: document.note!)
         
         // canvasを変更
         addShown.toggle()
         sheetNavigated.toggle()
         
-        // HomeListの表示を同期
-        allNoteManager.addNote(note: document.note!)
+        document.isNote = true
     }
 }
 

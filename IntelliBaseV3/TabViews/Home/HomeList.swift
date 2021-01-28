@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeList: View {
     let accountId: Int
-    @ObservedObject var noteManager:NoteManager = NoteManager()
+    @ObservedObject var noteManager:NoteManager = NoteManager.shared
     var recentlyNotes: [[Any]] = []
     var recentlyPurchasedBooks: [[Any]] = []
     var recommandBooks: [[Any]] = []
@@ -50,6 +50,9 @@ struct HomeList: View {
                 Text("最近のノート")
                     .font(.largeTitle)
                     .fontWeight(.heavy)
+                Button(action: {
+                    print(noteManager.mappedIds)
+                }, label: {Text("debug")})
             }
             if noteManager.mappedIds.count > 0 {
                 // ノートがあったら

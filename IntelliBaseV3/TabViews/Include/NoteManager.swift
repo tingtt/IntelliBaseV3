@@ -8,6 +8,7 @@
 import SwiftUI
 
 class NoteManager: ObservableObject {
+    static let shared = NoteManager()
     
     @Published var notes: [NoteStruct]
 //    @Published var noteIds: [Int] = []
@@ -28,6 +29,37 @@ class NoteManager: ObservableObject {
 //        notes.append(note)
         notes.insert(note, at: 0)
         mappedIds.insert([note.id, true], at: 0)
+        print("Debug : note added! \(mappedIds)")
+        self.objectWillChange.send()
+    }
+    
+    func moveToFirst(noteId: Int) {
+        var movedOne: Bool = false
+        for index in 0..<notes.count {
+            if notes[index].id == noteId {
+                if index == 0 {
+                    break
+                }
+                notes.move(fromOffsets: IndexSet([index]), toOffset: 0)
+                if movedOne {
+                    break
+                } else {
+                    movedOne = true
+                }
+            }
+            if mappedIds[index][0] as! Int == noteId {
+                if index == 0 {
+                    break
+                }
+                mappedIds.move(fromOffsets: IndexSet([index]), toOffset: 0)
+                if movedOne {
+                    break
+                } else {
+                    movedOne = true
+                }
+            }
+        }
+        
     }
     
     func deleteNote(id: Int) {
