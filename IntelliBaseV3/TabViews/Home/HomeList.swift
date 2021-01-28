@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct HomeList: View {
-    
-    var recentlyNotes: Array<Array<Any>> = []
-    var recentlyPurchasedBooks: Array<Array<Any>> = []
-    var recommandBooks: Array<Array<Any>> = []
+    let accountId: Int
+    @State var noteManager:NoteManager = NoteManager()
+    var recentlyNotes: [[Any]] = []
+    var recentlyPurchasedBooks: [[Any]] = []
+    var recommandBooks: [[Any]] = []
     //var courses = coursesData
     @State var showContent = false
     
@@ -20,9 +21,14 @@ struct HomeList: View {
         
         // ログイン中のアカウントを取得
         let accounts: Array<Account> = coreData.select(entity: .account, conditionStr: "login = true")
-        let accountId = accounts[0].id as! Int
+        accountId = accounts[0].id as! Int
         
-        // ログイン中のアカウントが所持している本を取得
+        // 最近開いたノートを取得
+//        print("Debug : Load recently updated notes.")
+//        noteManager.fetch()
+        
+        // 最近購入された本を取得
+//        print("Debug : Load recently purchased books.")
         for purchase:Purchase in coreData.select(entity: .purchase, conditionStr: "account_id = \(accountId)", sort: ["id":false]) {
             recentlyPurchasedBooks.append([purchase.book_id as! Int])
         }
@@ -45,20 +51,22 @@ struct HomeList: View {
             .padding(.leading, 60.0)
             
             HStack {
-                Text("最近読んだ本")
+                Text("最近のノート")
                     .font(.largeTitle)
                     .fontWeight(.heavy)
+                Button("Dump"){
+                    print("Debug : \(noteManager.mappedIds)")
+                }
             }
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 18.0) {
-                    SectionOfBookShelfView(ids: self.recentlyPurchasedBooks, partition: false)
+                    SectionOfBookShelfView(noteManager: noteManager, ids: noteManager.mappedIds, partition: false)
                 }
                 .padding(.leading, 30)
                 .padding(.top, 30)
                 .padding(.bottom, 40)
                 Spacer()
             }
-        
             
             HStack {
                 Text("最近購入した本")
@@ -66,8 +74,8 @@ struct HomeList: View {
                     .fontWeight(.heavy)
             }
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 18.0) {
-                    SectionOfBookShelfView(ids: self.recentlyPurchasedBooks, partition: false)
+                HStack(spacing: 20.0) {
+                    SectionOfBookShelfView(noteManager: noteManager, ids: self.recentlyPurchasedBooks, partition: false)
                 }
                 .padding(.leading, 30)
                 .padding(.top, 30)
@@ -83,7 +91,7 @@ struct HomeList: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 18.0) {
-                    SectionOfBookShelfView(ids: self.recentlyPurchasedBooks, partition: false)
+                    SectionOfBookShelfView(noteManager: noteManager, ids: self.recommandBooks, partition: false)
                 }
                 .padding(.leading, 30)
                 .padding(.top, 30)
@@ -101,7 +109,7 @@ struct HomeList: View {
 #if DEBUG
 struct HomeList_Previews: PreviewProvider {
    static var previews: some View {
-    HomeList()
+        HomeList()
    }
 }
 #endif

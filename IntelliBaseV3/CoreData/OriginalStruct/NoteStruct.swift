@@ -81,4 +81,8 @@ struct NoteStruct {
         
         return
     }
+    
+    func delete() {
+        _ = CoreDataOperation().delete(entity: .note, conditionStr: "id = \(id)")
+    }
 }

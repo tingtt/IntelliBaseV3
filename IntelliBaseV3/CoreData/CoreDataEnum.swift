@@ -17,6 +17,7 @@ struct CoreDataEnumManager {
         case genre
         case note
         case purchase
+        case drawingDoc
     }
     
     var entityName: String = "Book"
@@ -35,6 +36,8 @@ struct CoreDataEnumManager {
                 return "Note"
             case .purchase:
                 return "Purchase"
+            case .drawingDoc:
+                return "DrawingDoc"
         }
     }
     
