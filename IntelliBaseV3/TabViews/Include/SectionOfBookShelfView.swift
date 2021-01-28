@@ -26,15 +26,17 @@ struct SectionOfBookShelfView: View {
     
     var body: some View {
         ForEach(0..<self.ids.count) {i in
-            if ids[i].count == 2 {
+            if i < ids.count {
+                if ids[i].count == 2 {
 //                GeometryReader { geometry in
-                DocumentThumbnailView(noteManager: noteManager, id: ids[i][0] as! Int, isNote: ids[i][1] as! Bool)
+                    DocumentThumbnailView(noteManager: noteManager, id: ids[i][0] as! Int, isNote: ids[i][1] as! Bool)
 //                        .rotation3DEffect(Angle(degrees:
 //                                                    Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
 //                }
 //                .frame(width: 246, height: 360)
-            } else {
-                DocumentThumbnailView(noteManager: noteManager, id: ids[i][0] as! Int)
+                } else {
+                    DocumentThumbnailView(noteManager: noteManager, id: ids[i][0] as! Int)
+                }
             }
         }
     }

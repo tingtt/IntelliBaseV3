@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeList: View {
     let accountId: Int
-    @State var noteManager:NoteManager = NoteManager()
+    @ObservedObject var noteManager:NoteManager = NoteManager()
     var recentlyNotes: [[Any]] = []
     var recentlyPurchasedBooks: [[Any]] = []
     var recommandBooks: [[Any]] = []
