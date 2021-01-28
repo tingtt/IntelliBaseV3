@@ -9,8 +9,27 @@ import SwiftUI
 
 struct LibraryList: View {
 
-   var courses = coursesData2
-   @State var showContent = false
+    let accountId: Int
+    @ObservedObject var noteManager:NoteManager = NoteManager.shared
+    var recentlyNotes: [[Any]] = []
+    var recentlyPurchasedBooks: [[Any]] = []
+    var recommandBooks: [[Any]] = []
+    //var courses = coursesData
+    @State var showContent = false
+    
+    init() {
+        let coreData = CoreDataOperation()
+        
+        // ログイン中のアカウントを取得
+        let accounts: Array<Account> = coreData.select(entity: .account, conditionStr: "login = true")
+        accountId = accounts[0].id as! Int
+        
+        // 最近購入された本を取得
+//        print("Debug : Load recently purchased books.")
+        for purchase:Purchase in coreData.select(entity: .purchase, conditionStr: "account_id = \(accountId)", sort: ["id":false]) {
+            recentlyPurchasedBooks.append([purchase.book_id as! Int])
+        }
+    }
 
    var body: some View {
       ScrollView {
@@ -28,27 +47,18 @@ struct LibraryList: View {
             }
             .padding(.leading, 60.0)
             
-            ScrollView(.horizontal, showsIndicators: false) {
-               HStack(spacing: 20.0) {
-                  ForEach(courses) { item in
-                     Button(action: { self.showContent.toggle() }) {
-                        GeometryReader { geometry in
-                           CourseView2(//title: item.title,
-                                      image: item.image,
-                                      //color: item.color,
-                                      shadowColor: item.shadowColor)
-//                              .rotation3DEffect(Angle(degrees:
-//                                 Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
-                              .sheet(isPresented: self.$showContent) { ContentView() }
-                        }
-                        .frame(width: 246, height: 360)
-                     }
-                  }
-               }
-               .padding(.leading, 30)
-               .padding(.top, 30)
-               .padding(.bottom, 40)
-               Spacer()
+            if recentlyPurchasedBooks.count > 0 {
+                //ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 10.0) {
+                        IndexLibraryBooks(ids: self.recentlyPurchasedBooks, partition: false)
+                    }
+                    .padding(.leading, 30)
+                    .padding(.top, 30)
+                    .padding(.bottom, 40)
+                    //Spacer()
+                //}
+            }else{
+                // 本がない場合、
             }
 
             //CertificateRow()

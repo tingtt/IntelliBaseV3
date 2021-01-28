@@ -61,6 +61,8 @@
 		3F8892BB25C016B10052442D /* SectionOfBookShelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8892BA25C016B00052442D /* SectionOfBookShelfView.swift */; };
 		3F8892C025C016E20052442D /* DocumentThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8892BF25C016E20052442D /* DocumentThumbnailView.swift */; };
 		3F8892C525C0170C0052442D /* DocumentPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8892C425C0170C0052442D /* DocumentPopup.swift */; };
+		3F88933925C2D9260052442D /* IndexLibraryBooks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88933825C2D9260052442D /* IndexLibraryBooks.swift */; };
+		3F88933E25C2D98F0052442D /* LibraryBooksThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88933D25C2D98F0052442D /* LibraryBooksThumbnail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,6 +143,8 @@
 		3F8892BA25C016B00052442D /* SectionOfBookShelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionOfBookShelfView.swift; sourceTree = "<group>"; };
 		3F8892BF25C016E20052442D /* DocumentThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentThumbnailView.swift; sourceTree = "<group>"; };
 		3F8892C425C0170C0052442D /* DocumentPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPopup.swift; sourceTree = "<group>"; };
+		3F88933825C2D9260052442D /* IndexLibraryBooks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexLibraryBooks.swift; sourceTree = "<group>"; };
+		3F88933D25C2D98F0052442D /* LibraryBooksThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryBooksThumbnail.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -329,6 +333,8 @@
 				3F8892BF25C016E20052442D /* DocumentThumbnailView.swift */,
 				3F8892C425C0170C0052442D /* DocumentPopup.swift */,
 				25C3B2D025C1175B00A139E3 /* NoteManager.swift */,
+				3F88933825C2D9260052442D /* IndexLibraryBooks.swift */,
+				3F88933D25C2D98F0052442D /* LibraryBooksThumbnail.swift */,
 			);
 			path = Include;
 			sourceTree = "<group>";
@@ -543,6 +549,7 @@
 				25C33A9E25BEA57B00F61530 /* ContentView.swift in Sources */,
 				25C33B4825C053E700F61530 /* PDFKitRepresentedView.swift in Sources */,
 				3F88926D25BEC2910052442D /* HomeTabView.swift in Sources */,
+				3F88933925C2D9260052442D /* IndexLibraryBooks.swift in Sources */,
 				3F88919225BEA7EB0052442D /* LoginView.swift in Sources */,
 				3F8892BB25C016B10052442D /* SectionOfBookShelfView.swift in Sources */,
 				25C33B6825C0731C00F61530 /* DocumentEditView.swift in Sources */,
@@ -555,6 +562,7 @@
 				3F88926825BEC20F0052442D /* Application.swift in Sources */,
 				3F8892C025C016E20052442D /* DocumentThumbnailView.swift in Sources */,
 				3F88924525BEB55E0052442D /* CoreDataOperation.swift in Sources */,
+				3F88933E25C2D98F0052442D /* LibraryBooksThumbnail.swift in Sources */,
 				25C33AA125BEA57B00F61530 /* IntelliBaseV3.xcdatamodeld in Sources */,
 				3F88920525BEB0C50052442D /* CertificateView.swift in Sources */,
 				3F88924A25BEB57D0052442D /* AuthorStruct.swift in Sources */,
