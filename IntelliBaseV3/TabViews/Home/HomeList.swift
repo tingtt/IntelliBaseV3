@@ -58,14 +58,19 @@ struct HomeList: View {
                     print("Debug : \(noteManager.mappedIds)")
                 }
             }
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 18.0) {
-                    SectionOfBookShelfView(noteManager: noteManager, ids: noteManager.mappedIds, partition: false)
+            if noteManager.mappedIds.count > 0 {
+                // ノートがあったら
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 18.0) {
+                        SectionOfBookShelfView(noteManager: noteManager, ids: noteManager.mappedIds, partition: false)
+                    }
+                    .padding(.leading, 30)
+                    .padding(.top, 30)
+                    .padding(.bottom, 40)
+                    Spacer()
                 }
-                .padding(.leading, 30)
-                .padding(.top, 30)
-                .padding(.bottom, 40)
-                Spacer()
+            } else {
+                // ノートがない場合
             }
             
             HStack {
@@ -73,14 +78,19 @@ struct HomeList: View {
                     .font(.largeTitle)
                     .fontWeight(.heavy)
             }
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 20.0) {
-                    SectionOfBookShelfView(noteManager: noteManager, ids: self.recentlyPurchasedBooks, partition: false)
+            if recentlyPurchasedBooks.count > 0 {
+                // 購入した本があったら
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 20.0) {
+                        SectionOfBookShelfView(noteManager: noteManager, ids: self.recentlyPurchasedBooks, partition: false)
+                    }
+                    .padding(.leading, 30)
+                    .padding(.top, 30)
+                    .padding(.bottom, 40)
+                    Spacer()
                 }
-                .padding(.leading, 30)
-                .padding(.top, 30)
-                .padding(.bottom, 40)
-                Spacer()
+            } else {
+                // 本がない場合
             }
             
             HStack {
