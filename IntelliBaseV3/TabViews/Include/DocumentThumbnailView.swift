@@ -93,7 +93,7 @@ struct DocumentThumbnailView: View {
             // https://stackoverflow.com/a/60138475
         }
         .popover(isPresented: $showingPopover) {
-            DocumentPopup(showing: $showingSheet,document: self.document)
+            DocumentPopup(showing: $showingPopover,document: self.document)
         }
         .sheet(isPresented: $showingSheet) {
             DocumentPopup(showing: $showingSheet,document: self.document)

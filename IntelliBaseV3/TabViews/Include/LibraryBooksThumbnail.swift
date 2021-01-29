@@ -67,9 +67,9 @@ struct LibraryBooksThumbnail: View {
                 }
                 else if UIDevice.current.userInterfaceIdiom == .pad {
                     // iPad
-//                    self.showingPopover.toggle()
+                    self.showingPopover.toggle()
                     // temp for debug
-                    self.showingSheet.toggle()
+//                    self.showingSheet.toggle()
                 }
             }
             .onTapGesture(count: 1) {
@@ -81,14 +81,10 @@ struct LibraryBooksThumbnail: View {
             // https://stackoverflow.com/a/60138475
         }
         .popover(isPresented: $showingPopover) {
-            NavigationView {
-                DocumentPopup(showing: $showingSheet,document: self.document)
-            }
+            DocumentPopup(showing: $showingPopover,document: self.document)
         }
         .sheet(isPresented: $showingSheet) {
-            NavigationView {
-                DocumentPopup(showing: $showingSheet,document: self.document)
-            }
+            DocumentPopup(showing: $showingSheet,document: self.document)
         }
 //        .onAppear(perform: {
 //            print("Debug : thumbnail view loaded. id : \(self.document.id)")
