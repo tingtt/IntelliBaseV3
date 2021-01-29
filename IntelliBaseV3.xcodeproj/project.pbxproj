@@ -66,6 +66,7 @@
 		3F88933925C2D9260052442D /* IndexLibraryBooks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88933825C2D9260052442D /* IndexLibraryBooks.swift */; };
 		3F88933E25C2D98F0052442D /* LibraryBooksThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88933D25C2D98F0052442D /* LibraryBooksThumbnail.swift */; };
 		3F88934925C2F14D0052442D /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88934825C2F14D0052442D /* BackButton.swift */; };
+		3F88936F25C467CA0052442D /* NextPrevButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88936E25C467CA0052442D /* NextPrevButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,6 +152,7 @@
 		3F88933825C2D9260052442D /* IndexLibraryBooks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexLibraryBooks.swift; sourceTree = "<group>"; };
 		3F88933D25C2D98F0052442D /* LibraryBooksThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryBooksThumbnail.swift; sourceTree = "<group>"; };
 		3F88934825C2F14D0052442D /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
+		3F88936E25C467CA0052442D /* NextPrevButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextPrevButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -344,6 +346,7 @@
 				3F88933825C2D9260052442D /* IndexLibraryBooks.swift */,
 				3F88933D25C2D98F0052442D /* LibraryBooksThumbnail.swift */,
 				3F88934825C2F14D0052442D /* BackButton.swift */,
+				3F88936E25C467CA0052442D /* NextPrevButton.swift */,
 			);
 			path = Include;
 			sourceTree = "<group>";
@@ -538,6 +541,7 @@
 				3F88924025BEB5420052442D /* CoreDataEnum.swift in Sources */,
 				3F8891A425BEA86C0052442D /* CustomTextField.swift in Sources */,
 				3F8891F525BEAE450052442D /* Settings.swift in Sources */,
+				3F88936F25C467CA0052442D /* NextPrevButton.swift in Sources */,
 				3F88925425BEB5A90052442D /* GenreStruct.swift in Sources */,
 				25C3B2D125C1175B00A139E3 /* NoteManager.swift in Sources */,
 				25C33B5D25C0581600F61530 /* PDFKitView.swift in Sources */,

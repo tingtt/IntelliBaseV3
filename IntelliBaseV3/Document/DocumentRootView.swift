@@ -176,13 +176,13 @@ struct DocumentRootView: View {
                 Button(action: {
                     goToPreviousPage()
                 }) {
-                    Text("Prev")
+                    NextPrevButton(icon: "arrow.left")
                 }
                 Spacer()
                 Button(action: {
                     goToNextPage()
                 }) {
-                    Text("Next")
+                    NextPrevButton(icon: "arrow.right")
                 }
             }
             HStack {
