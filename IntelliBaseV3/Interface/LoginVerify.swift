@@ -34,13 +34,13 @@ struct LoginVerify {
                     // update coreData
                     if !coreData.update(entity: entity, conditionStr: "id = \(id)", values: ["login":true, "login_date":Date()]) {
                         // Error at update coreData.
-                        print("Debug : Error at update coreData entity \"Account\".")
+                        print("Error : Error at update coreData entity \"Account\".")
                     }
                 } else {
                     // insert new accout to coreData.
                     if !coreData.insert(entity: entity, values: ["id":id, "email":email, "name":name, "login":true, "login_date":Date()]) {
                         // Error
-                        print("Debug : Error at insert coreData entity \"Account\".")
+                        print("Error : Error at insert coreData entity \"Account\".")
                     }
                 }
             } else {

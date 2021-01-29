@@ -34,7 +34,7 @@ class GetNewData {
                     _ = GetNewData().download(entity:.purchase, id: id)
                 } else {
                     status = false
-                    print("Debug : Parameter user id does not exists. GetNewData(entityName: \"Book\", id: ?")
+                    print("Error : Parameter user id does not exists. GetNewData(entityName: \"Book\", id: ?")
                     return false
                 }
                 break
@@ -45,7 +45,7 @@ class GetNewData {
                     savedData = coreData.select(entity: entity, conditionStr: "account_id = \(id)", sort: ["id":false])
                 } else {
                     status = false
-                    print("Debug : Parameter user id does not exists. GetNewData(entityName: \"Purchase\", id: ?")
+                    print("Error : Parameter user id does not exists. GetNewData(entityName: \"Purchase\", id: ?")
                     return false
                 }
                 break
@@ -79,7 +79,7 @@ class GetNewData {
         // success ?
         if !interface.error {
             let newData = interface.content
-            print("Debug : New data from \(apiFileName) -> \(newData)")
+//            print("Debug : New data from \(apiFileName) -> \(newData)")
             // new data exists ?
             if newData.count > 0 {
                 // loop in result
@@ -108,7 +108,7 @@ class GetNewData {
                         }
                     }
                 }
-                print("Debug : Success to save new data. [type: \(CoreDataEnumManager().toString(entity: entity))]")
+//                print("Debug : Success to save new data. [type: \(CoreDataEnumManager().toString(entity: entity))]")
             } else {
                 print("Debug : New \(CoreDataEnumManager().toString(entity: entity)) does not exists.")
             }
