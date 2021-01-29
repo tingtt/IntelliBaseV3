@@ -53,9 +53,6 @@ struct HomeList: View {
                 Text("最近のノート")
                     .font(.largeTitle)
                     .fontWeight(.heavy)
-                Button(action: {
-                    print(noteManager.mappedIds)
-                }, label: {Text("debug")})
             }
             if noteManager.mappedIds.count > 0 {
                 // ノートがあったら
