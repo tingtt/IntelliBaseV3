@@ -48,15 +48,16 @@ struct HomeList: View {
             }
             .padding(.leading, 60.0)
             
-            HStack {
-                Text("最近のノート")
-                    .font(.largeTitle)
-                    .fontWeight(.heavy)
-                Button(action: {
-                    print(noteManager.mappedIds)
-                }, label: {Text("debug")})
-            }
+            
             if noteManager.mappedIds.count > 0 {
+                HStack {
+                    Text("最近のノート")
+                        .font(.largeTitle)
+                        .fontWeight(.heavy)
+                    Button(action: {
+                        print(noteManager.mappedIds)
+                    }, label: {Text("debug")})
+                }
                 // ノートがあったら
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 6.0) {
@@ -69,6 +70,17 @@ struct HomeList: View {
                 }
             } else {
                 // ノートがない場合
+                HStack {
+                    Text("最近のノート")
+                        .font(.largeTitle)
+                        .fontWeight(.heavy)
+                    Button(action: {
+                        print(noteManager.mappedIds)
+                    }, label: {Text("debug")})
+                }
+                VStack{
+                    Text("ノートがありません")
+                }
             }
             
             HStack {
