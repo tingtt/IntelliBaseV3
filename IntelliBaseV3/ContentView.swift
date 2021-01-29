@@ -136,7 +136,10 @@ struct ContentView: View {
                     let interface = Interface(apiFileName: "get_modify_date", parameter: ["id":"\(id)", "type":"password"], sync: true)
                     while interface.isDownloading {}
                     
-                    let modifiedDateInt: Int = Int(interface.content[0]["datetime"] as! String)!
+                    var modifiedDateInt: Int = 0
+                    for row in interface.content {
+                        modifiedDateInt = row["datetime"] as! Int
+                    }
                     
                     if dateInt < modifiedDateInt {
                         // Loginned account's password modified.
