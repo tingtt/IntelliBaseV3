@@ -20,7 +20,6 @@ struct LoginView: View {
     @State var navActive: Bool = false
     
     init(email: String = "", id: Int? = nil, skipLogin: Bool = false) {
-        print("Debug : Login view loaded.")
         self.email = email
         
         // If skip login is TRUE, but id does not set.
@@ -28,7 +27,7 @@ struct LoginView: View {
             if id == nil {
                 print("Error : Skipping login need account's id. Found id is \(String(describing: id))")
             } else {
-                print("Debug : login skipped. id = \(id!)")
+//                print("Debug : login skipped. id = \(id!)")
                 self.accountId = id!
                 self.skipLogin = true
             }
@@ -52,8 +51,7 @@ struct LoginView: View {
                 CustomTextfield(value: self.$password, placeholder: "Password", icon: Image(systemName: "lock"), isSecure: true)
                 CustomButton(text: "Login") {
                     let loginVerify = LoginVerify(email: self.email, password: self.password)
-                    while loginVerify.processing {}
-                    print("Debug : Login verify \(loginVerify.verify).")
+//                    print("Debug : Login verify \(loginVerify.verify).")
                     
                     if loginVerify.verify {
                         // Navigation to menu.
@@ -100,6 +98,9 @@ struct LoginView: View {
         }
         .padding()
         .offset(y: self.formOffset)
+        .onAppear(perform: {
+//            print("Debug : Login view loaded.")
+        })
     }
     
     func loginVerify(email: String, password: String) -> Bool {

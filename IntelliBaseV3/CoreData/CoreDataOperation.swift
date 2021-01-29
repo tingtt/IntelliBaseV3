@@ -61,7 +61,7 @@ struct CoreDataOperation {
     }
     
     func insert(entity: CoreDataEnumManager.EntityName, values: Dictionary<String,Any>) -> Bool {
-        let entityEnum = entity
+//        let entityEnum = entity
 //        print("Debug : Insert values -> \(values)")
         let entity = coreDataEnum.toEntity(entity: entity, managedContext: managedContext)
         // 追加レコード
@@ -88,13 +88,13 @@ struct CoreDataOperation {
         do {
             try managedContext.save()
 //            print("Debug : Record Added! \(record)")
-            if entityEnum == .book {
-                for record in self.select(entity: entityEnum) {
-                    if let record: Book = record as? Book {
-                        print("Debug : Saved book id = \(String(describing: record.id!))")
-                    }
-                }
-            }
+//            if entityEnum == .book {
+//                for record in self.select(entity: entityEnum) {
+//                    if let record: Book = record as? Book {
+//                        print("Debug : Saved book id = \(String(describing: record.id!))")
+//                    }
+//                }
+//            }
         } catch
             let error as NSError {
             print("Debug : Could not save record. \(error),\(error.userInfo)")
@@ -116,23 +116,19 @@ struct CoreDataOperation {
             for record in result {
                 // ノートを削除する場合に書き込みデータも削除する
                 if entity == .note {
-                    let container = NSPersistentContainer(name: "IntelliBaseV3")
-                    container.loadPersistentStores { (storeDesc, error) in
-                        if let error = error as NSError? {
-                            fatalError("Unresolved error \(error), \(error.userInfo)")
-                        }
-                    }
                     let request: NSFetchRequest<DrawingDoc> = DrawingDoc.fetchRequest()
                     request.includesPropertyValues = false
-                    // ノートIDで絞り込み
-                    request.predicate = NSPredicate(format: "name CONTAINS %@","_note\(String(describing: (record as! Note).id))_page")
                     // ページ番号で昇順にソート
                     request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-                    
+                    if conditionStr == "" {
+                        // ノートIDで絞り込み
+                        request.predicate = NSPredicate(format: "name CONTAINS %@","_note\(String(describing: (record as! Note).id!))_page")
+                    }
                     do {
-                        let results = try container.viewContext.fetch(request)
+                        let results = try managedContext.fetch(request)
                         for item in results {
-                            container.viewContext.delete(item)
+                            managedContext.delete(item)
+                            try managedContext.save()
                         }
                     } catch {
                         print("Error deleting document from database")
@@ -141,7 +137,7 @@ struct CoreDataOperation {
                 managedContext.delete(record)
             }
             try managedContext.save()
-            print("Debug : Success to delete record from \(coreDataEnum.toString(entity: entity)) having \"\(conditionStr)\"")
+//            print("Debug : Success to delete record from \(coreDataEnum.toString(entity: entity)) having \"\(conditionStr)\"")
             return true
         } catch let error as NSError {
             print("\(error), \(error.userInfo)")
@@ -173,12 +169,12 @@ struct CoreDataOperation {
                 }
             }
             try managedContext.save()
-            print("Debug : Success to update record from \(coreDataEnum.toString(entity: entity)) having \"\(conditionStr)\". values -> \(values)")
-            for record in self.select(entity: entity) {
-                if let record: Book = record as? Book {
-                    print("Debug : Saved book id = \(String(describing: record.id!))")
-                }
-            }
+//            print("Debug : Success to update record from \(coreDataEnum.toString(entity: entity)) having \"\(conditionStr)\". values -> \(values)")
+//            for record in self.select(entity: entity) {
+//                if let record: Book = record as? Book {
+//                    print("Debug : Saved book id = \(String(describing: record.id!))")
+//                }
+//            }
             return true
         } catch let error as NSError {
             print("\(error), \(error.userInfo)")
@@ -189,11 +185,11 @@ struct CoreDataOperation {
     func save() -> Bool{
         do {
             try managedContext.save()
-            print("Debug : Commit!")
+//            print("Debug : Commit!")
             return true
         } catch
             let error as NSError {
-            print("Debug : Could not commit. \(error),\(error.userInfo)")
+            print("Error : Could not commit. \(error),\(error.userInfo)")
             return false
         }
     }

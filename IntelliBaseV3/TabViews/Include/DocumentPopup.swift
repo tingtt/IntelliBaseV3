@@ -32,9 +32,9 @@ struct DocumentPopup: View {
     
     var body: some View {
         VStack{
+//            Divider()
             if(self.document.isNote){
                 // ノートの場合
-                Divider()
                 Text(self.document.note!.title)
                 Divider()
 //                Toggle(isOn: $shareToggle) {
@@ -60,22 +60,33 @@ struct DocumentPopup: View {
                         )
                     )
                 })
-                Divider()
             } else {
                 // 本の場合
-//                Button(action:{}){
-//                    Text("ノート作成")
-//                }
+//                Button(action: {
+//
+//                }, label: {
+//                    Text("ノートで開く")
+//                })
 //                Divider()
-//                Button(action:{}){
-//                    Text("ノート一覧")
-//                }
-                
+                Button(action: {
+                    // 本のストアページを開く
+                    if let url = URL(string: HomePageUrl(lastDirectoryUrl: "Star_images", fileName: "star-on.png", getParams: ["id":"\(document.book.id)"]).getFullPath()) {
+                        UIApplication.shared.open(url)
+                    }
+                }) {
+                    Text("ストアページ : \(document.book.title)")
+                }
+                Divider()
+                Button(action: {
+                    // 著者のページを開く
+                    if let url = URL(string: HomePageUrl(lastDirectoryUrl: "Star_images", fileName: "star-off.png", getParams: ["id":"\(document.book.id)"]).getFullPath()) {
+                        UIApplication.shared.open(url)
+                    }
+                }) {
+                    Text("著者 : \(document.book.auther.name)")
+                }
             }
-            Divider()
-            Button(action: {}) {
-                Text("本の情報")
-            }
+//            Divider()
         }
         .padding(.all)
         .navigationBarTitle(Text(self.navTitle), displayMode: .inline)

@@ -79,15 +79,13 @@ struct DocumentThumbnailView: View {
                 }
                 else if UIDevice.current.userInterfaceIdiom == .pad {
                     // iPad
-//                    self.showingPopover.toggle()
+                    self.showingPopover.toggle()
                     // temp for debug
-                    self.showingSheet.toggle()
+//                    self.showingSheet.toggle()
                 }
             }
             .onTapGesture(count: 1) {
-                let interfaceDl = InterfaceDL(id: document.book.id, documentType: "book")
-//                while interfaceDl.download.task!.state != .completed {}
-                while interfaceDl.download.isDownloading {}
+                let _ = InterfaceDL(id: document.book.id, documentType: "book")
                 self.navSelection = 0
             }
             // 長押しの判定とタップの判定を同時に行う
@@ -95,18 +93,14 @@ struct DocumentThumbnailView: View {
             // https://stackoverflow.com/a/60138475
         }
         .popover(isPresented: $showingPopover) {
-            NavigationView {
-                DocumentPopup(showing: $showingSheet,document: self.document)
-            }
+            DocumentPopup(showing: $showingSheet,document: self.document)
         }
         .sheet(isPresented: $showingSheet) {
-            NavigationView {
-                DocumentPopup(showing: $showingSheet,document: self.document)
-            }
+            DocumentPopup(showing: $showingSheet,document: self.document)
         }
-        .onAppear(perform: {
-            print("Debug : thumbnail view loaded. id : \(self.document.id)")
-        })
+//        .onAppear(perform: {
+//            print("Debug : thumbnail view loaded. id : \(self.document.id)")
+//        })
     }
 }
 

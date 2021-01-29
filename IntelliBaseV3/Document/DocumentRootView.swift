@@ -22,23 +22,7 @@ struct DocumentRootView: View {
     var pdfKitView: PDFKitView
     
     // edit view
-    @State var documentEditView: DocumentEditView? = nil
     @ObservedObject var editViewManager = EditViewManager()
-    
-    init(documentId: Int, isNote: Bool = false) {
-        // PDFデータのパスを取得
-        let document = DocumentStruct(id: documentId, isNote: isNote)
-        self._document = State(initialValue: document)
-        self._notes = State(initialValue: document.book.notes)
-        self.dataPath = documentDirectory.appendingPathComponent("book_\(document.book.id).pdf")
-        
-        self.pdfKitView = PDFKitView(url: dataPath)
-        
-        if isNote {
-            // init note edit view.
-            editViewManager.loadView(pdfKitView: pdfKitView, noteId: document.note!.id)
-        }
-    }
     
     // menu
     @State var showingMenu: Bool = false
@@ -55,6 +39,28 @@ struct DocumentRootView: View {
     @State private var documentName: String = ""
     @State var addShown: Bool = false
     @State var sheetNavigated: Bool = false
+    
+    init(documentId: Int, isNote: Bool = false, openAsNewNote: Bool = false) {
+        // PDFデータのパスを取得
+        let document = DocumentStruct(id: documentId, isNote: isNote)
+        self._document = State(initialValue: document)
+        self._notes = State(initialValue: document.book.notes)
+        self.dataPath = documentDirectory.appendingPathComponent("book_\(document.book.id).pdf")
+        
+        self.pdfKitView = PDFKitView(url: dataPath)
+        
+        if isNote {
+            // init note edit view.
+            editViewManager.loadView(pdfKitView: pdfKitView, noteId: document.note!.id)
+        }
+        
+        if openAsNewNote {
+            addShown = true
+            if document.book.notes.count == 0 {
+                sheetNavigated = true
+            }
+        }
+    }
     
     var body: some View {
         ZStack {
@@ -189,9 +195,19 @@ struct DocumentRootView: View {
                 if document.isNote {
                     Button(action: {
                         print("Debug : ")
-                        print(editViewManager.view!.canvasManager.canvases[(editViewManager.view!.canvasManager.currentPageIndex[0])])
+                        print([
+                            "canvasCount":editViewManager.view!.canvasManager.canvases.count,
+                            "currentPage":editViewManager.view!.canvasManager.currentPageIndex[0],
+                            "pdfCurrentPage1":pdfKitView.pdfKitRepresentedView.pdfView.currentPage!.pageRef!.pageNumber,
+                            "pdfCurrentPage2":editViewManager.view!.pdfKitView.pdfKitRepresentedView.pdfView.currentPage!.pageRef!.pageNumber
+                        ])
                     }){
-                        Text("Debug")
+                        Text("DempPageCount")
+                    }
+                    Button(action: {
+                        print("\(editViewManager.view!.canvasManager.canvases[editViewManager.view!.canvasManager.currentPageIndex[0]])")
+                    }) {
+                        Text("DumpCanvasInfo")
                     }
                 }
             }
@@ -246,7 +262,7 @@ struct DocumentRootView: View {
         for pageNum in 1..<pageCount+1 {
             // coreDataに追加
             CoreDataManager.shared.addData(doc: DrawingDocument(id: UUID(), data: Data(), name: "\(noteTitle)_note\(String(describing: noteId))_page\(pageNum)"))
-            print("Debug: drawing document added. Name: \(noteTitle)_note\(String(describing: noteId))_page\(pageNum)")
+//            print("Debug: drawing document added. Name: \(noteTitle)_note\(String(describing: noteId))_page\(pageNum)")
         }
         
         // Documentのフィールドを変更

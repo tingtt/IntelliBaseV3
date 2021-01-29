@@ -97,7 +97,7 @@ public class InterfaceDL {
             let result = interface.content
             if result.count == 0 {
                 // Error
-                print("Debug : Api returned empty data. [ \(interface.apiPath) ]")
+                print("Error : Api returned empty data. [ \(interface.apiPath) ]")
             } else {
                 updatedDate = Int(result[0]["datetime"] as! String)!
                 print(updatedDate)
@@ -139,16 +139,16 @@ public class InterfaceDL {
         download.task = URLSession.shared.downloadTask(with: url) { location, response, error in
 
             // ダウンロードデータの一時保存URL
-            print("Debug : Saved as temp to \(location!)")
+//            print("Debug : Saved as temp to \(location!)")
 
             if let tempFileUrl = location {
                 do {
                     // Write to file
                     let data = try Data(contentsOf: tempFileUrl)
                     try data.write(to: writeFilePath)
-                    print("Debug : Seved to \(writeFilePath.absoluteString)")
+//                    print("Debug : Seved to \(writeFilePath.absoluteString)")
                 } catch {
-                    print("Error")
+                    print("Error : Caught error at download file.")
                 }
             }
         }
