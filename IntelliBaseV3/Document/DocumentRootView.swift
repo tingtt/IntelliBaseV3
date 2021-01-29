@@ -21,6 +21,10 @@ struct DocumentRootView: View {
     // pdf viewer
     var pdfKitView: PDFKitView
     
+    // edit view
+    @State var documentEditView: DocumentEditView? = nil
+    @ObservedObject var editViewManager = EditViewManager()
+    
     init(documentId: Int, isNote: Bool = false) {
         // PDFデータのパスを取得
         let document = DocumentStruct(id: documentId, isNote: isNote)
@@ -29,6 +33,11 @@ struct DocumentRootView: View {
         self.dataPath = documentDirectory.appendingPathComponent("book_\(document.book.id).pdf")
         
         self.pdfKitView = PDFKitView(url: dataPath)
+        
+        if isNote {
+            // init note edit view.
+            editViewManager.loadView(pdfKitView: pdfKitView, noteId: document.note!.id)
+        }
     }
     
     // menu
@@ -48,13 +57,9 @@ struct DocumentRootView: View {
     @State var sheetNavigated: Bool = false
     
     var body: some View {
-        Group {
+        ZStack {
             if document.isNote {
-                DocumentEditView(
-                    bookId: document.book.id,
-                    noteId: document.note!.id,
-                    pageNum: pdfKitView.pdfKitRepresentedView.pdfView.currentPage?.pageRef!.pageNumber
-                )
+                editViewManager.view
                 .scaleEffect(self.nowScalingValue)
                 .navigationBarItems(
                     trailing:
@@ -108,6 +113,12 @@ struct DocumentRootView: View {
                                     if index < notes.count {
                                         Button(
                                             action: {
+                                                editViewManager.loadView(
+                                                    pdfKitView: pdfKitView,
+                                                    noteId: notes[index].id,
+                                                    pageNum: (pdfKitView.pdfKitRepresentedView.pdfView.currentPage?.pageRef!.pageNumber)!
+                                                )
+                                                
                                                 document.note = NoteStruct(id: notes[index].id)
                                                 document.isNote = true
                                             },
@@ -132,8 +143,6 @@ struct DocumentRootView: View {
                                                 mapedIndexSet.forEach({ index in
                                                     // HomeListの表示を同期
                                                     allNoteManager.deleteNote(id: notes[index].id)
-                                                    
-                                                    notes[index].delete()
                                                     notes.remove(at: index)
                                                 })
                                             }
@@ -163,6 +172,29 @@ struct DocumentRootView: View {
                         })
                     })
             }
+            HStack {
+                Button(action: {
+                    goToPreviousPage()
+                }) {
+                    Text("Prev")
+                }
+                Spacer()
+                Button(action: {
+                    goToNextPage()
+                }) {
+                    Text("Next")
+                }
+            }
+            HStack {
+                if document.isNote {
+                    Button(action: {
+                        print("Debug : ")
+                        print(editViewManager.view!.canvasManager.canvases[(editViewManager.view!.canvasManager.currentPageIndex[0])])
+                    }){
+                        Text("Debug")
+                    }
+                }
+            }
         }
         .background(Color("background1"))
         .navigationBarHidden(!showingMenu)
@@ -173,15 +205,15 @@ struct DocumentRootView: View {
             self.showingMenu.toggle()
         })
         // zoom in/out
-        //        .gesture(MagnificationGesture(minimumScaleDelta: 0.1)
-        //            .onChanged { val in
-        //                self.nowScalingValue = self.lastScaleValue * val
-        //
-        //            //... anything else e.g. clamping the newScale
-        //            }.onEnded{ val in
-        //                self.lastScaleValue *= val
-        //            }
-        //        )
+        .gesture(MagnificationGesture(minimumScaleDelta: 0.1)
+            .onChanged { val in
+                self.nowScalingValue = self.lastScaleValue * val
+
+            //... anything else e.g. clamping the newScale
+            }.onEnded{ val in
+                self.lastScaleValue *= val
+            }
+        )
     }
     
     private func save(noteTitle: String) {
@@ -228,7 +260,28 @@ struct DocumentRootView: View {
         addShown.toggle()
         sheetNavigated.toggle()
         
+        // init note edit view.
+        editViewManager.loadView(
+            pdfKitView: pdfKitView,
+            noteId: noteId,
+            pageNum: (pdfKitView.pdfKitRepresentedView.pdfView.currentPage?.pageRef!.pageNumber)!
+        )
+        
         document.isNote = true
+    }
+    
+    func goToNextPage() {
+        pdfKitView.pdfKitRepresentedView.pdfView.goToNextPage(nil)
+        if document.isNote {
+            editViewManager.view?.canvasManager.goToNextCanvas()
+        }
+    }
+    
+    func goToPreviousPage() {
+        pdfKitView.pdfKitRepresentedView.pdfView.goToPreviousPage(nil)
+        if document.isNote {
+            editViewManager.view?.canvasManager.goToPreviousCanvas()
+        }
     }
 }
 

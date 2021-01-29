@@ -19,6 +19,22 @@ struct ContentView: View {
         // init coreData (debug)
         let coreData = CoreDataOperation()
         
+        // delete book data
+//        _ = coreData.delete(entity: .book)
+        // delete purchase info data
+//        _ = coreData.delete(entity: .purchase)
+        // delete author info data
+//        _ = coreData.delete(entity: .author)
+        // delete gerne data
+//        _ = coreData.delete(entity: .genre)
+        // delete note info and drawing data
+//        _ = coreData.delete(entity: .note)
+        // delete account data
+//        _ = coreData.delete(entity: .account)
+        
+        // commit
+        _ = coreData.save()
+        
         // log to check saved data.
         print("Debug : Saved accounts.")
         for account: Account in coreData.select(entity: .account) {
@@ -63,22 +79,6 @@ struct ContentView: View {
                 "update":note.update_date!
             ])
         }
-        
-        // delete book data
-//        _ = coreData.delete(entity: .book)
-        // delete purchase info data
-//        _ = coreData.delete(entity: .purchase)
-        // delete author info data
-//        _ = coreData.delete(entity: .author)
-        // delete gerne data
-//        _ = coreData.delete(entity: .genre)
-        // delete note info and drawing data
-//        _ = coreData.delete(entity: .note)
-        // delete account data
-//        _ = coreData.delete(entity: .account)
-        
-        // commit
-        _ = coreData.save()
         
         // get genres from api.
         let entity: CoreDataEnumManager.EntityName = .genre
@@ -136,7 +136,12 @@ struct ContentView: View {
                     let interface = Interface(apiFileName: "get_modify_date", parameter: ["id":"\(id)", "type":"password"], sync: true)
                     while interface.isDownloading {}
                     
-                    let modifiedDateInt: Int = Int(interface.content[0]["datetime"] as! String)!
+                    var modifiedDateInt: Int = 0
+                    for row in interface.content {
+                        if let datetime: Int = row["datetime"] as? Int {
+                            modifiedDateInt = datetime
+                        }
+                    }
                     
                     if dateInt < modifiedDateInt {
                         // Loginned account's password modified.
