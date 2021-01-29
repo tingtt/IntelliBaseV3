@@ -116,7 +116,7 @@ struct CoreDataOperation {
             for record in result {
                 // ノートを削除する場合に書き込みデータも削除する
                 if entity == .note {
-                    let container = NSPersistentContainer(name: "IntelliBaseV2")
+                    let container = NSPersistentContainer(name: "IntelliBaseV3")
                     container.loadPersistentStores { (storeDesc, error) in
                         if let error = error as NSError? {
                             fatalError("Unresolved error \(error), \(error.userInfo)")
