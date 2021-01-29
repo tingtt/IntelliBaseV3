@@ -79,19 +79,6 @@ struct ContentView: View {
                 "update":note.update_date!
             ])
         }
-        
-        // get genres from api.
-        let entity: CoreDataEnumManager.EntityName = .genre
-        let savedData:Array<Genre> = coreData.select(entity: entity, sort: ["id":false])
-        var alreadyGetId = "0"
-        if savedData.count != 0 {
-            alreadyGetId = "\((savedData[0]).id as! Int)"
-        }
-        print("Debug : Saved Genre -> ~\(alreadyGetId)")
-        let dataGetter = GetNewData()
-        _ = dataGetter.download(entity: entity)
-        // wait download
-        while dataGetter.interface!.isDownloading {}
     }
     
     var body: some View {
@@ -109,7 +96,21 @@ struct ContentView: View {
         .navigationViewStyle(StackNavigationViewStyle())
         .onAppear(perform: {
             let coreData = CoreDataOperation()
-            let entity: CoreDataEnumManager.EntityName = .account
+            
+            // get genres from api.
+            var entity: CoreDataEnumManager.EntityName = .genre
+            let savedData:Array<Genre> = coreData.select(entity: entity, sort: ["id":false])
+            var alreadyGetId = "0"
+            if savedData.count != 0 {
+                alreadyGetId = "\((savedData[0]).id as! Int)"
+            }
+            print("Debug : Saved Genre -> ~\(alreadyGetId)")
+            let dataGetter = GetNewData()
+            _ = dataGetter.download(entity: entity)
+            // wait download
+            while dataGetter.interface!.isDownloading {}
+            
+            entity = .account
             
             // Used acocunt exist ?
             if coreData.select(entity: entity).count > 0 {
