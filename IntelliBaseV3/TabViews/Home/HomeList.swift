@@ -108,6 +108,7 @@ struct HomeList: View {
             CertificateRow()
          }
          .padding(.top, 78)
+         .padding(.bottom, 78)
       }
    }
 }
