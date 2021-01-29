@@ -61,11 +61,8 @@ struct HomeList: View {
                 // ノートがあったら
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 6.0) {
-//                        SectionOfBookShelfView(ids: noteManager.mappedIds, partition: false)
-                        ForEach(noteManager.notes.indices) { index in
-                            if index < noteManager.notes.count {
-                                DocumentThumbnailView(id: (noteManager.notes[index] as NoteStruct).id, isNote: true)
-                            }
+                        ForEach(noteManager.notes, id: \.id) { note in
+                            DocumentThumbnailView(id: note.id, isNote: true)
                         }
                     }
                     .padding(.leading, 30)
