@@ -18,8 +18,9 @@ struct MenuRight: View {
             HStack {
                 Button(action: { self.showLoginStatus.toggle() }) {
                     CircleButton(icon: "person.crop.circle")
-                        .sheet(isPresented: self.$showLoginStatus) { LoginView() }
+//                        .sheet(isPresented: self.$showLoginStatus) { LoginView() }
                 }
+                .disabled(true)
                 Button(action: { self.showUpdate.toggle() }) {
                     CircleButton(icon: "bell")
                         .sheet(isPresented: self.$showUpdate) { UpdateList() }

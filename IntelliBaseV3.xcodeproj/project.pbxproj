@@ -291,10 +291,10 @@
 		3F88918F25BEA79C0052442D /* TabViews */ = {
 			isa = PBXGroup;
 			children = (
+				3F88926725BEC20E0052442D /* Application.swift */,
 				3F8891C525BEACC90052442D /* Library */,
 				3F8891FE25BEB03D0052442D /* Home */,
 				3F8891E125BEAD9C0052442D /* Include */,
-				3F88926725BEC20E0052442D /* Application.swift */,
 			);
 			path = TabViews;
 			sourceTree = "<group>";
@@ -302,8 +302,8 @@
 		3F88919025BEA7C20052442D /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				3F88919925BEA8160052442D /* CustomDesign */,
 				3F88919125BEA7EB0052442D /* LoginView.swift */,
+				3F88919925BEA8160052442D /* CustomDesign */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -364,9 +364,9 @@
 		3F88920925BEB2940052442D /* Interface */ = {
 			isa = PBXGroup;
 			children = (
-				3F88921525BEB37D0052442D /* Include */,
 				3F88920B25BEB2D10052442D /* LoginVerify.swift */,
 				3F88921025BEB3460052442D /* GetNewData.swift */,
+				3F88921525BEB37D0052442D /* Include */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
