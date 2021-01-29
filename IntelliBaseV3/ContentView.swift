@@ -138,7 +138,9 @@ struct ContentView: View {
                     
                     var modifiedDateInt: Int = 0
                     for row in interface.content {
-                        modifiedDateInt = row["datetime"] as! Int
+                        if let datetime: Int = row["datetime"] as? Int {
+                            modifiedDateInt = datetime
+                        }
                     }
                     
                     if dateInt < modifiedDateInt {
