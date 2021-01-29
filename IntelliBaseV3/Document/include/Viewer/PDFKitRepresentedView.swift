@@ -26,8 +26,8 @@ struct PDFKitRepresentedView: UIViewRepresentable {
 //        print("Debug : document URL -> \(url)")
         
 //        pdfView.autoScales = true
-//        pdfView.minScaleFactor = pdfView.scaleFactor
-//        pdfView.maxScaleFactor = pdfView.scaleFactor
+        pdfView.minScaleFactor = pdfView.scaleFactor
+        pdfView.maxScaleFactor = pdfView.scaleFactor
         pdfView.displayDirection = .horizontal
         pdfView.displayMode = .singlePage
         pdfView.usePageViewController(false)
