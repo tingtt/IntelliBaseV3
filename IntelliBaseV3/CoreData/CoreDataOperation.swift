@@ -61,7 +61,7 @@ struct CoreDataOperation {
     }
     
     func insert(entity: CoreDataEnumManager.EntityName, values: Dictionary<String,Any>) -> Bool {
-        let entityEnum = entity
+//        let entityEnum = entity
 //        print("Debug : Insert values -> \(values)")
         let entity = coreDataEnum.toEntity(entity: entity, managedContext: managedContext)
         // 追加レコード
@@ -88,13 +88,13 @@ struct CoreDataOperation {
         do {
             try managedContext.save()
 //            print("Debug : Record Added! \(record)")
-            if entityEnum == .book {
-                for record in self.select(entity: entityEnum) {
-                    if let record: Book = record as? Book {
-                        print("Debug : Saved book id = \(String(describing: record.id!))")
-                    }
-                }
-            }
+//            if entityEnum == .book {
+//                for record in self.select(entity: entityEnum) {
+//                    if let record: Book = record as? Book {
+//                        print("Debug : Saved book id = \(String(describing: record.id!))")
+//                    }
+//                }
+//            }
         } catch
             let error as NSError {
             print("Debug : Could not save record. \(error),\(error.userInfo)")
@@ -170,11 +170,11 @@ struct CoreDataOperation {
             }
             try managedContext.save()
             print("Debug : Success to update record from \(coreDataEnum.toString(entity: entity)) having \"\(conditionStr)\". values -> \(values)")
-            for record in self.select(entity: entity) {
-                if let record: Book = record as? Book {
-                    print("Debug : Saved book id = \(String(describing: record.id!))")
-                }
-            }
+//            for record in self.select(entity: entity) {
+//                if let record: Book = record as? Book {
+//                    print("Debug : Saved book id = \(String(describing: record.id!))")
+//                }
+//            }
             return true
         } catch let error as NSError {
             print("\(error), \(error.userInfo)")

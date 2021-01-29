@@ -85,9 +85,7 @@ struct DocumentThumbnailView: View {
                 }
             }
             .onTapGesture(count: 1) {
-                let interfaceDl = InterfaceDL(id: document.book.id, documentType: "book")
-//                while interfaceDl.download.task!.state != .completed {}
-                while interfaceDl.download.isDownloading {}
+                let _ = InterfaceDL(id: document.book.id, documentType: "book")
                 self.navSelection = 0
             }
             // 長押しの判定とタップの判定を同時に行う
