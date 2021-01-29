@@ -104,9 +104,9 @@ struct DocumentThumbnailView: View {
                 DocumentPopup(showing: $showingSheet,document: self.document)
             }
         }
-        .onAppear(perform: {
-            print("Debug : thumbnail view loaded. id : \(self.document.id)")
-        })
+//        .onAppear(perform: {
+//            print("Debug : thumbnail view loaded. id : \(self.document.id)")
+//        })
     }
 }
 
