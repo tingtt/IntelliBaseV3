@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SectionOfBookShelfView: View {
-    var noteManager: NoteManager = NoteManager.shared
     var ids: Array<Array<Any>>
     var partition: Bool
     
