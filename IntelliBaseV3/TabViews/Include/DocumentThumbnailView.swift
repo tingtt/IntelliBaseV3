@@ -49,7 +49,7 @@ struct DocumentThumbnailView: View {
                                 .resizable()
                                 .renderingMode(.original)
                                 //.aspectRatio(contentMode: .fit)
-                                .frame(width: 260, height: 360, alignment: .leading)
+                                .frame(width: 246, height: 335, alignment: .leading)
                                 .padding(.bottom, 30)
                                 .rotation3DEffect(Angle(degrees:
                                                             Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))

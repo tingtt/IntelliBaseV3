@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct HomeList: View {
+    
     let accountId: Int
     @ObservedObject var noteManager:NoteManager = NoteManager.shared
     var recentlyNotes: [[Any]] = []
     var recentlyPurchasedBooks: [[Any]] = []
     var recommandBooks: [[Any]] = []
-    //var courses = coursesData
+    
+    var courses = coursesData
     @State var showContent = false
     
     init() {
@@ -57,7 +59,7 @@ struct HomeList: View {
             if noteManager.mappedIds.count > 0 {
                 // ノートがあったら
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 18.0) {
+                    HStack(spacing: 6.0) {
                         SectionOfBookShelfView(ids: noteManager.mappedIds, partition: false)
                     }
                     .padding(.leading, 30)
@@ -77,7 +79,7 @@ struct HomeList: View {
             if recentlyPurchasedBooks.count > 0 {
                 // 購入した本が
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 20.0) {
+                    HStack(spacing: 6.0) {
                         SectionOfBookShelfView(ids: self.recentlyPurchasedBooks, partition: false)
                     }
                     .padding(.leading, 30)
@@ -94,20 +96,32 @@ struct HomeList: View {
                     .font(.largeTitle)
                     .fontWeight(.heavy)
             }
-            
+        
+            //おすすめ
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 18.0) {
-                    SectionOfBookShelfView(ids: self.recommandBooks, partition: false)
-                }
-                .padding(.leading, 30)
-                .padding(.top, 30)
-                .padding(.bottom, 40)
-                Spacer()
+               HStack(spacing: 6.0) {
+                  ForEach(courses) { item in
+                     Button(action: { self.showContent.toggle() }) {
+                        GeometryReader { geometry in
+                           CourseView(image: item.image)
+                              .rotation3DEffect(Angle(degrees:
+                                 Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
+                              .sheet(isPresented: self.$showContent) { ContentView() }
+                        }
+                        .frame(width: 250, height: 360)
+                     }
+                  }
+               }
+               .padding(.leading, 30)
+               .padding(.top, 30)
+               .padding(.bottom, 40)
+               Spacer()
             }
             
             CertificateRow()
          }
          .padding(.top, 78)
+         .padding(.bottom, 50)
       }
    }
 }
@@ -120,27 +134,47 @@ struct HomeList_Previews: PreviewProvider {
 }
 #endif
 
+struct CourseView: View {
+    
+    var image = "Book1"
+    var item = Course(url: "https://www.isehangroup.jp/kissmeproject/kaosaiyo2020/",
+                           image: "Recommend1")
+    
+    var body: some View {
+        return VStack(alignment: .leading) {
+            Button(action: {
+                if let url = URL(string: item.url) {
+                    UIApplication.shared.open(url)
+                }
+            }) {
+                Image(image)
+                    .resizable()
+                    .renderingMode(.original)
+                    .frame(width: 246, height: 335, alignment: .leading)
+                    .padding(.bottom, 30)
+            }
+        }
+        .frame(width: 250, height: 360)
+        .shadow(color: Color("backgroundShadow3"), radius: 20, x: 0, y: 20)
+        
+    }
+}
 
 struct Course: Identifiable {
-   var id = UUID()
-   var image: String
-   var shadowColor: Color
+    var id = UUID()
+    var url: String
+    var image: String
 }
 
 let coursesData = [
-   Course(//title: "Build an app with SwiftUI",
-          image: "Book1",
-          shadowColor: Color("backgroundShadow3")),
-   Course(//title: "Design and animate your UI",
-          image: "Book2",
-          shadowColor: Color("backgroundShadow3")),
-   Course(//title: "Swift UI Advanced",
-          image: "Book3",
-          shadowColor: Color(hue: 0.677, saturation: 0.701, brightness: 0.788, opacity: 0.5)),
-   Course(//title: "Framer Playground",
-          image: "Book4",
-          shadowColor: Color(hue: 0.677, saturation: 0.701, brightness: 0.788, opacity: 0.5)),
-   Course(//title: "Flutter for Designers",
-          image: "Book5",
-          shadowColor: Color(hue: 0.677, saturation: 0.701, brightness: 0.788, opacity: 0.5)),
+   Course(url: "https://www.isehangroup.jp/kissmeproject/kaosaiyo2020/",
+          image: "Recommend1"),
+   Course(url: "https://www.isehangroup.jp/kissmeproject/kaosaiyo2020/",
+          image: "Recommend2"),
+   Course(url: "https://www.isehangroup.jp/kissmeproject/kaosaiyo2020/",
+          image: "Recommend3"),
+   Course(url: "https://www.isehangroup.jp/kissmeproject/kaosaiyo2020/",
+          image: "Recommend4"),
+   Course(url: "https://www.isehangroup.jp/kissmeproject/kaosaiyo2020/",
+          image: "Recommend5")
 ]

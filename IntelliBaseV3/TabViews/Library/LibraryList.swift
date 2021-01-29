@@ -118,26 +118,26 @@ struct Course2: Identifiable {
    var shadowColor: Color
 }
 
-let coursesData2 = [
-   Course(//title: "Build an app with SwiftUI",
-          image: "Book1",
-          //color: Color("background3"),
-          shadowColor: Color("backgroundShadow3")),
-   Course(//title: "Design and animate your UI",
-          image: "Book2",
-          //color: Color("background4"),
-          shadowColor: Color("backgroundShadow3")),
-   Course(//title: "Swift UI Advanced",
-          image: "Book3",
-          //color: Color("background7"),
-          shadowColor: Color(hue: 0.677, saturation: 0.701, brightness: 0.788, opacity: 0.5)),
-   Course(//title: "Framer Playground",
-          image: "Book4",
-          //color: Color("background8"),
-          shadowColor: Color(hue: 0.677, saturation: 0.701, brightness: 0.788, opacity: 0.5)),
-   Course(//title: "Flutter for Designers",
-          image: "Book5",
-          //color: Color("background9"),
-          shadowColor: Color(hue: 0.677, saturation: 0.701, brightness: 0.788, opacity: 0.5)),
-]
+//let coursesData2 = [
+//   Course(//title: "Build an app with SwiftUI",
+//          image: "Book1",
+//          //color: Color("background3"),
+//          shadowColor: Color("backgroundShadow3")),
+//   Course(//title: "Design and animate your UI",
+//          image: "Book2",
+//          //color: Color("background4"),
+//          shadowColor: Color("backgroundShadow3")),
+//   Course(//title: "Swift UI Advanced",
+//          image: "Book3",
+//          //color: Color("background7"),
+//          shadowColor: Color(hue: 0.677, saturation: 0.701, brightness: 0.788, opacity: 0.5)),
+//   Course(//title: "Framer Playground",
+//          image: "Book4",
+//          //color: Color("background8"),
+//          shadowColor: Color(hue: 0.677, saturation: 0.701, brightness: 0.788, opacity: 0.5)),
+//   Course(//title: "Flutter for Designers",
+//          image: "Book5",
+//          //color: Color("background9"),
+//          shadowColor: Color(hue: 0.677, saturation: 0.701, brightness: 0.788, opacity: 0.5)),
+//]
 
