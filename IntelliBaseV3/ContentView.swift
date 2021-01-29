@@ -28,7 +28,7 @@ struct ContentView: View {
         // delete gerne data
 //        _ = coreData.delete(entity: .genre)
         // delete note info and drawing data
-//        _ = coreData.delete(entity: .note)
+        _ = coreData.delete(entity: .note)
         // delete account data
 //        _ = coreData.delete(entity: .account)
         
