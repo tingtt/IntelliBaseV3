@@ -51,7 +51,7 @@ struct DocumentRootView: View {
         Group {
             if document.isNote {
                 DocumentEditView(
-                    bookId: document.book.id,
+                    pdfKitView: pdfKitView,
                     noteId: document.note!.id,
                     pageNum: pdfKitView.pdfKitRepresentedView.pdfView.currentPage?.pageRef!.pageNumber
                 )
@@ -165,15 +165,15 @@ struct DocumentRootView: View {
             self.showingMenu.toggle()
         })
         // zoom in/out
-        //        .gesture(MagnificationGesture(minimumScaleDelta: 0.1)
-        //            .onChanged { val in
-        //                self.nowScalingValue = self.lastScaleValue * val
-        //
-        //            //... anything else e.g. clamping the newScale
-        //            }.onEnded{ val in
-        //                self.lastScaleValue *= val
-        //            }
-        //        )
+        .gesture(MagnificationGesture(minimumScaleDelta: 0.1)
+            .onChanged { val in
+                self.nowScalingValue = self.lastScaleValue * val
+
+            //... anything else e.g. clamping the newScale
+            }.onEnded{ val in
+                self.lastScaleValue *= val
+            }
+        )
     }
     
     private func save(noteTitle: String) {
