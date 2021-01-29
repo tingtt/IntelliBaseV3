@@ -22,7 +22,6 @@ struct DocumentRootView: View {
     var pdfKitView: PDFKitView
     
     // edit view
-    @State var documentEditView: DocumentEditView? = nil
     @ObservedObject var editViewManager = EditViewManager()
     
     init(documentId: Int, isNote: Bool = false) {
