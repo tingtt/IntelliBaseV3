@@ -13,22 +13,23 @@ struct DocumentEditView: View {
     
     var noteId: Int = 0
     
-    @State var drawingManager: DrawingManager
-    @State var canvas: DrawingWrapper
+    @ObservedObject var drawingManager: DrawingManager
+    @ObservedObject var canvasManager: CanvasManager
     
-    init(pdfKitView: PDFKitView, noteId: Int, pageNum: Int? = 1) {
+    init(pdfKitView: PDFKitView, noteId: Int, pageNum: Int = 1) {
         self.pdfKitView = pdfKitView
         
         self.noteId = noteId
         let drawingManager = DrawingManager(noteId: noteId)
-        self._drawingManager = State(initialValue: drawingManager)
-        self._canvas = State(initialValue: DrawingWrapper(manager: drawingManager, id: drawingManager.docs[pageNum!-1].id))
+//        self._drawingManager = State(initialValue: drawingManager)
+        self.drawingManager = drawingManager
+        self.canvasManager = CanvasManager(drawingManager: drawingManager, pageNum: pageNum)
     }
     
     var body: some View {
         ZStack {
             pdfKitView
-            canvas
+            canvasManager.canvases[canvasManager.currentPageIndex[0]]
         }
     }
 }

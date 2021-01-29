@@ -19,6 +19,22 @@ struct ContentView: View {
         // init coreData (debug)
         let coreData = CoreDataOperation()
         
+        // delete book data
+//        _ = coreData.delete(entity: .book)
+        // delete purchase info data
+//        _ = coreData.delete(entity: .purchase)
+        // delete author info data
+//        _ = coreData.delete(entity: .author)
+        // delete gerne data
+//        _ = coreData.delete(entity: .genre)
+        // delete note info and drawing data
+//        _ = coreData.delete(entity: .note)
+        // delete account data
+//        _ = coreData.delete(entity: .account)
+        
+        // commit
+        _ = coreData.save()
+        
         // log to check saved data.
         print("Debug : Saved accounts.")
         for account: Account in coreData.select(entity: .account) {
@@ -63,22 +79,6 @@ struct ContentView: View {
                 "update":note.update_date!
             ])
         }
-        
-        // delete book data
-//        _ = coreData.delete(entity: .book)
-        // delete purchase info data
-//        _ = coreData.delete(entity: .purchase)
-        // delete author info data
-//        _ = coreData.delete(entity: .author)
-        // delete gerne data
-//        _ = coreData.delete(entity: .genre)
-        // delete note info and drawing data
-//        _ = coreData.delete(entity: .note)
-        // delete account data
-//        _ = coreData.delete(entity: .account)
-        
-        // commit
-        _ = coreData.save()
         
         // get genres from api.
         let entity: CoreDataEnumManager.EntityName = .genre

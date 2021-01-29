@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2520610125C3A76200D8AD64 /* EditViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2520610025C3A76200D8AD64 /* EditViewManager.swift */; };
+		2520610625C3A9CA00D8AD64 /* CanvasManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2520610525C3A9CA00D8AD64 /* CanvasManager.swift */; };
 		25C33A9A25BEA57B00F61530 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33A9925BEA57B00F61530 /* AppDelegate.swift */; };
 		25C33A9C25BEA57B00F61530 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33A9B25BEA57B00F61530 /* SceneDelegate.swift */; };
 		25C33A9E25BEA57B00F61530 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33A9D25BEA57B00F61530 /* ContentView.swift */; };
@@ -81,6 +83,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2520610025C3A76200D8AD64 /* EditViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewManager.swift; sourceTree = "<group>"; };
+		2520610525C3A9CA00D8AD64 /* CanvasManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasManager.swift; sourceTree = "<group>"; };
 		25C33A9625BEA57B00F61530 /* IntelliBaseV3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IntelliBaseV3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25C33A9925BEA57B00F61530 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25C33A9B25BEA57B00F61530 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -270,6 +274,8 @@
 				25C33B8125C08CB000F61530 /* DrawingManager.swift */,
 				25C33B8625C08CCA00F61530 /* DrawingViewController.swift */,
 				25C33B8B25C08CE500F61530 /* DrawingWrapper.swift */,
+				2520610025C3A76200D8AD64 /* EditViewManager.swift */,
+				2520610525C3A9CA00D8AD64 /* CanvasManager.swift */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -556,10 +562,12 @@
 				3F8892C025C016E20052442D /* DocumentThumbnailView.swift in Sources */,
 				3F88924525BEB55E0052442D /* CoreDataOperation.swift in Sources */,
 				25C33AA125BEA57B00F61530 /* IntelliBaseV3.xcdatamodeld in Sources */,
+				2520610625C3A9CA00D8AD64 /* CanvasManager.swift in Sources */,
 				3F88920525BEB0C50052442D /* CertificateView.swift in Sources */,
 				3F88924A25BEB57D0052442D /* AuthorStruct.swift in Sources */,
 				25C33B7825C08BF000F61530 /* DrawingDocument.swift in Sources */,
 				3F88921125BEB3460052442D /* GetNewData.swift in Sources */,
+				2520610125C3A76200D8AD64 /* EditViewManager.swift in Sources */,
 				3F88925E25BEB6640052442D /* NoteStruct.swift in Sources */,
 				25C33B8C25C08CE500F61530 /* DrawingWrapper.swift in Sources */,
 				25C33B3C25C0514200F61530 /* DocumentRootView.swift in Sources */,
