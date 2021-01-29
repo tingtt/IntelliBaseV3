@@ -187,8 +187,7 @@ struct DocumentRootView: View {
             HStack {
                 if document.isNote {
                     Button(action: {
-                        print("Debug : ")
-                        print(editViewManager.view!.canvasManager.canvases[(editViewManager.view!.canvasManager.currentPageIndex[0])])
+                        print("Debug : \(editViewManager.view!.canvasManager.canvases[(editViewManager.view!.canvasManager.currentPageIndex[0])])")
                     }){
                         Text("Debug")
                     }
@@ -245,7 +244,7 @@ struct DocumentRootView: View {
         for pageNum in 1..<pageCount+1 {
             // coreDataに追加
             CoreDataManager.shared.addData(doc: DrawingDocument(id: UUID(), data: Data(), name: "\(noteTitle)_note\(String(describing: noteId))_page\(pageNum)"))
-            print("Debug: drawing document added. Name: \(noteTitle)_note\(String(describing: noteId))_page\(pageNum)")
+//            print("Debug: drawing document added. Name: \(noteTitle)_note\(String(describing: noteId))_page\(pageNum)")
         }
         
         // Documentのフィールドを変更

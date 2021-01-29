@@ -53,7 +53,7 @@ struct NoteStruct {
                 let result = interface.content
                 if result.count == 0 {
                     // Error
-                    print("Debug : Api returned empty data. [ \(interface.apiPath) ]")
+                    print("Error : Api returned empty data. [ \(interface.apiPath) ]")
                 } else {
                     // loop in record
                     for (key, value) in result[0] {

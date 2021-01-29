@@ -49,7 +49,7 @@ struct Application: View {
                 self.accountId = accounts[0].id as! Int
             }
             
-            print("Debug : Menu loaded. id = \(accountId).")
+//            print("Debug : Menu loaded. id = \(accountId).")
             
             // get purchased books
             let dataGetter = GetNewData()

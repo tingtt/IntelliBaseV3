@@ -17,68 +17,72 @@ struct ContentView: View {
     
     init() {
         // init coreData (debug)
-        let coreData = CoreDataOperation()
+//        let coreData = CoreDataOperation()
         
-        // delete book data
+        // delete datas in coreData
 //        _ = coreData.delete(entity: .book)
-        // delete purchase info data
 //        _ = coreData.delete(entity: .purchase)
-        // delete author info data
 //        _ = coreData.delete(entity: .author)
-        // delete gerne data
 //        _ = coreData.delete(entity: .genre)
-        // delete note info and drawing data
-        _ = coreData.delete(entity: .note)
-        // delete account data
+//        _ = coreData.delete(entity: .note)
 //        _ = coreData.delete(entity: .account)
         
         // commit
-        _ = coreData.save()
+//        _ = coreData.save()
         
         // log to check saved data.
-        print("Debug : Saved accounts.")
-        for account: Account in coreData.select(entity: .account) {
-            print([
-                "id":account.id!,
-                "email":account.email!,
-                "name":account.name!,
-                "login":account.login
-            ])
-        }
-        print("Debug : Saved purchase infomations.")
-        for purchase: Purchase in coreData.select(entity: .purchase) {
-            print([
-                "id":purchase.id!,
-                "account":purchase.account_id!,
-                "book":purchase.book_id!
-            ])
-        }
-        print("Debug : Saved books.")
-        for book: Book in coreData.select(entity: .book) {
-            print([
-                "id":book.id!,
-                "title":book.title!,
-                "author":book.author_id!,
-                "genre":book.genre_id!
-            ])
-        }
-        print("Debug : Seved authors.")
-        for author:Author in coreData.select(entity: .author) {
-            print([
-                "id":author.id!,
-                "name":author.name!
-            ])
-        }
-        print("Debug : Saved notes.")
-        for note: Note in coreData.select(entity: .note) {
-            print([
-                "id":note.id!,
-                "book":note.book_id!,
-                "title":note.title!,
-                "account":note.account_id!,
-                "update":note.update_date!
-            ])
-        }
+//        print("Debug : Saved accounts.")
+//        for account: Account in coreData.select(entity: .account) {
+//            print([
+//                "id":account.id!,
+//                "email":account.email!,
+//                "name":account.name!,
+//                "login":account.login
+//            ])
+//        }
+//        print("Debug : Saved purchase infomations.")
+//        for purchase: Purchase in coreData.select(entity: .purchase) {
+//            print([
+//                "id":purchase.id!,
+//                "account":purchase.account_id!,
+//                "book":purchase.book_id!
+//            ])
+//        }
+//        print("Debug : Saved books.")
+//        for book: Book in coreData.select(entity: .book) {
+//            print([
+//                "id":book.id!,
+//                "title":book.title!,
+//                "author":book.author_id!,
+//                "genre":book.genre_id!,
+//                "dl":book.download_date!
+//            ])
+//        }
+//        print("Debug : Seved authors.")
+//        for author:Author in coreData.select(entity: .author) {
+//            print([
+//                "id":author.id!,
+//                "name":author.name!
+//            ])
+//        }
+//        print("Debug : Saved genres.")
+//        for genre: Genre in coreData.select(entity: .genre) {
+//            print([
+//                "id":genre.id!,
+//                "name":genre.name!,
+//                "parent":genre.parent_id!
+//            ])
+//        }
+//        print("Debug : Saved notes.")
+//        for note: Note in coreData.select(entity: .note) {
+//            print([
+//                "id":note.id!,
+//                "book":note.book_id!,
+//                "title":note.title!,
+//                "account":note.account_id!,
+//                "update":note.update_date!
+//            ])
+//        }
     }
     
     var body: some View {
@@ -99,12 +103,6 @@ struct ContentView: View {
             
             // get genres from api.
             var entity: CoreDataEnumManager.EntityName = .genre
-            let savedData:Array<Genre> = coreData.select(entity: entity, sort: ["id":false])
-            var alreadyGetId = "0"
-            if savedData.count != 0 {
-                alreadyGetId = "\((savedData[0]).id as! Int)"
-            }
-            print("Debug : Saved Genre -> ~\(alreadyGetId)")
             let dataGetter = GetNewData()
             _ = dataGetter.download(entity: entity)
             // wait download
@@ -151,7 +149,7 @@ struct ContentView: View {
                         if coreData.update(entity: entity, conditionStr: "id == \(id)", values: ["login":false]) {}
                         
                         // Navigation login view.
-                        print("Debug : Loginned account's password modified. id : \(id)")
+//                        print("Debug : Loginned account's password modified. id : \(id)")
                         self.navigation = true
                     } else {
                         // Navigation menu with skip login view.
@@ -165,12 +163,12 @@ struct ContentView: View {
                     self.email = account.email!
                     
                     // No logining accout.
-                    print("Debug : Navigation login view with email client has ever loginned.")
+//                    print("Debug : Navigation login view with email client has ever loginned.")
                     self.navigation = true
                 }
             } else {
                 // Client has never loginned.
-                print("Debug : First try to login.")
+//                print("Debug : First try to login.")
                 self.navigation = true
             }
         })

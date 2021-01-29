@@ -44,7 +44,7 @@ struct BookStruct: Identifiable {
             if fetchResults.count > 1 {
                 // Debug
                 for result in fetchResults {
-                    print("Debug : Duplication book. \(String(describing: result.id!))")
+                    print("Error : Duplication book. \(String(describing: result.id!))")
                 }
                 _ = coreData.delete(entity: entity, conditionStr: "id == \(id)")
             }
@@ -62,7 +62,7 @@ struct BookStruct: Identifiable {
                 let result = interface.content
                 if result.count == 0 {
                     // Error
-                    print("Debug : Api returned empty data. [ \(interface.apiPath) ]")
+                    print("Error : Api returned empty data. [ \(interface.apiPath) ]")
                 } else {
                     insertValues["id"] = id
                     insertValues["title"] = result[0]["title"]

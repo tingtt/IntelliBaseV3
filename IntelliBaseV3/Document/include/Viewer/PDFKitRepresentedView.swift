@@ -22,7 +22,8 @@ struct PDFKitRepresentedView: UIViewRepresentable {
         // Create a `PDFView` and set its `PDFDocument`.
 //        let pdfView = PDFView()
 //        pdfView.document = PDFDocument(url: self.url)
-        print("Debug : document URL -> \(url)")
+        
+//        print("Debug : document URL -> \(url)")
         
 //        pdfView.autoScales = true
 //        pdfView.minScaleFactor = pdfView.scaleFactor

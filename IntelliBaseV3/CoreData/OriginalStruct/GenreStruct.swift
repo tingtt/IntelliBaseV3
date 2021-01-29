@@ -44,10 +44,10 @@ struct GenreStruct: Identifiable {
             // success ?
             if !interface.error {
                 let result = interface.content
-                print("Debug : New data -> \(interface.content)")
+//                print("Debug : New data -> \(interface.content)")
                 if result.count == 0 {
                     // Error
-                    print("Debug : Api returned empty data. [ \(interface.apiPath) ]")
+                    print("Error : Api returned empty data. [ \(interface.apiPath) ]")
                 } else {
                     insertValues["id"] = id as Int
                     insertValues["name"] = result[0]["name"] as! String
@@ -58,7 +58,7 @@ struct GenreStruct: Identifiable {
             if coreData.insert(entity: entity, values: insertValues) {
                 // fetch inserted data
                 let fetchResults2: Array<Genre> = coreData.select(entity: entity, conditionStr: "id == \(id)")
-                print("Debug : Inserted data -> \(fetchResults2)")
+//                print("Debug : Inserted data -> \(fetchResults2)")
                 nameStr = fetchResults2[0].name!
                 parentId = fetchResults2[0].parent_id as! Int
             }

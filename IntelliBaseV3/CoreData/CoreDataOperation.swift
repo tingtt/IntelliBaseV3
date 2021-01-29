@@ -137,7 +137,7 @@ struct CoreDataOperation {
                 managedContext.delete(record)
             }
             try managedContext.save()
-            print("Debug : Success to delete record from \(coreDataEnum.toString(entity: entity)) having \"\(conditionStr)\"")
+//            print("Debug : Success to delete record from \(coreDataEnum.toString(entity: entity)) having \"\(conditionStr)\"")
             return true
         } catch let error as NSError {
             print("\(error), \(error.userInfo)")
@@ -169,7 +169,7 @@ struct CoreDataOperation {
                 }
             }
             try managedContext.save()
-            print("Debug : Success to update record from \(coreDataEnum.toString(entity: entity)) having \"\(conditionStr)\". values -> \(values)")
+//            print("Debug : Success to update record from \(coreDataEnum.toString(entity: entity)) having \"\(conditionStr)\". values -> \(values)")
 //            for record in self.select(entity: entity) {
 //                if let record: Book = record as? Book {
 //                    print("Debug : Saved book id = \(String(describing: record.id!))")
@@ -185,11 +185,11 @@ struct CoreDataOperation {
     func save() -> Bool{
         do {
             try managedContext.save()
-            print("Debug : Commit!")
+//            print("Debug : Commit!")
             return true
         } catch
             let error as NSError {
-            print("Debug : Could not commit. \(error),\(error.userInfo)")
+            print("Error : Could not commit. \(error),\(error.userInfo)")
             return false
         }
     }

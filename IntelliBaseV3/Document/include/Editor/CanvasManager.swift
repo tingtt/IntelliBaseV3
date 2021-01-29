@@ -25,13 +25,13 @@ class CanvasManager: ObservableObject {
         if currentPageIndex[0] > 1 {
             currentPageIndex[0] -= 1
         }
-        print("Debug : canvas page -> \(currentPageIndex)")
+//        print("Debug : canvas page -> \(currentPageIndex)")
     }
     
     func goToNextCanvas() {
         if currentPageIndex[0] < drawingManager.docs.count {
             currentPageIndex[0] += 1
         }
-        print("Debug : canvas page -> \(currentPageIndex)")
+//        print("Debug : canvas page -> \(currentPageIndex)")
     }
 }

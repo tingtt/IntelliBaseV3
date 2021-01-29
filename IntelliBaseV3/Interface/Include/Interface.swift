@@ -61,7 +61,7 @@ public class Interface {
             if let error = error {
                 print("error is \(String(describing: error))")
                 // dubug
-                print("Debug : Failed request to \"\(self.apiPath)\(self.postParamStr)\".")
+                print("Error : Failed request to \"\(self.apiPath)\(self.postParamStr)\".")
                 self.error = true
                 self.isDownloading = false
                 return
@@ -74,7 +74,7 @@ public class Interface {
                 if let parseJSON = myJSON {
                     // Error ?
                     if parseJSON["error"] as! Bool == true {
-                        print("Debug : \(parseJSON["message"] as! String) at API \"\(self.apiPath)\(self.postParamStr)\"")
+//                        print("Debug : \(parseJSON["message"] as! String) at API \"\(self.apiPath)\(self.postParamStr)\"")
                         self.error = true
                         self.isDownloading = false
                         return
@@ -85,7 +85,7 @@ public class Interface {
 //                    print(content!)
                     self.content = content
                     // debug
-                    print("Debug : Request to \"\(self.apiPath)\(self.postParamStr)\" completed.")
+//                    print("Debug : Request to \"\(self.apiPath)\(self.postParamStr)\" completed.")
                     self.isDownloading = false
                 }
             }catch{
