@@ -125,8 +125,6 @@ struct DocumentRootView: View {
                                                 mapedIndexSet.forEach({ index in
                                                     // HomeListの表示を同期
                                                     allNoteManager.deleteNote(id: notes[index].id)
-                                                    
-                                                    notes[index].delete()
                                                     notes.remove(at: index)
                                                 })
                                             }

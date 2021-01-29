@@ -54,7 +54,6 @@ struct DocumentPopup: View {
                         secondaryButton: .default(
                             Text("Yes"),
                             action: {
-                                document.note!.delete()
                                 NoteManager.shared.deleteNote(id: document.note!.id)
                                 showingSheet.toggle()
                             }
