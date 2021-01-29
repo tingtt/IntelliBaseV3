@@ -29,7 +29,9 @@ struct DocumentEditView: View {
     var body: some View {
         ZStack {
             pdfKitView
-            canvasManager.canvases[canvasManager.currentPageIndex[0]]
+            ForEach(canvasManager.currentPageIndex, id: \.self){ index in
+                canvasManager.canvases[index]
+            }
         }
     }
 }
