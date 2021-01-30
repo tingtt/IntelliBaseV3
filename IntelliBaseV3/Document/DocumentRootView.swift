@@ -62,35 +62,57 @@ struct DocumentRootView: View {
         }
     }
     
+    @State var position: CGSize = CGSize(width: 400, height: 600)
+    @State var lastPosition: CGSize = CGSize(width: 400, height: 600)
+        
+    var drag: some Gesture {
+        DragGesture()
+        .onChanged{ value in
+            self.position = CGSize(
+                width: lastPosition.width
+                    + value.translation.width,
+                height: lastPosition.height
+                    + value.translation.height
+            )
+        }
+        .onEnded{ value in
+            self.lastPosition = position
+        }
+    }
+    
     var body: some View {
         ZStack {
             if document.isNote {
                 editViewManager.view
-                .scaleEffect(self.nowScalingValue)
-                .navigationBarItems(
-                    trailing:
-                        Button(action: {
-                            closeNoteAlertShown.toggle()
-                        }) {
-                            CircleButton(icon: "text.badge.xmark")
-                        }
-                )
-                .alert(isPresented: $closeNoteAlertShown, content: {
-                    Alert(
-                        title: Text("ノートを閉じますか？"),
-                        message: Text("※一度閉じるとundoできなくなります。"),
-                        primaryButton: .cancel(Text("No")),
-                        secondaryButton: .default(
-                            Text("Yes"),
-                            action: {
-                                document.note = nil
-                                document.isNote = false
+                    .scaleEffect(self.nowScalingValue)
+                    .position(x: position.width, y: position.height)
+                    .gesture(drag)
+                    .navigationBarItems(
+                        trailing:
+                            Button(action: {
+                                closeNoteAlertShown.toggle()
+                            }) {
+                                CircleButton(icon: "text.badge.xmark")
                             }
-                        )
                     )
-                })
+                    .alert(isPresented: $closeNoteAlertShown, content: {
+                        Alert(
+                            title: Text("ノートを閉じますか？"),
+                            message: Text("※一度閉じるとundoできなくなります。"),
+                            primaryButton: .cancel(Text("No")),
+                            secondaryButton: .default(
+                                Text("Yes"),
+                                action: {
+                                    document.note = nil
+                                    document.isNote = false
+                                }
+                            )
+                        )
+                    })
             } else {
                 pdfKitView
+                    .position(x: position.width, y: position.height)
+                    .gesture(drag)
                     .scaleEffect(self.nowScalingValue)
                     .navigationBarItems(
                         trailing:
@@ -141,18 +163,16 @@ struct DocumentRootView: View {
                                 .alert(isPresented: $deleteNoteAlert) {
                                     Alert(
                                         title: Text("ノートを削除しますか？"),
-                                        message: Text("\(allNoteManager.notes[deleteIndexSet.first!].title)"),
+//                                        message: Text("\(allNoteManager.notes[deleteIndexSet.map({$0})[0]].title)"),
                                         primaryButton: .cancel(Text("No")),
-                                        secondaryButton: .default(Text("Yes"),
-                                            action: {// TODO: show alert
-                                                let mapedIndexSet: [Int] = deleteIndexSet.map({$0})
-                                                mapedIndexSet.forEach({ index in
-                                                    // HomeListの表示を同期
-                                                    allNoteManager.deleteNote(id: notes[index].id)
-                                                    notes.remove(at: index)
-                                                })
-                                            }
-                                        )
+                                        secondaryButton: .default(Text("Yes"),action: {// TODO: show alert
+                                            let mapedIndexSet: [Int] = deleteIndexSet.map({$0})
+                                            mapedIndexSet.forEach({ index in
+                                                // HomeListの表示を同期
+                                                allNoteManager.deleteNote(id: notes[index].id)
+                                                notes.remove(at: index)
+                                            })
+                                        })
                                     )
                                 }
                                 NavigationLink(
@@ -262,7 +282,7 @@ struct DocumentRootView: View {
         for pageNum in 1..<pageCount+1 {
             // coreDataに追加
             CoreDataManager.shared.addData(doc: DrawingDocument(id: UUID(), data: Data(), name: "\(noteTitle)_note\(String(describing: noteId))_page\(pageNum)"))
-//            print("Debug: drawing document added. Name: \(noteTitle)_note\(String(describing: noteId))_page\(pageNum)")
+            //            print("Debug: drawing document added. Name: \(noteTitle)_note\(String(describing: noteId))_page\(pageNum)")
         }
         
         // Documentのフィールドを変更
