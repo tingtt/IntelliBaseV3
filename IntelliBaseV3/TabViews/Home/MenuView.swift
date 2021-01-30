@@ -17,13 +17,17 @@ struct MenuView: View {
     
     var body: some View {
         ZStack{
-            //
-//            Image("")
-//                .opacity(0)
-//                .frame(minWidth: 1668, maxWidth: 2388)
-//                .onTapGesture {
-//                    show.toggle()
-//                }
+            Text("")
+                .position(x: 0, y: 0)
+                .background(Color.white)
+                .opacity(0.01)
+                .onTapGesture {
+                    show.toggle()
+                }
+                .rotation3DEffect(Angle(degrees: show ? 0 : 60), axis: (x: 0, y: 10.0, z: 0))
+                .animation(.default)
+                .offset(x: show ? 0 : -UIScreen.main.bounds.width)
+                
             //
             HStack {
                 VStack(alignment: .leading) {
