@@ -243,11 +243,13 @@ struct DocumentRootView: View {
         // zoom in/out
         .gesture(MagnificationGesture(minimumScaleDelta: 0.1)
             .onChanged { val in
-                self.nowScalingValue = self.lastScaleValue * val
+                if lastScaleValue * val > 0.5 {
+                    self.nowScalingValue = self.lastScaleValue * val
+                }
 
             //... anything else e.g. clamping the newScale
             }.onEnded{ val in
-                self.lastScaleValue *= val
+                self.lastScaleValue = nowScalingValue
             }
         )
     }
