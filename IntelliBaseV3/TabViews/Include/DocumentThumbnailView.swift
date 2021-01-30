@@ -68,8 +68,7 @@ struct DocumentThumbnailView: View {
                 }
             }
             .onTapGesture(count: 2) {
-                let interfaceDl = InterfaceDL(id: document.book.id, documentType: "book")
-                while interfaceDl.download.task!.state != .completed {}
+                _ = InterfaceDL(id: document.book.id, documentType: "book")
                 self.navSelection = 0
             }
             .onLongPressGesture {

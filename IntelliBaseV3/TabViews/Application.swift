@@ -22,21 +22,42 @@ struct Application: View {
     init() {}
     
     var body: some View {
-        TabView{
-            HomeTabView()
-                .animation(Animation.linear)
-                .tabItem {
-                    HStack {
-                        Image(systemName: "house.fill")
-                    }
-                }.tag(1)
-            LibraryTabView()
-                .animation(Animation.linear)
-                .tabItem {
-                    VStack {
-                        Image(systemName: "book.fill")
-                    }
-                }.tag(2)
+        ZStack(alignment: .top) {
+            TabView{
+                HomeTabView()
+                    .animation(Animation.linear)
+                    .tabItem {
+                        HStack {
+                            Image(systemName: "house.fill")
+                        }
+                    }.tag(1)
+                LibraryTabView()
+                    .animation(Animation.linear)
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "book.fill")
+                        }
+                    }.tag(2)
+            }
+            .blur(radius: show ? 20 : 0)
+            .scaleEffect(showProfile ? 0.95 : 1)
+            .animation(.default)
+            
+            HStack {
+                MenuButton(show: $show)
+                    .offset(x: -40, y: -70)
+                Spacer()
+                
+                MenuRight(show: $showProfile)
+                    .offset(x: -16, y: -70)
+            }
+            
+            .offset(y: showProfile ? statusBarHeight : 80)
+            .animation(.spring())
+            
+            MenuView(show: $show)
+//                .offset(y: -100)
+                .frame(height: 1100, alignment: .bottomLeading)
         }
         .onAppear(perform: {
             let coreData = CoreDataOperation()

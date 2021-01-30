@@ -12,7 +12,7 @@ struct LibraryList: View {
     let accountId: Int
     @ObservedObject var noteManager:NoteManager = NoteManager.shared
     var recentlyNotes: [[Any]] = []
-    var recentlyPurchasedBooks: [[Any]] = []
+    var recentlyPurchasedBooks: [Int] = []
     var recommandBooks: [[Any]] = []
     var purchasedBookGenre: [String:[Int]] = [:]
     //["文学・評論"][1, 2, 8]
@@ -61,7 +61,7 @@ struct LibraryList: View {
         // 最近購入された本を取得
 //        print("Debug : Load recently purchased books.")
         for purchase:Purchase in coreData.select(entity: .purchase, conditionStr: "account_id = \(accountId)", sort: ["id":false]) {
-            recentlyPurchasedBooks.append([purchase.book_id as! Int])
+            recentlyPurchasedBooks.append(purchase.book_id as! Int)
             let bookS = BookStruct(id: purchase.book_id as! Int)
             let genreName = bookS.genre.name
             //let genreId = bookS.genre.id

@@ -70,7 +70,7 @@ struct DocumentPopup: View {
 //                Divider()
                 Button(action: {
                     // 本のストアページを開く
-                    if let url = URL(string: HomePageUrl(lastDirectoryUrl: "Star_images", fileName: "star-on.png", getParams: ["id":"\(document.book.id)"]).getFullPath()) {
+                    if let url = URL(string: HomePageUrl(lastDirectoryUrl: "Search", fileName: "product_detail.php", getParams: ["id":"\(document.book.id)"]).getFullPath()) {
                         UIApplication.shared.open(url)
                     }
                 }) {
@@ -79,7 +79,7 @@ struct DocumentPopup: View {
                 Divider()
                 Button(action: {
                     // 著者のページを開く
-                    if let url = URL(string: HomePageUrl(lastDirectoryUrl: "Star_images", fileName: "star-off.png", getParams: ["id":"\(document.book.id)"]).getFullPath()) {
+                    if let url = URL(string: HomePageUrl(lastDirectoryUrl: "Search", fileName: "search.php", getParams: ["keyword":"\(document.book.auther.name)"]).getFullPath()) {
                         UIApplication.shared.open(url)
                     }
                 }) {

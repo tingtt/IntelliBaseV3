@@ -30,7 +30,9 @@ struct DocumentEditView: View {
         ZStack {
             pdfKitView
             ForEach(canvasManager.currentPageIndex, id: \.self){ index in
-                canvasManager.canvases[index]
+                if index < canvasManager.canvases.count {
+                    canvasManager.canvases[index]
+                }
             }
         }
     }

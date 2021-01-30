@@ -20,23 +20,6 @@ struct HomeTabView: View {
     var body: some View {
         ZStack(alignment: .top) {
             HomeList()
-                .blur(radius: show ? 20 : 0)
-                .scaleEffect(showProfile ? 0.95 : 1)
-                .animation(.default)
-            
-            HStack {
-                MenuButton(show: $show)
-                    .offset(x: -40)
-                Spacer()
-                
-                MenuRight(show: $showProfile)
-                    .offset(x: -16)
-            }
-            
-            .offset(y: showProfile ? statusBarHeight : 80)
-            .animation(.spring())
-            
-            MenuView(show: $show)
         }
         .background(Color("background1"))
         .edgesIgnoringSafeArea(.all)
@@ -51,16 +34,3 @@ struct HomeTabView_Previews: PreviewProvider {
     }
 }
 #endif
-
-struct Menu: Identifiable {
-    var id = UUID()
-    var title: String
-    var icon: String
-}
-
-let menuData = [
-    Menu(title: "アカウント", icon: "person.crop.circle"),
-    Menu(title: "設定", icon: "gear"),
-    Menu(title: "お支払い情報", icon: "creditcard"),
-    Menu(title: "サインアウト", icon: "arrow.uturn.down")
-]

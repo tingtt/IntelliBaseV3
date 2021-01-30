@@ -15,22 +15,6 @@ struct LibraryTabView: View {
     var body: some View {
         ZStack(alignment: .top) {
             LibraryList()
-                .blur(radius: show ? 20 : 0)
-                .scaleEffect(showProfile ? 0.95 : 1)
-                .animation(.default)
-            
-            HStack {
-                MenuButton(show: $show)
-                    .offset(x: -40)
-                Spacer()
-                
-                MenuRight(show: $showProfile)
-                    .offset(x: -16)
-            }
-            .offset(y: showProfile ? statusBarHeight : 80)
-            .animation(.spring())
-            
-            MenuView(show: $show)
         }
         .background(Color("background1"))
         .edgesIgnoringSafeArea(.all)

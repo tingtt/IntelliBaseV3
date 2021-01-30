@@ -26,7 +26,6 @@ struct MenuRight: View {
                         .sheet(isPresented: self.$showUpdate) { UpdateList() }
                 }
             }
-            Spacer()
         }
     }
 }

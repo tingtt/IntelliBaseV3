@@ -191,26 +191,26 @@ struct DocumentRootView: View {
                     NextPrevButton(icon: "arrow.right")
                 }
             }
-            HStack {
-                if document.isNote {
-                    Button(action: {
-                        print("Debug : ")
-                        print([
-                            "canvasCount":editViewManager.view!.canvasManager.canvases.count,
-                            "currentPage":editViewManager.view!.canvasManager.currentPageIndex[0],
-                            "pdfCurrentPage1":pdfKitView.pdfKitRepresentedView.pdfView.currentPage!.pageRef!.pageNumber,
-                            "pdfCurrentPage2":editViewManager.view!.pdfKitView.pdfKitRepresentedView.pdfView.currentPage!.pageRef!.pageNumber
-                        ])
-                    }){
-                        Text("DempPageCount")
-                    }
-                    Button(action: {
-                        print("\(editViewManager.view!.canvasManager.canvases[editViewManager.view!.canvasManager.currentPageIndex[0]])")
-                    }) {
-                        Text("DumpCanvasInfo")
-                    }
-                }
-            }
+//            HStack {
+//                if document.isNote {
+//                    Button(action: {
+//                        print("Debug : ")
+//                        print([
+//                            "canvasCount":editViewManager.view!.canvasManager.canvases.count,
+//                            "currentPage":editViewManager.view!.canvasManager.currentPageIndex[0],
+//                            "pdfCurrentPage1":pdfKitView.pdfKitRepresentedView.pdfView.currentPage!.pageRef!.pageNumber,
+//                            "pdfCurrentPage2":editViewManager.view!.pdfKitView.pdfKitRepresentedView.pdfView.currentPage!.pageRef!.pageNumber
+//                        ])
+//                    }){
+//                        Text("DempPageCount")
+//                    }
+//                    Button(action: {
+//                        print("\(editViewManager.view!.canvasManager.canvases[editViewManager.view!.canvasManager.currentPageIndex[0]])")
+//                    }) {
+//                        Text("DumpCanvasInfo")
+//                    }
+//                }
+//            }
         }
         .background(Color("background1"))
         .navigationBarHidden(!showingMenu)
