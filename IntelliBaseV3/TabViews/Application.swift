@@ -51,13 +51,13 @@ struct Application: View {
                 MenuRight(show: $showProfile)
                     .offset(x: -16, y: -70)
             }
+            .edgesIgnoringSafeArea(.top)
             
             .offset(y: showProfile ? statusBarHeight : 80)
             .animation(.spring())
             
             MenuView(show: $show)
-//                .offset(y: -100)
-                .frame(height: 1100, alignment: .bottomLeading)
+                .edgesIgnoringSafeArea(.top)
         }
         .onAppear(perform: {
             let coreData = CoreDataOperation()
