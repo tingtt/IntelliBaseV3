@@ -70,7 +70,7 @@ struct DocumentPopup: View {
 //                Divider()
                 Button(action: {
                     // 本のストアページを開く
-                    if let url = URL(string: HomePageUrl(lastDirectoryUrl: "Search", fileName: "product_detail.php", getParams: ["id":"\(document.book.id)"]).getFullPath()) {
+                    if let url = URL(string: HomePageUrl(lastDirectoryUrl: "Search", fileName: "product_detail.php", getParams: ["book_id":"\(document.book.id)"]).getFullPath()) {
                         UIApplication.shared.open(url)
                     }
                 }) {
