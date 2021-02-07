@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DocumentPopup: View {
-    var document: DocumentStruct
+    @State var document: DocumentStruct
     
     @Binding var showingSheet: Bool
     @State var share: Bool = false
@@ -18,9 +18,10 @@ struct DocumentPopup: View {
     
     init(showing: Binding<Bool>,document: DocumentStruct) {
         self._showingSheet = showing
-        self.document = document
+        self._document = State(initialValue: document)
         if (document.isNote){
             self.navTitle = document.note!.title
+            self._noteShare = State(initialValue: document.note!.share)
         } else {
             self.navTitle = document.book.title
         }
@@ -29,6 +30,9 @@ struct DocumentPopup: View {
     }
     
     @State var deleteNoteAlert = false
+    @State var noteShare: Bool = false
+    @State var shareOffAlert: Bool = false
+    @State var sharedInformationAlert: Bool = false
     
     var body: some View {
         VStack{
@@ -37,10 +41,61 @@ struct DocumentPopup: View {
                 // ノートの場合
                 Text(self.document.note!.title)
                 Divider()
-//                Toggle(isOn: $shareToggle) {
-//                    Text("共有")
-//                }
-//                Divider()
+                if noteShare {
+                    HStack{
+                        // 共有中
+                        Button(action: {
+                            // 保存済みの共有キーを取得してクリップボードにコピー
+                            let writings: Note = CoreDataOperation().select(entity: .note, conditionStr: "id = \(document.note!.id)")[0]
+                            UIPasteboard.general.setValue(writings.share_key! as String, forPasteboardType: "public.text")
+                        }, label: {
+                            Text("共有キーをコピー")
+                        })
+                        Button(action: {
+                            // 共有の解除
+                            
+                        }, label: {
+                            Text("共有をやめる")
+                                .foregroundColor(.red)
+                        })
+                        .alert(isPresented: $shareOffAlert, content: {
+                            Alert(
+                                title: Text("共有をやめますか？"),
+                                message: Text("共有をやめると同じ共有キーでの共有ができなくなり、すでに共有しているユーザも閲覧することができなくなります。"),
+                                primaryButton: .cancel(Text("No")),
+                                secondaryButton: .default(
+                                    Text("Yes"),
+                                    action: {
+                                        // 共有の解除
+                                        _ = Interface(
+                                            apiFileName: "writings/delete_shared_writings",
+                                            parameter: [
+                                                "share_key":"\(String(describing: (CoreDataOperation().select(entity: .note, conditionStr: "id = \(document.note!.id)")[0] as Note).share_key))"
+                                            ],
+                                            sync: false
+                                        )
+                                        document.note!.share = false
+                                        noteShare.toggle()
+                                        _ = CoreDataOperation().update(entity: .note, conditionStr: "id = \(document.note!.id)", values: ["share_key":"", "share":false])
+                                    }
+                                )
+                            )
+                        })
+                    }
+                } else {
+                    HStack{
+                        Button(action: {
+                            // 共有キーの生成
+                            _ = UploadWritings(writingsId: document.note!.id)
+                            
+                            // 取得したキーをCoreDataに保存
+                            
+                        }, label: {
+                            Text("共有する")
+                        })
+                    }
+                }
+                Divider()
                 Button(action: {
                     deleteNoteAlert.toggle()
                 }, label: {

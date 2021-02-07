@@ -27,7 +27,6 @@
 		25C33B8225C08CB000F61530 /* DrawingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33B8125C08CB000F61530 /* DrawingManager.swift */; };
 		25C33B8725C08CCA00F61530 /* DrawingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33B8625C08CCA00F61530 /* DrawingViewController.swift */; };
 		25C33B8C25C08CE500F61530 /* DrawingWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33B8B25C08CE500F61530 /* DrawingWrapper.swift */; };
-		25C37A3325CFAE9E0079DF8A /* InterfaceUL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C37A3225CFAE9E0079DF8A /* InterfaceUL.swift */; };
 		25C37A3B25CFB8BE0079DF8A /* UploadWriting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C37A3A25CFB8BE0079DF8A /* UploadWriting.swift */; };
 		25C3B2D125C1175B00A139E3 /* NoteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C3B2D025C1175B00A139E3 /* NoteManager.swift */; };
 		3F88919225BEA7EB0052442D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88919125BEA7EB0052442D /* LoginView.swift */; };
@@ -115,7 +114,6 @@
 		25C33B8125C08CB000F61530 /* DrawingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingManager.swift; sourceTree = "<group>"; };
 		25C33B8625C08CCA00F61530 /* DrawingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingViewController.swift; sourceTree = "<group>"; };
 		25C33B8B25C08CE500F61530 /* DrawingWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingWrapper.swift; sourceTree = "<group>"; };
-		25C37A3225CFAE9E0079DF8A /* InterfaceUL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceUL.swift; sourceTree = "<group>"; };
 		25C37A3A25CFB8BE0079DF8A /* UploadWriting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadWriting.swift; sourceTree = "<group>"; };
 		25C3B2D025C1175B00A139E3 /* NoteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteManager.swift; sourceTree = "<group>"; };
 		3F88919125BEA7EB0052442D /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -383,7 +381,6 @@
 				3F88921B25BEB3BB0052442D /* HomePageUrl.swift */,
 				3F88922025BEB4100052442D /* InterfaceDL.swift */,
 				3F88922525BEB4340052442D /* Download.swift */,
-				25C37A3225CFAE9E0079DF8A /* InterfaceUL.swift */,
 			);
 			path = Include;
 			sourceTree = "<group>";
@@ -579,7 +576,6 @@
 				3F88927225BEC3420052442D /* LibraryTabView.swift in Sources */,
 				3F8891DD25BEAD7C0052442D /* LibraryList.swift in Sources */,
 				25C33B8725C08CCA00F61530 /* DrawingViewController.swift in Sources */,
-				25C37A3325CFAE9E0079DF8A /* InterfaceUL.swift in Sources */,
 				25C33B7D25C08C1800F61530 /* CoreDataManager.swift in Sources */,
 				3F88926825BEC20F0052442D /* Application.swift in Sources */,
 				3F8892C025C016E20052442D /* DocumentThumbnailView.swift in Sources */,
