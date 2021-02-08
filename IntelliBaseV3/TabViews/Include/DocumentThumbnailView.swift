@@ -14,18 +14,16 @@ struct DocumentThumbnailView: View {
     @State var navSelection: Int? = nil
     @State var showingPopover: Bool = false
     @State var showingSheet: Bool = false
-    var document: DocumentStruct
+    @State var document: DocumentStruct
     
-    var thumbnailDataPath: URL
+    var thumbnailDataPath: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     var uiImage: UIImage? = nil
-    
-    //UINavigationBar.appearance().
     
     @State private var popoverWidth = CGFloat(500)
     
     init(id: Int, isNote: Bool = false) {
         self.id = id
-        self.document = DocumentStruct(id: id, isNote: isNote)
+        self._document = State(initialValue: DocumentStruct(id: id, isNote: isNote))
         
         let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         self.thumbnailDataPath = documentDirectory.appendingPathComponent("thumbnail_\(document.book.id).png")
@@ -92,10 +90,10 @@ struct DocumentThumbnailView: View {
             // https://stackoverflow.com/a/60138475
         }
         .popover(isPresented: $showingPopover) {
-            DocumentPopup(showing: $showingPopover,document: self.document)
+            DocumentPopup(showing: $showingPopover,bindedDocument: self.$document)
         }
         .sheet(isPresented: $showingSheet) {
-            DocumentPopup(showing: $showingSheet,document: self.document)
+            DocumentPopup(showing: $showingSheet,bindedDocument: self.$document)
         }
 //        .onAppear(perform: {
 //            print("Debug : thumbnail view loaded. id : \(self.document.id)")

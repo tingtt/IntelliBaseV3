@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct DocumentPopup: View {
-    @State var document: DocumentStruct
+    @Binding var document: DocumentStruct
     
     @Binding var showingSheet: Bool
     @State var share: Bool = false
-    var url: String
+    var url: String = ""
     @State var shareToggle: Bool = false
-    var navTitle: String
+    var navTitle: String = ""
     
-    init(showing: Binding<Bool>,document: DocumentStruct) {
+    init(showing: Binding<Bool>,bindedDocument: Binding<DocumentStruct>) {
         self._showingSheet = showing
-        self._document = State(initialValue: document)
+        self._document = bindedDocument
         if (document.isNote){
             self.navTitle = document.note!.title
         } else {
