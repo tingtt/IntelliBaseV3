@@ -27,7 +27,6 @@
 		25C33B8225C08CB000F61530 /* DrawingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33B8125C08CB000F61530 /* DrawingManager.swift */; };
 		25C33B8725C08CCA00F61530 /* DrawingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33B8625C08CCA00F61530 /* DrawingViewController.swift */; };
 		25C33B8C25C08CE500F61530 /* DrawingWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C33B8B25C08CE500F61530 /* DrawingWrapper.swift */; };
-		25C37A3B25CFB8BE0079DF8A /* UploadWriting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C37A3A25CFB8BE0079DF8A /* UploadWriting.swift */; };
 		25C3B2D125C1175B00A139E3 /* NoteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C3B2D025C1175B00A139E3 /* NoteManager.swift */; };
 		3F88919225BEA7EB0052442D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88919125BEA7EB0052442D /* LoginView.swift */; };
 		3F88919B25BEA8400052442D /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88919A25BEA8400052442D /* CustomButton.swift */; };
@@ -114,7 +113,6 @@
 		25C33B8125C08CB000F61530 /* DrawingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingManager.swift; sourceTree = "<group>"; };
 		25C33B8625C08CCA00F61530 /* DrawingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingViewController.swift; sourceTree = "<group>"; };
 		25C33B8B25C08CE500F61530 /* DrawingWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingWrapper.swift; sourceTree = "<group>"; };
-		25C37A3A25CFB8BE0079DF8A /* UploadWriting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadWriting.swift; sourceTree = "<group>"; };
 		25C3B2D025C1175B00A139E3 /* NoteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteManager.swift; sourceTree = "<group>"; };
 		3F88919125BEA7EB0052442D /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3F88919A25BEA8400052442D /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -368,7 +366,6 @@
 			children = (
 				3F88920B25BEB2D10052442D /* LoginVerify.swift */,
 				3F88921025BEB3460052442D /* GetNewData.swift */,
-				25C37A3A25CFB8BE0079DF8A /* UploadWriting.swift */,
 				3F88921525BEB37D0052442D /* Include */,
 			);
 			path = Interface;
@@ -560,7 +557,6 @@
 				3F88921C25BEB3BB0052442D /* HomePageUrl.swift in Sources */,
 				3F88922625BEB4340052442D /* Download.swift in Sources */,
 				3F88920C25BEB2D10052442D /* LoginVerify.swift in Sources */,
-				25C37A3B25CFB8BE0079DF8A /* UploadWriting.swift in Sources */,
 				3F88927725BEC53B0052442D /* MenuButton.swift in Sources */,
 				3F88926325BEB90D0052442D /* MenuView.swift in Sources */,
 				3F88934925C2F14D0052442D /* BackButton.swift in Sources */,

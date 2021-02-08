@@ -69,7 +69,7 @@ struct CoreDataOperation {
         for (columnName, value) in values {
 //            print("Debug : Set value -> \(columnName) : \(value) type: \(String(describing: type(of: value)))")
 //            print("Debug: \(String(describing: type(of: value)) == "NSTaggedPointerString" || columnName != "login_date" && columnName.contains("_date"))")
-            if String(describing: type(of: value)) == "NSTaggedPointerString" || columnName != "login_date" && columnName.contains("_date") && columnName != "update_date" {
+            if String(describing: type(of: value)) == "NSTaggedPointerString" || columnName != "login_date" && columnName.contains("_date") && columnName != "update_date" && columnName != "upload_date" {
 //                print("Debug : Cast on.")
                 if columnName.contains("_id") || columnName == "id" || columnName.contains("_date") {
                     if String(describing: type(of: value)) == "Int" {
@@ -169,12 +169,12 @@ struct CoreDataOperation {
                 }
             }
             try managedContext.save()
-//            print("Debug : Success to update record from \(coreDataEnum.toString(entity: entity)) having \"\(conditionStr)\". values -> \(values)")
-//            for record in self.select(entity: entity) {
-//                if let record: Book = record as? Book {
-//                    print("Debug : Saved book id = \(String(describing: record.id!))")
-//                }
-//            }
+            print("Debug : Success to update record from \(coreDataEnum.toString(entity: entity)) having \"\(conditionStr)\". values -> \(values)")
+            for record in self.select(entity: entity) {
+                if let record: Book = record as? Book {
+                    print("Debug : Saved book id = \(String(describing: record.id!))")
+                }
+            }
             return true
         } catch let error as NSError {
             print("\(error), \(error.userInfo)")

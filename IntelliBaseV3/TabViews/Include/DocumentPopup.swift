@@ -21,7 +21,6 @@ struct DocumentPopup: View {
         self._document = State(initialValue: document)
         if (document.isNote){
             self.navTitle = document.note!.title
-            self._noteShare = State(initialValue: document.note!.share)
         } else {
             self.navTitle = document.book.title
         }
@@ -30,7 +29,6 @@ struct DocumentPopup: View {
     }
     
     @State var deleteNoteAlert = false
-    @State var noteShare: Bool = false
     @State var shareOffAlert: Bool = false
     @State var sharedInformationAlert: Bool = false
     
@@ -41,7 +39,7 @@ struct DocumentPopup: View {
                 // ノートの場合
                 Text(self.document.note!.title)
                 Divider()
-                if noteShare {
+                if document.note!.share {
                     // 共有中
                     Button(action: {
                         // 保存済みの共有キーを取得してクリップボードにコピー
@@ -52,10 +50,15 @@ struct DocumentPopup: View {
                     })
                     Divider()
                     Button(action: {
-                        // 共有キーの生成
-                        let uploadInterface = UploadWritings(writingsId: document.note!.id)
-                        // 取得したキーをCoreDataに保存
-                        _ = CoreDataOperation().update(entity: .note, conditionStr: "id = \(document.note!.id)", values: ["share_key":uploadInterface.shareKey, "share":true])
+                        // 共有データのアップデート
+                        document.note!.updateSharedData()
+                    }, label: {
+                        Text("共有した書き込みのアップデート")
+                    })
+                    Divider()
+                    Button(action: {
+                        // 共有キーの再取得
+                        document.note!.regenerateShareKey()
                     }, label: {
                         Text("共有キーを再生成")
                     })
@@ -76,29 +79,15 @@ struct DocumentPopup: View {
                                 Text("Yes"),
                                 action: {
                                     // 共有の解除
-                                    _ = Interface(
-                                        apiFileName: "writings/delete_shared_writings",
-                                        parameter: [
-                                            "share_key":"\(String(describing: (CoreDataOperation().select(entity: .note, conditionStr: "id = \(document.note!.id)")[0] as Note).share_key!))"
-                                        ],
-                                        sync: false
-                                    )
-                                    document.note!.share.toggle()
-                                    noteShare.toggle()
-                                    _ = CoreDataOperation().update(entity: .note, conditionStr: "id = \(document.note!.id)", values: ["share_key":"", "share":false])
+                                    document.note!.shareOff()
                                 }
                             )
                         )
                     })
                 } else {
                     Button(action: {
-                        // 共有キーの生成
-                        let uploadInterface = UploadWritings(writingsId: document.note!.id)
-                        
-                        // 取得したキーをCoreDataに保存
-                        document.note!.share.toggle()
-                        noteShare.toggle()
-                        _ = CoreDataOperation().update(entity: .note, conditionStr: "id = \(document.note!.id)", values: ["share_key":uploadInterface.shareKey, "share":true])
+                        // 共有キーの取得と書き込みのアップロード
+                        document.note!.shareOn()
                     }, label: {
                         Text("共有する")
                     })

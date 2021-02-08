@@ -275,7 +275,10 @@ struct DocumentRootView: View {
                 "title": noteTitle,
                 "share": false,
                 "public_share": false,
-                "update_date": Date()
+                "update_date": Date(),
+                "share_id": 0,
+                "share_key":"",
+                "upload_date":Date(),
             ]
         )
         
