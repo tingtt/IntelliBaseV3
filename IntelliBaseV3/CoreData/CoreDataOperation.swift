@@ -130,6 +130,12 @@ struct CoreDataOperation {
                             managedContext.delete(item)
                             try managedContext.save()
                         }
+                        if let _record: Note = record as? Note {
+                            // delete shared writings
+                            if let _shareKey = _record.share_key {
+                                _ = Interface(apiFileName: "writings/delete_shared_writings", parameter: ["share_key":_shareKey], sync: false)
+                            }
+                        }
                     } catch {
                         print("Error deleting document from database")
                     }
