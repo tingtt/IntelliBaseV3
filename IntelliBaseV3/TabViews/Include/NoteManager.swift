@@ -30,6 +30,19 @@ class NoteManager: ObservableObject {
         mappedIds.insert([note.id, true], at: 0)
     }
     
+    func addSharedNote(shareKey: String) -> Bool {
+        let interface = Interface(apiFileName: "get_writings", parameter: ["share_key":shareKey], sync: true)
+        while interface.isDownloading {}
+        
+        if interface.error {
+            return false
+        }
+        
+        addNote(note: NoteStruct(shareKey: shareKey, sharedWritingInfo: interface.content[0]))
+        
+        return true
+    }
+    
     func moveToFirst(noteId: Int) {
         var movedOne: Bool = false
         for index in 0..<notes.count {

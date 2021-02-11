@@ -124,6 +124,7 @@ struct NoteStruct {
                 parameter: [
                     "account_id":"\(String(describing: (CoreDataOperation().select(entity: .account, conditionStr: "login = true")[0] as Account).id!))",
                     "local_writing_id":"\(id)",
+                    "local_writing_title":"\(title)",
                     "book_id":"\(book_id)"
                 ],
                 sync: true
@@ -179,6 +180,7 @@ struct NoteStruct {
             parameter: [
                 "account_id":"\(String(describing: (CoreDataOperation().select(entity: .account, conditionStr: "login = true")[0] as Account).id!))",
                 "local_writing_id":"\(id)",
+                "local_writing_title":"\(title)",
                 "book_id":"\(book_id)"
             ],
             sync: true
