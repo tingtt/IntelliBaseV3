@@ -36,6 +36,7 @@
         <attribute name="id" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="public_share" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="share" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="share_account_id" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="share_id" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="share_key" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
@@ -53,7 +54,7 @@
         <element name="Book" positionX="-36" positionY="36" width="128" height="133"/>
         <element name="DrawingDoc" positionX="-18" positionY="90" width="128" height="88"/>
         <element name="Genre" positionX="-18" positionY="81" width="128" height="88"/>
-        <element name="Note" positionX="0" positionY="90" width="128" height="208"/>
+        <element name="Note" positionX="0" positionY="90" width="128" height="223"/>
         <element name="Purchase" positionX="18" positionY="135" width="128" height="88"/>
     </elements>
 </model>

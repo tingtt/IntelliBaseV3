@@ -12,6 +12,7 @@ struct NoteStruct {
     var id: Int
     var book_id: Int
     var share: Bool = false
+    var share_account_id = 0
     var share_key: String = ""
     var share_id: Int = 0
     var public_share: Bool = false
@@ -27,6 +28,7 @@ struct NoteStruct {
         var titleStr: String = ""
         var shareBool: Bool = false
         var account: Int = 0
+        var shareAccountId = 0
         var shareKey: String = ""
         var shareId: Int = 0
         
@@ -43,6 +45,7 @@ struct NoteStruct {
             shareBool = fetchResults[0].share
             book = fetchResults[0].book_id as! Int
             shareKey = fetchResults[0].share_key!
+            shareAccountId = fetchResults[0].share_account_id as! Int
             shareId = Int(truncating: fetchResults[0].share_id!)
         } else {
             // no
@@ -84,6 +87,7 @@ struct NoteStruct {
         self.title = titleStr
         self.book_id = book
         self.account_id = account
+        self.share_account_id = shareAccountId
         self.share_id = shareId
         self.share_key = shareKey
         self.share = shareBool
