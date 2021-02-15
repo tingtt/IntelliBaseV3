@@ -30,11 +30,17 @@ class NoteManager: ObservableObject {
         mappedIds.insert([note.id, true], at: 0)
     }
     
+    // シェアキーから書き込みの共有情報を取得して追加
     func addSharedNote(shareKey: String) -> Bool {
         let interface = Interface(apiFileName: "get_writings", parameter: ["share_key":shareKey], sync: true)
         while interface.isDownloading {}
         
         if interface.error {
+            return false
+        }
+        // ログインしているアカウントが本を所持していない場合にfalseを返す
+        if CoreDataOperation().select(entity: .book, conditionStr: "id = \(String(describing: interface.content[0]["book_id"] as! Int)) AND account_id = \((CoreDataOperation().select(entity: .account, conditionStr: "login == true")[0] as! Account).id as! Int)").count != 1 {
+            print("Debug : Book ID that the user does not have has been entered.")
             return false
         }
         

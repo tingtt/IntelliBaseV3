@@ -95,6 +95,44 @@ struct NoteStruct {
         return
     }
     
+    init(shareKey: String, sharedWritingInfo: Dictionary<String,Any>) {
+        // 未使用のIDを取得して設定
+        let notes: Array<Note> = CoreDataOperation().select(entity: .note, conditionStr: "", sort: ["id":false])
+        let noteId: Int
+        if notes.count == 0 {
+            noteId = 1
+        } else {
+            noteId = notes[0].id as! Int + 1
+        }
+        id = noteId
+        
+        book_id = sharedWritingInfo["book_id"] as! Int
+        share = true
+        share_key = shareKey
+        share_account_id = sharedWritingInfo["account_id"] as! Int
+        share_id = sharedWritingInfo["writing_id"] as! Int
+        public_share = false
+        title = sharedWritingInfo["writing_id"] as! String
+        account_id = (CoreDataOperation().select(entity: .account, conditionStr: "login == true")[0] as! Account).id as! Int
+        
+        _ = CoreDataOperation().insert(
+            entity: .note,
+            values: [
+                "id":noteId,
+                "account_id": account_id,
+                "book_id": book_id,
+                "title": title,
+                "share": true,
+                "public_share": false,
+                "update_date": Date(),
+                "share_account_id": share_account_id,
+                "share_id": share_id,
+                "share_key":shareKey,
+                "upload_date": Date(),
+            ]
+        )
+    }
+    
     func delete() {
         if share {
             deleteSharedWritings()
