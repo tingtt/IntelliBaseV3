@@ -131,6 +131,36 @@ struct NoteStruct {
                 "upload_date": Date(),
             ]
         )
+        
+        self.downloadWriting(noteId: noteId)
+    }
+    
+    func downloadWriting(noteId: Int) {
+        let writings: Note = CoreDataOperation().select(entity: .note, conditionStr: "id = \(noteId)")[0]
+        // シェアIDから書き込みのページ数を取得
+        let interface = Interface(apiFileName: "writings/get_page_count", parameter: ["shareId": "\(String(describing: writings.share_id))"], sync: true)
+        let pageCount: Int = interface.content[0]["page_count"] as! Int
+        
+        for pageNum in 1..<pageCount+1 {
+            let url: URL = URL(string: HomePageUrl(lastDirectoryUrl: "uploadedData/writing", fileName: "writing\(String(describing: writings.share_id))_page\(String(describing: pageNum))").getFullPath())!
+            let downloadTask = URLSession.shared.downloadTask(with: url) { location, response, error in
+                // ダウンロードデータの一時保存URL
+    //            print("Debug : Saved as temp to \(location!)")
+
+                if let tempFileUrl = location {
+                    do {
+                        // Insert into coreData.
+                        let data = try Data(contentsOf: tempFileUrl)
+                        CoreDataManager.shared.addData(doc: DrawingDocument(id: UUID(), data: data, name: "\(writings.title!)_note\(String(describing: noteId))_page\(pageNum)"))
+    //                    print("Debug : Seved to coreData \(writeFilePath.absoluteString)")
+                    } catch {
+                        print("Error : Caught error at download file.")
+                    }
+                }
+            }
+            downloadTask.resume()
+            while downloadTask.state != .completed {}
+        }
     }
     
     func delete() {
