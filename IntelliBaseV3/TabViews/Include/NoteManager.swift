@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 class NoteManager: ObservableObject {
     static let shared = NoteManager()
@@ -32,14 +33,36 @@ class NoteManager: ObservableObject {
     
     // シェアキーから書き込みの共有情報を取得して追加
     func addSharedNote(shareKey: String) -> Bool {
-        let interface = Interface(apiFileName: "get_writings", parameter: ["share_key":shareKey], sync: true)
+        let interface = Interface(apiFileName: "writings/get_writings", parameter: ["share_key":shareKey], sync: true)
         while interface.isDownloading {}
         
         if interface.error {
             return false
+        } else {
+            let accountId: Int = (CoreDataOperation().select(entity: .account, conditionStr: "login == true")[0] as! Account).id as! Int
+            // すでに共有された書き込みを取得している場合
+            let req = NSFetchRequest<NSFetchRequestResult>(entityName: "Note")
+            let predicateAccount = NSPredicate(format: "account_id == \(accountId)")
+            let predicateShareKey = NSPredicate(format: "share_key == %@", shareKey)
+            let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [predicateAccount, predicateShareKey])
+            req.predicate = andPredicate
+            
+            do {
+                let writings: [Note] = try (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext.fetch(req) as! [Note]
+                if writings.count == 1 {
+//                    return false
+                }
+            } catch let error {
+                NSLog("\(error)")
+            }
+            
+            // 自分の書き込みデータの場合
+            if Int((interface.content[0]["account_id"] as! NSString).doubleValue) == accountId {
+//                return false
+            }
         }
         // ログインしているアカウントが本を所持していない場合にfalseを返す
-        if CoreDataOperation().select(entity: .book, conditionStr: "id = \(String(describing: interface.content[0]["book_id"] as! Int)) AND account_id = \((CoreDataOperation().select(entity: .account, conditionStr: "login == true")[0] as! Account).id as! Int)").count != 1 {
+        if CoreDataOperation().select(entity: .purchase, conditionStr: "book_id = \(String(Int((interface.content[0]["book_id"] as! NSString).doubleValue))) AND account_id = \((CoreDataOperation().select(entity: .account, conditionStr: "login == true")[0] as! Account).id as! Int)").count != 1 {
             print("Debug : Book ID that the user does not have has been entered.")
             return false
         }

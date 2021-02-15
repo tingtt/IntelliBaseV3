@@ -34,6 +34,9 @@ struct HomeList: View {
 
 //   var courses = coursesData
 //   @State var showContent = false
+    @State var getSharedWritingSheet = false
+    @State var str: String = ""
+    @State var getSharedWritingAlert = false
 
    var body: some View {
       ScrollView {
@@ -53,6 +56,37 @@ struct HomeList: View {
                 Text("最近のノート")
                     .font(.largeTitle)
                     .fontWeight(.heavy)
+                Button(action: {
+                    getSharedWritingSheet.toggle()
+                }, label: {
+                    Text("共有キーを入力")
+                })
+                .sheet(isPresented: $getSharedWritingSheet, content: {
+                    VStack {
+                        TextField("Share key", text: $str)
+                        Button(action: {
+                            if noteManager.addSharedNote(shareKey: str) {
+                                getSharedWritingSheet.toggle()
+                            } else {
+                                // 失敗時のアラート
+                                getSharedWritingAlert.toggle()
+                            }
+                        }, label: {
+                            Text("検索")
+                        })
+                        .alert(isPresented: $getSharedWritingAlert, content: {
+                            Alert(
+                                title: Text("共有キーが正しくありません"),
+                                dismissButton: Alert.Button.default(
+                                    Text("Yes"),
+                                    action: {
+                                        getSharedWritingAlert.toggle()
+                                    }
+                                )
+                            )
+                        })
+                    }
+                })
             }
             if noteManager.mappedIds.count > 0 {
                 // ノートがあったら

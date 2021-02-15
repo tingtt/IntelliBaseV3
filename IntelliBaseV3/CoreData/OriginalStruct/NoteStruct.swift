@@ -106,13 +106,13 @@ struct NoteStruct {
         }
         id = noteId
         
-        book_id = sharedWritingInfo["book_id"] as! Int
+        book_id = Int((sharedWritingInfo["book_id"] as! NSString).doubleValue)
         share = true
         share_key = shareKey
-        share_account_id = sharedWritingInfo["account_id"] as! Int
-        share_id = sharedWritingInfo["writing_id"] as! Int
+        share_account_id = Int((sharedWritingInfo["account_id"] as! NSString).doubleValue)
+        share_id = Int((sharedWritingInfo["writing_id"] as! NSString).doubleValue)
         public_share = false
-        title = sharedWritingInfo["writing_id"] as! String
+        title = sharedWritingInfo["local_writing_title"] as! String
         account_id = (CoreDataOperation().select(entity: .account, conditionStr: "login == true")[0] as! Account).id as! Int
         
         _ = CoreDataOperation().insert(
@@ -138,8 +138,9 @@ struct NoteStruct {
     func downloadWriting(noteId: Int) {
         let writings: Note = CoreDataOperation().select(entity: .note, conditionStr: "id = \(noteId)")[0]
         // シェアIDから書き込みのページ数を取得
-        let interface = Interface(apiFileName: "writings/get_page_count", parameter: ["shareId": "\(String(describing: writings.share_id))"], sync: true)
-        let pageCount: Int = interface.content[0]["page_count"] as! Int
+        let interface = Interface(apiFileName: "writings/get_page_count", parameter: ["share_id": "\(String(describing: writings.share_id!))"], sync: true)
+        while interface.isDownloading {}
+        let pageCount: Int = Int((interface.content[0]["page_count"] as! NSString).doubleValue)
         
         for pageNum in 1..<pageCount+1 {
             let url: URL = URL(string: HomePageUrl(lastDirectoryUrl: "uploadedData/writing", fileName: "writing\(String(describing: writings.share_id))_page\(String(describing: pageNum))").getFullPath())!
