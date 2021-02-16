@@ -12,7 +12,7 @@ class EditViewManager: ObservableObject {
     
     init() {}
     
-    func loadView(pdfKitView: PDFKitView, noteId: Int, pageNum: Int = 1) {
+    func loadView(pdfKitView: Binding<PDFKitView>, noteId: Int, pageNum: Int = 1) {
         view = DocumentEditView(pdfKitView: pdfKitView, noteId: noteId, pageNum: pageNum)
     }
 }

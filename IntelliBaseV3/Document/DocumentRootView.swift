@@ -19,7 +19,7 @@ struct DocumentRootView: View {
     let dataPath: URL
     
     // pdf viewer
-    var pdfKitView: PDFKitView
+    @State var pdfKitView: PDFKitView
     
     // edit view
     @ObservedObject var editViewManager = EditViewManager()
@@ -47,11 +47,11 @@ struct DocumentRootView: View {
         self._notes = State(initialValue: document.book.notes)
         self.dataPath = documentDirectory.appendingPathComponent("book_\(document.book.id).pdf")
         
-        self.pdfKitView = PDFKitView(url: dataPath)
+        self._pdfKitView = State(initialValue: PDFKitView(url: dataPath))
         
         if isNote {
             // init note edit view.
-            editViewManager.loadView(pdfKitView: pdfKitView, noteId: document.note!.id)
+            editViewManager.loadView(pdfKitView: $pdfKitView, noteId: document.note!.id)
         }
         
         if openAsNewNote {
@@ -142,7 +142,7 @@ struct DocumentRootView: View {
                                         Button(
                                             action: {
                                                 editViewManager.loadView(
-                                                    pdfKitView: pdfKitView,
+                                                    pdfKitView: $pdfKitView,
                                                     noteId: notes[index].id,
                                                     pageNum: (pdfKitView.pdfKitRepresentedView.pdfView.currentPage?.pageRef!.pageNumber)!
                                                 )
@@ -303,7 +303,7 @@ struct DocumentRootView: View {
         
         // init note edit view.
         editViewManager.loadView(
-            pdfKitView: pdfKitView,
+            pdfKitView: $pdfKitView,
             noteId: noteId,
             pageNum: (pdfKitView.pdfKitRepresentedView.pdfView.currentPage?.pageRef!.pageNumber)!
         )
@@ -323,11 +323,5 @@ struct DocumentRootView: View {
         if document.isNote {
             editViewManager.view?.canvasManager.goToPreviousCanvas()
         }
-    }
-}
-
-struct DocumentRootView_Previews: PreviewProvider {
-    static var previews: some View {
-        DocumentRootView(documentId: 1, isNote: false)
     }
 }

@@ -17,8 +17,8 @@ public class HomePageUrl {
     
     init(
         protocolStr: String = "http",
-//        ip: String = "localhost",
-        ip: String = "192.168.3.15",
+        ip: String = "localhost",
+//        ip: String = "tingttmacbookpro.local",
 //        ip: String = "169.254.108.1",
         middleDirectoryUrl: String = "IntelliBase",
         lastDirectoryUrl: String,

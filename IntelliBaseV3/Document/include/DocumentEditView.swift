@@ -9,15 +9,15 @@ import SwiftUI
 
 struct DocumentEditView: View {
     let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-    var pdfKitView: PDFKitView
+    @Binding var pdfKitView: PDFKitView
     
     var noteId: Int = 0
     
     @ObservedObject var drawingManager: DrawingManager
     @ObservedObject var canvasManager: CanvasManager
     
-    init(pdfKitView: PDFKitView, noteId: Int, pageNum: Int = 1) {
-        self.pdfKitView = pdfKitView
+    init(pdfKitView: Binding<PDFKitView>, noteId: Int, pageNum: Int = 1) {
+        self._pdfKitView = pdfKitView
         
         self.noteId = noteId
         let drawingManager = DrawingManager(noteId: noteId)
