@@ -40,6 +40,10 @@ class NoteManager: ObservableObject {
             return "共有キーが正しくない、又はサーバへのアクセスに失敗しました"
         } else {
             let accountId: Int = (CoreDataOperation().select(entity: .account, conditionStr: "login == true")[0] as! Account).id as! Int
+            // 自分の書き込みデータの場合
+            if Int((interface.content[0]["account_id"] as! NSString).doubleValue) == accountId {
+                return "自分が共有した書き込みは取得できません"
+            }
             // すでに共有された書き込みを取得している場合
             let req = NSFetchRequest<NSFetchRequestResult>(entityName: "Note")
             let predicateAccount = NSPredicate(format: "account_id == \(accountId)")
@@ -54,11 +58,6 @@ class NoteManager: ObservableObject {
                 }
             } catch let error {
                 NSLog("\(error)")
-            }
-            
-            // 自分の書き込みデータの場合
-            if Int((interface.content[0]["account_id"] as! NSString).doubleValue) == accountId {
-                return "自分が共有した書き込みは取得できません"
             }
         }
         // ログインしているアカウントが本を所持していない場合にfalseを返す
