@@ -79,9 +79,7 @@ struct HomeList: View {
                                 title: Text("共有キーが正しくありません"),
                                 dismissButton: Alert.Button.default(
                                     Text("Yes"),
-                                    action: {
-                                        getSharedWritingAlert.toggle()
-                                    }
+                                    action: {}
                                 )
                             )
                         })
