@@ -32,12 +32,12 @@ class NoteManager: ObservableObject {
     }
     
     // シェアキーから書き込みの共有情報を取得して追加
-    func addSharedNote(shareKey: String) -> Bool {
+    func addSharedNote(shareKey: String) -> String? {
         let interface = Interface(apiFileName: "writings/get_writings", parameter: ["share_key":shareKey], sync: true)
         while interface.isDownloading {}
         
         if interface.error {
-            return false
+            return "共有キーが正しくない、又はサーバへのアクセスに失敗しました"
         } else {
             let accountId: Int = (CoreDataOperation().select(entity: .account, conditionStr: "login == true")[0] as! Account).id as! Int
             // すでに共有された書き込みを取得している場合
@@ -50,7 +50,7 @@ class NoteManager: ObservableObject {
             do {
                 let writings: [Note] = try (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext.fetch(req) as! [Note]
                 if writings.count == 1 {
-//                    return false
+                    return "取得済みです"
                 }
             } catch let error {
                 NSLog("\(error)")
@@ -58,18 +58,18 @@ class NoteManager: ObservableObject {
             
             // 自分の書き込みデータの場合
             if Int((interface.content[0]["account_id"] as! NSString).doubleValue) == accountId {
-//                return false
+                return "自分が共有した書き込みは取得できません"
             }
         }
         // ログインしているアカウントが本を所持していない場合にfalseを返す
         if CoreDataOperation().select(entity: .purchase, conditionStr: "book_id = \(String(Int((interface.content[0]["book_id"] as! NSString).doubleValue))) AND account_id = \((CoreDataOperation().select(entity: .account, conditionStr: "login == true")[0] as! Account).id as! Int)").count != 1 {
             print("Debug : Book ID that the user does not have has been entered.")
-            return false
+            return "本を所持していません id:\(Int((interface.content[0]["book_id"] as! NSString).doubleValue))"
         }
         
         addNote(note: NoteStruct(shareKey: shareKey, sharedWritingInfo: interface.content[0]))
         
-        return true
+        return nil
     }
     
     func moveToFirst(noteId: Int) {

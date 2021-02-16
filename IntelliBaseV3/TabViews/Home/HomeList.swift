@@ -37,6 +37,7 @@ struct HomeList: View {
     @State var getSharedWritingSheet = false
     @State var str: String = ""
     @State var getSharedWritingAlert = false
+    @State var errorMessage = "共有キーが正しくありません"
 
    var body: some View {
       ScrollView {
@@ -65,23 +66,36 @@ struct HomeList: View {
                     VStack {
                         TextField("Share key", text: $str)
                         Button(action: {
-                            if noteManager.addSharedNote(shareKey: str) {
-                                getSharedWritingSheet.toggle()
-                            } else {
+                            let res: String? = noteManager.addSharedNote(shareKey: str)
+                            if let _res = res {
+                                errorMessage = _res
                                 // 失敗時のアラート
                                 getSharedWritingAlert.toggle()
+                            } else {
+                                getSharedWritingSheet.toggle()
                             }
                         }, label: {
                             Text("検索")
                         })
                         .alert(isPresented: $getSharedWritingAlert, content: {
-                            Alert(
-                                title: Text("共有キーが正しくありません"),
-                                dismissButton: Alert.Button.default(
-                                    Text("Yes"),
-                                    action: {}
+                            if errorMessage.contains("本を所持していません") {
+                                return Alert(
+                                    title: Text(errorMessage),
+                                    primaryButton: .default(Text("ストアページを開く"), action: {
+                                        // 本のストアページを開く
+                                        let bookId = errorMessage[errorMessage.range(of: ":")!.upperBound...]
+                                        if let url = URL(string: HomePageUrl(lastDirectoryUrl: "Search", fileName: "product_detail.php", getParams: ["book_id":"\(bookId)"]).getFullPath()) {
+                                            UIApplication.shared.open(url)
+                                        }
+                                    }),
+                                    secondaryButton: .default(Text("OK"), action: {})
                                 )
-                            )
+                            } else {
+                                return Alert(
+                                    title: Text(errorMessage),
+                                    dismissButton: .default(Text("OK"), action: {})
+                                )
+                            }
                         })
                     }
                 })
