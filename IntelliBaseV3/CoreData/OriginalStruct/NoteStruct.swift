@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import CoreData
 
 struct NoteStruct {
     var id: Int
@@ -132,11 +133,11 @@ struct NoteStruct {
             ]
         )
         
-        self.downloadWriting(noteId: noteId)
+        self.downloadWriting()
     }
     
-    func downloadWriting(noteId: Int) {
-        let writings: Note = CoreDataOperation().select(entity: .note, conditionStr: "id = \(noteId)")[0]
+    func downloadWriting() {
+        let writings: Note = CoreDataOperation().select(entity: .note, conditionStr: "id = \(id)")[0]
         // シェアIDから書き込みのページ数を取得
         let interface = Interface(apiFileName: "writings/get_page_count", parameter: ["share_id": "\(String(describing: writings.share_id!))"], sync: true)
         while interface.isDownloading {}
@@ -149,9 +150,25 @@ struct NoteStruct {
 
                 if let tempFileUrl = location {
                     do {
-                        // Insert into coreData.
+                        // Insert or update data to coreData.
                         let data = try Data(contentsOf: tempFileUrl)
-                        CoreDataManager.shared.addData(doc: DrawingDocument(id: UUID(), data: data, name: "\(writings.title!)_note\(String(describing: noteId))_page\(pageNum)"))
+                        
+                        let req = NSFetchRequest<NSFetchRequestResult>(entityName: "DrawingDoc")
+                        req.predicate = NSPredicate(format: "name == \(writings.title!)_note\(String(describing: id))_page\(pageNum)")
+                        do {
+                            let doc: [DrawingDoc] = try (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext.fetch(req) as! [DrawingDoc]
+                            if doc.count == 1 {
+                                // update
+                                doc[0].data = data
+                                try (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext.save()
+                            } else {
+                                // isnert
+                                CoreDataManager.shared.addData(doc: DrawingDocument(id: UUID(), data: data, name: "\(writings.title!)_note\(String(describing: id))_page\(pageNum)"))
+                            }
+                        } catch let error {
+                            print("\(error)")
+                        }
+                        
     //                    print("Debug : Seved to coreData \(writeFilePath.absoluteString)")
                     } catch {
                         print("Error : Caught error at download file.")

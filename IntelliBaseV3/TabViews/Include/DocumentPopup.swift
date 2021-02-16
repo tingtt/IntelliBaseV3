@@ -41,49 +41,61 @@ struct DocumentPopup: View {
                 Divider()
                 if document.note!.share {
                     // 共有中
-                    Button(action: {
-                        // 保存済みの共有キーを取得してクリップボードにコピー
-                        let writings: Note = CoreDataOperation().select(entity: .note, conditionStr: "id = \(document.note!.id)")[0]
-                        UIPasteboard.general.string = writings.share_key! as String
-                    }, label: {
-                        Text("共有キーをコピー")
-                    })
-                    Divider()
-                    Button(action: {
-                        // 共有データのアップデート
-                        document.note!.updateSharedData()
-                    }, label: {
-                        Text("共有した書き込みのアップデート")
-                    })
-                    Divider()
-                    Button(action: {
-                        // 共有キーの再取得
-                        document.note!.regenerateShareKey()
-                    }, label: {
-                        Text("共有キーを再生成")
-                    })
-                    Divider()
-                    Button(action: {
-                        // 共有の解除
-                        shareOffAlert.toggle()
-                    }, label: {
-                        Text("共有をやめる")
-                            .foregroundColor(.red)
-                    })
-                    .alert(isPresented: $shareOffAlert, content: {
-                        Alert(
-                            title: Text("共有をやめますか？"),
-                            message: Text("共有をやめると同じ共有キーでの共有ができなくなり、すでに共有しているユーザも閲覧することができなくなります。"),
-                            primaryButton: .cancel(Text("No")),
-                            secondaryButton: .default(
-                                Text("Yes"),
-                                action: {
-                                    // 共有の解除
-                                    document.note!.shareOff()
-                                }
+                    if document.note!.share_account_id == (CoreDataOperation().select(entity: .account, conditionStr: "login == true")[0] as! Account).id as! Int {
+                        // 自分の共有書き込みの場合
+                        Button(action: {
+                            // 保存済みの共有キーを取得してクリップボードにコピー
+                            let writings: Note = CoreDataOperation().select(entity: .note, conditionStr: "id = \(document.note!.id)")[0]
+                            UIPasteboard.general.string = writings.share_key! as String
+                        }, label: {
+                            Text("共有キーをコピー")
+                        })
+                        Divider()
+                        Button(action: {
+                            // 共有データのアップデート
+                            document.note!.updateSharedData()
+                        }, label: {
+                            Text("共有した書き込みのアップデート")
+                        })
+                        Divider()
+                        Button(action: {
+                            // 共有キーの再取得
+                            document.note!.regenerateShareKey()
+                        }, label: {
+                            Text("共有キーを再生成")
+                        })
+                        Divider()
+                        Button(action: {
+                            // 共有の解除
+                            shareOffAlert.toggle()
+                        }, label: {
+                            Text("共有をやめる")
+                                .foregroundColor(.red)
+                        })
+                        .alert(isPresented: $shareOffAlert, content: {
+                            Alert(
+                                title: Text("共有をやめますか？"),
+                                message: Text("共有をやめると同じ共有キーでの共有ができなくなり、すでに共有しているユーザも閲覧することができなくなります。"),
+                                primaryButton: .cancel(Text("No")),
+                                secondaryButton: .default(
+                                    Text("Yes"),
+                                    action: {
+                                        // 共有の解除
+                                        document.note!.shareOff()
+                                    }
+                                )
                             )
-                        )
-                    })
+                        })
+                    } else {
+                        // 取得した共有書き込みの場合
+                        Button("アップデート", action: {
+                            document.note!.downloadWriting()
+                        })
+                        Divider()
+                        Button("端末から削除", action: {
+                            document.note!.delete()
+                        })
+                    }
                 } else {
                     Button(action: {
                         // 共有キーの取得と書き込みのアップロード
