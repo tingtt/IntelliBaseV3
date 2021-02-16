@@ -143,8 +143,7 @@ struct NoteStruct {
         let pageCount: Int = Int((interface.content[0]["page_count"] as! NSString).doubleValue)
         
         for pageNum in 1..<pageCount+1 {
-            let url: URL = URL(string: HomePageUrl(lastDirectoryUrl: "uploadedData/writing", fileName: "writing\(String(describing: writings.share_id))_page\(String(describing: pageNum))").getFullPath())!
-            let downloadTask = URLSession.shared.downloadTask(with: url) { location, response, error in
+            let downloadTask = URLSession.shared.downloadTask(with: URL(string: HomePageUrl(lastDirectoryUrl: "uploadedData/writing", fileName: "writing\(String(describing: writings.share_id!))_page\(String(describing: pageNum))").getFullPath())!) { location, response, error in
                 // ダウンロードデータの一時保存URL
     //            print("Debug : Saved as temp to \(location!)")
 
@@ -162,6 +161,7 @@ struct NoteStruct {
             downloadTask.resume()
             while downloadTask.state != .completed {}
         }
+        print("Debug : Download writing data completed.")
     }
     
     func delete() {
