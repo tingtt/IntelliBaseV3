@@ -44,7 +44,7 @@ struct DocumentPopup: View {
                     Button(action: {
                         // 保存済みの共有キーを取得してクリップボードにコピー
                         let writings: Note = CoreDataOperation().select(entity: .note, conditionStr: "id = \(document.note!.id)")[0]
-                        UIPasteboard.general.setValue(writings.share_key! as String, forPasteboardType: "public.text")
+                        UIPasteboard.general.string = writings.share_key! as String
                     }, label: {
                         Text("共有キーをコピー")
                     })
