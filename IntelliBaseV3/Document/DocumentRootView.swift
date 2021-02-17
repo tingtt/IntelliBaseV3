@@ -86,7 +86,11 @@ struct DocumentRootView: View {
         MagnificationGesture(minimumScaleDelta: 0.1)
             .onChanged { val in
                 if lastScaleValue * val > 0.5 {
-                    self.nowScalingValue = self.lastScaleValue * val
+                    if self.lastScaleValue * val < 3 {
+                        self.nowScalingValue = self.lastScaleValue * val
+                    } else {
+                        self.nowScalingValue = 3
+                    }
                 }
 
             //... anything else e.g. clamping the newScale
