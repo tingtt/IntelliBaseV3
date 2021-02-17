@@ -267,7 +267,7 @@ struct DocumentRootView: View {
                     dismissButton: .default(
                         Text("OK"),
                         action: {
-//                            allNoteManager.deleteNote(id: document.id)
+                            allNoteManager.deleteNote(id: document.id)
                             // ホーム画面へ戻る
                             mode.wrappedValue.dismiss()
                         }
@@ -279,7 +279,7 @@ struct DocumentRootView: View {
                     dismissButton: .default(
                         Text("OK"),
                         action: {
-//                            allNoteManager.deleteNote(id: document.id)
+                            allNoteManager.deleteNote(id: document.id)
                             // ホーム画面へ戻る
                             mode.wrappedValue.dismiss()
                         }

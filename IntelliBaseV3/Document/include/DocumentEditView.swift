@@ -16,19 +16,13 @@ struct DocumentEditView: View {
     @ObservedObject var drawingManager: DrawingManager
     @ObservedObject var canvasManager: CanvasManager
     
-    init(pdfKitView: Binding<PDFKitView>, noteId: Int, pageNum: Int = 1) {
+    init(pdfKitView: Binding<PDFKitView>, noteId: Int, readOnly:Bool = false, pageNum: Int = 1) {
         self._pdfKitView = pdfKitView
         
         self.noteId = noteId
         let drawingManager = DrawingManager(noteId: noteId)
 //        self._drawingManager = State(initialValue: drawingManager)
         self.drawingManager = drawingManager
-        var readOnly = false
-        let note:Note = CoreDataOperation().select(entity: .note, conditionStr: "id = \(noteId)")[0]
-        if note.account_id != note.share_account_id {
-            readOnly = true
-//            print("Debug : Read only true.")
-        }
         self.canvasManager = CanvasManager(drawingManager: drawingManager, pageNum: pageNum, readOnly: readOnly)
     }
     

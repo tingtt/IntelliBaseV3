@@ -23,7 +23,11 @@ struct HomeList: View {
         
         // ログイン中のアカウントを取得
         let accounts: Array<Account> = coreData.select(entity: .account, conditionStr: "login = true")
-        accountId = accounts[0].id as! Int
+        if accounts.count == 1 {
+            accountId = accounts[0].id as! Int
+        } else {
+            accountId = 0
+        }
         
         // 最近購入された本を取得
 //        print("Debug : Load recently purchased books.")

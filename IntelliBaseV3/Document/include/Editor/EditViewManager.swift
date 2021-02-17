@@ -13,6 +13,13 @@ class EditViewManager: ObservableObject {
     init() {}
     
     func loadView(pdfKitView: Binding<PDFKitView>, noteId: Int, pageNum: Int = 1) {
-        view = DocumentEditView(pdfKitView: pdfKitView, noteId: noteId, pageNum: pageNum)
+        var readOnly = false
+        let notes: [Note] = CoreDataOperation().select(entity: .note, conditionStr: "id = \(noteId)")
+        if notes.count == 1 {
+            if notes[0].account_id != notes[0].share_account_id {
+                readOnly = true
+            }
+            view = DocumentEditView(pdfKitView: pdfKitView, noteId: noteId, readOnly: readOnly, pageNum: pageNum)
+        }
     }
 }

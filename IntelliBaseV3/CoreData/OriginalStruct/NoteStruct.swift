@@ -48,42 +48,8 @@ struct NoteStruct {
             shareKey = fetchResults[0].share_key!
             shareAccountId = fetchResults[0].share_account_id as! Int
             shareId = Int(truncating: fetchResults[0].share_id!)
-        } else {
-            // no
-            
-            // init insert vslurs array
-            var insertValues: Dictionary<String,String> = [:]
-            
-            // get info from api
-            let interface = Interface(apiFileName: "get_note", parameter: ["id": "\(id)"], sync: true)
-            while interface.isDownloading {}
-            // download complete to continue ↓
-            
-            // success ?
-            if !interface.error {
-                let result = interface.content
-                if result.count == 0 {
-                    // Error
-                    print("Error : Api returned empty data. [ \(interface.apiPath) ]")
-                } else {
-                    // loop in record
-                    for (key, value) in result[0] {
-                        insertValues[key] = value as? String
-                    }
-                }
-            }
-            // insert book info to core data
-            if coreData.insert(entity: entity, values: insertValues) {
-                // success
-                
-                // fetch inserted data
-                let fetchResults2: Array<Book> = coreData.select(entity: entity, conditionStr: "id == \(id)", sort: ["id":false])
-                titleStr = fetchResults2[0].title!
-//                account = fetchResults2[0].account_id as! Int
-//                shareBool = fetchResults2[0].share as! Bool
-//                book = fetchResults2[0].book_id as! Int
-            }
         }
+        
         self.id = id
         self.title = titleStr
         self.book_id = book
