@@ -87,8 +87,19 @@ struct BookStruct: Identifiable {
         self.genre = GenreStruct(id: genreId)
         
         // ノートを取得
-        for note:Note in coreData.select(entity: .note, conditionStr: "book_id = \(id)", sort: ["update_date":false]) {
-            notes.append(NoteStruct(id: note.id as! Int))
+        let req = NSFetchRequest<NSFetchRequestResult>(entityName: "Note")
+        let predicateBookId = NSPredicate(format: "book_id == %@", NSNumber(value: id))
+        let predicateAccount = NSPredicate(format: "account_id == %@", (CoreDataOperation().select(entity: .account, conditionStr: "login == true")[0] as! Account).id!)
+        let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [predicateBookId, predicateAccount])
+        req.predicate = andPredicate
+        
+        do {
+            let writings: [Note] = try (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext.fetch(req) as! [Note]
+            for writing in writings {
+                notes.append(NoteStruct(id: writing.id as! Int))
+            }
+        } catch let error {
+            NSLog("\(error)")
         }
         
         return
