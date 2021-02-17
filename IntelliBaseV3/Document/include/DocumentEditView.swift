@@ -28,7 +28,7 @@ struct DocumentEditView: View {
     
     var body: some View {
         ZStack {
-            pdfKitView
+            pdfKitView.blur(radius: 5)
             ForEach(canvasManager.currentPageIndex, id: \.self){ index in
                 if index < canvasManager.canvases.count {
                     canvasManager.canvases[index]

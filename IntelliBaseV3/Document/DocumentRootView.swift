@@ -136,6 +136,7 @@ struct DocumentRootView: View {
                     )
             } else {
                 pdfKitView
+                    .blur(radius: 5)
                     .scaleEffect(self.nowScalingValue)
                     .position(x: position.width, y: position.height)
                     .gesture(SimultaneousGesture(pinch, drag))
