@@ -288,7 +288,6 @@ struct DocumentRootView: View {
             } else {
                 return Alert(
                     title: Text("ノートを閉じますか？"),
-                    message: Text("※一度閉じるとundoできなくなります。"),
                     primaryButton: .cancel(Text("No")),
                     secondaryButton: .default(
                         Text("Yes"),
