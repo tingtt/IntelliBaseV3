@@ -266,11 +266,12 @@ struct DocumentRootView: View {
             noteId = notes[0].id as! Int + 1
         }
         
+        let accountId = (coreData.select(entity: .account, conditionStr: "login = true")[0] as Account).id!
         _ = coreData.insert(
             entity: .note,
             values: [
                 "id":noteId,
-                "account_id": (coreData.select(entity: .account, conditionStr: "login = true")[0] as Account).id!,
+                "account_id": accountId,
                 "book_id": document.book.id,
                 "title": noteTitle,
                 "share": false,
@@ -278,6 +279,7 @@ struct DocumentRootView: View {
                 "update_date": Date(),
                 "share_id": 0,
                 "share_key":"",
+                "share_account_id":accountId,
                 "upload_date":Date(),
             ]
         )

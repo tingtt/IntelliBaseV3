@@ -54,8 +54,10 @@ struct LoginView: View {
 //                    print("Debug : Login verify \(loginVerify.verify).")
                     
                     if loginVerify.verify {
-                        // Navigation to menu.
                         self.accountId = loginVerify.id
+                        // 表示するノートをログイン中のアカウントのものへ切り替え
+                        NoteManager.shared.fetch()
+                        // Navigation to menu.
                         navActive = true
                     }
                 }
@@ -101,16 +103,6 @@ struct LoginView: View {
         .onAppear(perform: {
 //            print("Debug : Login view loaded.")
         })
-    }
-    
-    func loginVerify(email: String, password: String) -> Bool {
-        let loginInterface = LoginVerify(email: email, password: password)
-        
-        if loginInterface.verify {
-            self.accountId = loginInterface.id
-        }
-        
-        return loginInterface.verify
     }
 }
 

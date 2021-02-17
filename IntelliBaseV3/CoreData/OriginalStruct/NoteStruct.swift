@@ -13,9 +13,9 @@ struct NoteStruct {
     var id: Int
     var book_id: Int
     var share: Bool = false
-    var share_account_id = 0
-    var share_key: String = ""
-    var share_id: Int = 0
+    var share_account_id: Int
+    var share_key: String
+    var share_id: Int
     var public_share: Bool = false
     var title: String
     var account_id: Int
@@ -153,7 +153,7 @@ struct NoteStruct {
                         let data = try Data(contentsOf: tempFileUrl)
                         
                         let req = NSFetchRequest<NSFetchRequestResult>(entityName: "DrawingDoc")
-                        req.predicate = NSPredicate(format: "name == \(title)_note\(id)_page\(pageNum)")
+                        req.predicate = NSPredicate(format: "name == %@","\(title)_note\(id)_page\(pageNum)")
                         do {
                             let doc: [DrawingDoc] = try (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext.fetch(req) as! [DrawingDoc]
                             if doc.count == 1 {
@@ -228,7 +228,7 @@ struct NoteStruct {
             share_account_id = accountId
             
             _ = CoreDataOperation().update(entity: .note, conditionStr: "id = \(id)", values: ["share_key":shareInterface.content[0]["share_key"] as! String, "share_id":Int((shareInterface.content[0]["id"] as! NSString).doubleValue), "share":true])
-            share = true
+            share.toggle()
         }
         
         // upload
