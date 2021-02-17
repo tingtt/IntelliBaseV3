@@ -30,6 +30,7 @@ struct DocumentPopup: View {
     
     @State var deleteNoteAlert = false
     @State var shareOffAlert: Bool = false
+    @State var keyRegenerateAlert: Bool = false
     @State var sharedInformationAlert: Bool = false
     
     var body: some View {
@@ -59,10 +60,23 @@ struct DocumentPopup: View {
                         })
                         Divider()
                         Button(action: {
-                            // 共有キーの再取得
-                            document.note!.regenerateShareKey()
+                            keyRegenerateAlert.toggle()
                         }, label: {
                             Text("共有キーを再生成")
+                        })
+                        .alert(isPresented: $keyRegenerateAlert, content: {
+                            Alert(
+                                title: Text("共有キーを再生成しますか？"),
+                                message: Text("共有キーを再生成すると、すでに共有しているユーザ側で新しいキーを入力するまで見られなくなります。"),
+                                primaryButton: .cancel(Text("No")),
+                                secondaryButton: .default(
+                                    Text("Yes"),
+                                    action: {
+                                        // 共有キーの再取得
+                                        document.note!.regenerateShareKey()
+                                    }
+                                )
+                            )
                         })
                         Divider()
                         Button(action: {
