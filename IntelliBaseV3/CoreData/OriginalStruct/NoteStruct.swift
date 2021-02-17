@@ -137,14 +137,13 @@ struct NoteStruct {
     }
     
     func downloadWriting() {
-        let writings: Note = CoreDataOperation().select(entity: .note, conditionStr: "id = \(id)")[0]
         // シェアIDから書き込みのページ数を取得
-        let interface = Interface(apiFileName: "writings/get_page_count", parameter: ["share_id": "\(String(describing: writings.share_id!))"], sync: true)
+        let interface = Interface(apiFileName: "writings/get_page_count", parameter: ["share_id": "\(share_id)"], sync: true)
         while interface.isDownloading {}
         let pageCount: Int = Int((interface.content[0]["page_count"] as! NSString).doubleValue)
         
         for pageNum in 1..<pageCount+1 {
-            let downloadTask = URLSession.shared.downloadTask(with: URL(string: HomePageUrl(lastDirectoryUrl: "uploadedData/writing", fileName: "writing\(String(describing: writings.share_id!))_page\(String(describing: pageNum))").getFullPath())!) { location, response, error in
+            let downloadTask = URLSession.shared.downloadTask(with: URL(string: HomePageUrl(lastDirectoryUrl: "uploadedData/writing", fileName: "writing\(share_id)_page\(String(describing: pageNum))").getFullPath())!) { location, response, error in
                 // ダウンロードデータの一時保存URL
     //            print("Debug : Saved as temp to \(location!)")
 
@@ -154,7 +153,7 @@ struct NoteStruct {
                         let data = try Data(contentsOf: tempFileUrl)
                         
                         let req = NSFetchRequest<NSFetchRequestResult>(entityName: "DrawingDoc")
-                        req.predicate = NSPredicate(format: "name == \(writings.title!)_note\(String(describing: id))_page\(pageNum)")
+                        req.predicate = NSPredicate(format: "name == \(title)_note\(id)_page\(pageNum)")
                         do {
                             let doc: [DrawingDoc] = try (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext.fetch(req) as! [DrawingDoc]
                             if doc.count == 1 {
@@ -163,7 +162,7 @@ struct NoteStruct {
                                 try (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext.save()
                             } else {
                                 // isnert
-                                CoreDataManager.shared.addData(doc: DrawingDocument(id: UUID(), data: data, name: "\(writings.title!)_note\(String(describing: id))_page\(pageNum)"))
+                                CoreDataManager.shared.addData(doc: DrawingDocument(id: UUID(), data: data, name: "\(title)_note\(String(describing: id))_page\(pageNum)"))
                             }
                         } catch let error {
                             print("\(error)")
@@ -182,7 +181,7 @@ struct NoteStruct {
     }
     
     func delete() {
-        if share {
+        if share && share_account_id == account_id {
             deleteSharedWritings()
         }
         _ = CoreDataOperation().delete(entity: .note, conditionStr: "id = \(id)")
@@ -208,11 +207,12 @@ struct NoteStruct {
     
     mutating func uploadWritings() {
         if !share {
+            let accountId: Int = Int(truncating: (CoreDataOperation().select(entity: .account, conditionStr: "login = true")[0] as Account).id!)
             // 共有されていなければ共有キーを取得する
             let shareInterface = Interface(
                 apiFileName: "writings/generate_share_key",
                 parameter: [
-                    "account_id":"\(String(describing: (CoreDataOperation().select(entity: .account, conditionStr: "login = true")[0] as Account).id!))",
+                    "account_id":"\(accountId)",
                     "local_writing_id":"\(id)",
                     "local_writing_title":"\(title)",
                     "book_id":"\(book_id)"
@@ -225,6 +225,7 @@ struct NoteStruct {
             
             share_id = Int((shareInterface.content[0]["id"] as! NSString).doubleValue)
             share_key = shareInterface.content[0]["share_key"] as! String
+            share_account_id = accountId
             
             _ = CoreDataOperation().update(entity: .note, conditionStr: "id = \(id)", values: ["share_key":shareInterface.content[0]["share_key"] as! String, "share_id":Int((shareInterface.content[0]["id"] as! NSString).doubleValue), "share":true])
             share = true
