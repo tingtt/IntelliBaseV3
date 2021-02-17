@@ -33,12 +33,14 @@ struct DocumentRootView: View {
     // note delete alert
     @State var deleteNoteAlert = false
     @State var deleteIndexSet: IndexSet = IndexSet(integer: 0)
-    // note editor alert
-    @State var closeNoteAlertShown: Bool = false
     // new note sheet.
     @State private var documentName: String = ""
     @State var addShown: Bool = false
     @State var sheetNavigated: Bool = false
+    
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    @State var alertShown = false
+    @State var updateStatus: String = ""
     
     init(documentId: Int, isNote: Bool = false, openAsNewNote: Bool = false) {
         // PDFデータのパスを取得
@@ -90,25 +92,12 @@ struct DocumentRootView: View {
                     .navigationBarItems(
                         trailing:
                             Button(action: {
-                                closeNoteAlertShown.toggle()
+                                updateStatus = ""
+                                alertShown.toggle()
                             }) {
                                 CircleButton(icon: "text.badge.xmark")
                             }
                     )
-                    .alert(isPresented: $closeNoteAlertShown, content: {
-                        Alert(
-                            title: Text("ノートを閉じますか？"),
-                            message: Text("※一度閉じるとundoできなくなります。"),
-                            primaryButton: .cancel(Text("No")),
-                            secondaryButton: .default(
-                                Text("Yes"),
-                                action: {
-                                    document.note = nil
-                                    document.isNote = false
-                                }
-                            )
-                        )
-                    })
             } else {
                 pdfKitView
                     .position(x: position.width, y: position.height)
@@ -232,6 +221,85 @@ struct DocumentRootView: View {
 //                }
 //            }
         }
+        .onAppear(perform: {
+            // 共有キーのアップデート、
+            if document.isNote && document.note!.share && document.note!.account_id != document.note!.share_account_id {
+                // 取得した書き込みデータの場合、共有情報がアップデートされていないか確認する。
+                let interface = Interface(
+                    apiFileName: "writings/check_key_update_or_delete",
+                    parameter: [
+                        "account_id":"\(document.note!.share_account_id)",
+                        "book_id":"\(document.note!.book_id)",
+                        "share_key":"\(document.note!.share_key)",
+                        "local_writing_title":"\(document.note!.title)"
+                    ],
+                    sync: true
+                )
+                while interface.isDownloading {}
+                if interface.error {
+                    // ホーム画面へ戻る
+                    mode.wrappedValue.dismiss()
+                } else {
+                    let status: String = interface.content[0]["status"] as! String
+                    switch status {
+                    case "noChange":break
+                        
+                    case "keyChanged":
+                        updateStatus = "keyChanged"
+                        alertShown.toggle()
+                        break
+                        
+                    case "shareRejected":
+                        updateStatus = "shareRejected"
+                        alertShown.toggle()
+                        break
+                        
+                    default: break
+                    }
+                }
+            }
+        })
+        .alert(isPresented: $alertShown, content: {
+            if updateStatus == "keyChanged" {
+                return Alert(
+                    title: Text("共有キーが変更されました。"),
+                    message: Text("新しいキーを入力して取得し直してください。\n※取得済みの書き込みデータは削除されます。"),
+                    dismissButton: .default(
+                        Text("OK"),
+                        action: {
+//                            allNoteManager.deleteNote(id: document.id)
+                            // ホーム画面へ戻る
+                            mode.wrappedValue.dismiss()
+                        }
+                    )
+                )
+            } else if updateStatus == "shareRejected" {
+                return Alert(
+                    title: Text("共有が解除されました。\n※取得済みの書き込みデータは削除されます。"),
+                    dismissButton: .default(
+                        Text("OK"),
+                        action: {
+//                            allNoteManager.deleteNote(id: document.id)
+                            // ホーム画面へ戻る
+                            mode.wrappedValue.dismiss()
+                        }
+                    )
+                )
+            } else {
+                return Alert(
+                    title: Text("ノートを閉じますか？"),
+                    message: Text("※一度閉じるとundoできなくなります。"),
+                    primaryButton: .cancel(Text("No")),
+                    secondaryButton: .default(
+                        Text("Yes"),
+                        action: {
+                            document.note = nil
+                            document.isNote = false
+                        }
+                    )
+                )
+            }
+        })
         .background(Color("background1"))
         .navigationBarHidden(!showingMenu)
         .edgesIgnoringSafeArea([.top, .bottom])
