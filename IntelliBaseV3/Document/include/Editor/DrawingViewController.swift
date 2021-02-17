@@ -39,6 +39,8 @@ class DrawingViewController: UIViewController {
         // 背景透過
         v.backgroundColor = .clear
         v.isOpaque = false
+        // disallow finger drawing.
+        v.drawingPolicy = .pencilOnly
         return v
     }()
     
