@@ -82,13 +82,26 @@ struct DocumentRootView: View {
         }
     }
     
+    var pinch: some Gesture {
+        MagnificationGesture(minimumScaleDelta: 0.1)
+            .onChanged { val in
+                if lastScaleValue * val > 0.5 {
+                    self.nowScalingValue = self.lastScaleValue * val
+                }
+
+            //... anything else e.g. clamping the newScale
+            }.onEnded{ val in
+                self.lastScaleValue = nowScalingValue
+            }
+    }
+    
     var body: some View {
         ZStack {
             if document.isNote {
                 editViewManager.view
                     .scaleEffect(self.nowScalingValue)
                     .position(x: position.width, y: position.height)
-                    .gesture(drag)
+                    .gesture(SimultaneousGesture(pinch, drag))
                     .navigationBarItems(
                         trailing:
                             Button(action: {
@@ -100,9 +113,9 @@ struct DocumentRootView: View {
                     )
             } else {
                 pdfKitView
-                    .position(x: position.width, y: position.height)
-                    .gesture(drag)
                     .scaleEffect(self.nowScalingValue)
+                    .position(x: position.width, y: position.height)
+                    .gesture(SimultaneousGesture(pinch, drag))
                     .navigationBarItems(
                         trailing:
                             ZStack(alignment: .topLeading) {
@@ -200,26 +213,6 @@ struct DocumentRootView: View {
                     NextPrevButton(icon: "arrow.right")
                 }
             }
-//            HStack {
-//                if document.isNote {
-//                    Button(action: {
-//                        print("Debug : ")
-//                        print([
-//                            "canvasCount":editViewManager.view!.canvasManager.canvases.count,
-//                            "currentPage":editViewManager.view!.canvasManager.currentPageIndex[0],
-//                            "pdfCurrentPage1":pdfKitView.pdfKitRepresentedView.pdfView.currentPage!.pageRef!.pageNumber,
-//                            "pdfCurrentPage2":editViewManager.view!.pdfKitView.pdfKitRepresentedView.pdfView.currentPage!.pageRef!.pageNumber
-//                        ])
-//                    }){
-//                        Text("DempPageCount")
-//                    }
-//                    Button(action: {
-//                        print("\(editViewManager.view!.canvasManager.canvases[editViewManager.view!.canvasManager.currentPageIndex[0]])")
-//                    }) {
-//                        Text("DumpCanvasInfo")
-//                    }
-//                }
-//            }
         }
         .onAppear(perform: {
             // 共有キーのアップデート、
@@ -307,18 +300,6 @@ struct DocumentRootView: View {
         .onTapGesture(perform: {
             self.showingMenu.toggle()
         })
-        // zoom in/out
-        .gesture(MagnificationGesture(minimumScaleDelta: 0.1)
-            .onChanged { val in
-                if lastScaleValue * val > 0.5 {
-                    self.nowScalingValue = self.lastScaleValue * val
-                }
-
-            //... anything else e.g. clamping the newScale
-            }.onEnded{ val in
-                self.lastScaleValue = nowScalingValue
-            }
-        )
     }
     
     private func save(noteTitle: String) {
