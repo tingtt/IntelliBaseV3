@@ -18,7 +18,18 @@ import UIKit
 import PencilKit
 
 class DrawingViewController: UIViewController {
-
+    
+    var readOnly: Bool
+    
+    init(readOnly: Bool = false) {
+        self.readOnly = readOnly
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     lazy var canvas: PKCanvasView =  {
         let v = PKCanvasView()
         v.drawingPolicy = .anyInput
@@ -52,8 +63,12 @@ class DrawingViewController: UIViewController {
             canvas.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
         
-        toolPicker.setVisible(true, forFirstResponder: canvas)
-        toolPicker.addObserver(canvas)
+        if readOnly {
+            canvas.drawingGestureRecognizer.isEnabled = false
+        } else {
+            toolPicker.setVisible(true, forFirstResponder: canvas)
+            toolPicker.addObserver(canvas)
+        }
         canvas.delegate = self
         canvas.becomeFirstResponder()
         

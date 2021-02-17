@@ -21,9 +21,10 @@ struct DrawingWrapper: UIViewControllerRepresentable {
     
     var manager: DrawingManager
     var id: UUID
+    var readOnly: Bool = false
     
     func makeUIViewController(context: Context) -> DrawingViewController {
-        let viewController = DrawingViewController()
+        let viewController = DrawingViewController(readOnly: readOnly)
         viewController.drawingData = manager.getData(for: id)
         viewController.drawingChanged = { data in
             manager.update(data: data, for: id)

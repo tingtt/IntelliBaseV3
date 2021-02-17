@@ -13,11 +13,11 @@ class CanvasManager: ObservableObject {
     var drawingManager: DrawingManager
     @Published var currentPageIndex: [Int]
     
-    init(drawingManager: DrawingManager, pageNum: Int = 1){
+    init(drawingManager: DrawingManager, pageNum: Int = 1, readOnly: Bool = false){
         self.drawingManager = drawingManager
         self.currentPageIndex = [pageNum - 1]
         for index in 0..<drawingManager.docs.count {
-            canvases.append(DrawingWrapper(manager: drawingManager, id: drawingManager.docs[index].id))
+            canvases.append(DrawingWrapper(manager: drawingManager, id: drawingManager.docs[index].id, readOnly: readOnly))
         }
     }
     
