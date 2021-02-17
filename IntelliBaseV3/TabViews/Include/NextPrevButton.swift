@@ -16,9 +16,10 @@ struct NextPrevButton: View {
             Image(systemName: icon)
                 .foregroundColor(.primary)
         }
-        .frame(width: 77, height: 77)
+        .frame(width: 50, height: 700)
         .background(Color("button"))
-        .cornerRadius(30)
+        .cornerRadius(15)
         .shadow(color: Color("buttonShadow"), radius: 20, x: 0, y: 20)
+        .opacity(0.6)
     }
 }
