@@ -53,6 +53,24 @@ struct DocumentThumbnailView: View {
                                 .padding(.bottom, 30)
                                 .rotation3DEffect(Angle(degrees:
                                                             Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
+                            if document.isNote {
+                                HStack{
+                                    EditedMark(icon: "pencil.and.outline")
+                                        .rotation3DEffect(Angle(degrees:
+                                                                    Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
+                                    if document.note!.share {
+                                        EditedMark(icon: "link.icloud")
+                                            .rotation3DEffect(Angle(degrees:
+                                                                        Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
+                                    }
+                                    
+                                }
+                                
+
+                                
+                            }
+                            
+                            
                         }
                         .frame(width: 246, height: 360)
                     }

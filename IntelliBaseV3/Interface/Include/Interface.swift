@@ -56,7 +56,7 @@ public class Interface {
         let task =  URLSession.shared.dataTask(with: request as URLRequest){
             data, response, error in
             
-//            print("Debug : Try request to \(self.apiPath)\(self.postParamStr)")
+            print("Debug : Try request to \(self.apiPath)\(self.postParamStr)")
             
             if let error = error {
                 print("error is \(String(describing: error))")

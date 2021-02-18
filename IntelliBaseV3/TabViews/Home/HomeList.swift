@@ -108,6 +108,11 @@ struct HomeList: View {
                 // ノートがあったら
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 6.0) {
+                        Button(action: { getSharedWritingSheet.toggle() }) {
+                            PlusButton(icon: "plus")
+            //                        .sheet(isPresented: self.$showLoginStatus) { LoginView() }
+                        }
+                        Spacer()
                         ForEach(noteManager.notes, id: \.id) { note in
                             DocumentThumbnailView(id: note.id, isNote: true)
                         }
