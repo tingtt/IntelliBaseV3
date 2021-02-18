@@ -40,43 +40,39 @@ struct DocumentPopup: View {
                 // ノートの場合
                 Text(self.document.note!.title)
                 Divider()
-                if document.note!.share {
-                    // 共有中
-                    if document.note!.share_account_id == (CoreDataOperation().select(entity: .account, conditionStr: "login == true")[0] as! Account).id as! Int {
-                        // 自分の共有書き込みの場合
-                        Button(action: {
+                if document.note!.share_account_id == (CoreDataOperation().select(entity: .account, conditionStr: "login == true")[0] as! Account).id as! Int {
+                    // own
+                    if document.note!.share {
+                        // shared
+                        Button("共有キーをコピー", action: {
                             // 保存済みの共有キーを取得してクリップボードにコピー
                             let writings: Note = CoreDataOperation().select(entity: .note, conditionStr: "id = \(document.note!.id)")[0]
                             UIPasteboard.general.string = writings.share_key! as String
-                        }, label: {
-                            Text("共有キーをコピー")
                         })
                         Divider()
-                        Button(action: {
+                        Button("共有した書き込みのアップデート", action: {
                             // 共有データのアップデート
                             document.note!.updateSharedData()
-                        }, label: {
-                            Text("共有した書き込みのアップデート")
                         })
                         Divider()
                         Button(action: {
                             keyRegenerateAlert.toggle()
                         }, label: {
                             Text("共有キーを再生成")
-                        })
-                        .alert(isPresented: $keyRegenerateAlert, content: {
-                            Alert(
-                                title: Text("共有キーを再生成しますか？"),
-                                message: Text("共有キーを再生成すると、すでに共有しているユーザ側で新しいキーを入力するまで見られなくなります。"),
-                                primaryButton: .cancel(Text("No")),
-                                secondaryButton: .default(
-                                    Text("Yes"),
-                                    action: {
-                                        // 共有キーの再取得
-                                        document.note!.regenerateShareKey()
-                                    }
-                                )
-                            )
+                                .alert(isPresented: $keyRegenerateAlert, content: {
+                                    Alert(
+                                        title: Text("共有キーを再生成しますか？"),
+                                        message: Text("共有キーを再生成すると、すでに共有しているユーザ側で新しいキーを入力するまで見られなくなります。"),
+                                        primaryButton: .cancel(Text("No")),
+                                        secondaryButton: .default(
+                                            Text("Yes"),
+                                            action: {
+                                                // 共有キーの再取得
+                                                document.note!.regenerateShareKey()
+                                            }
+                                        )
+                                    )
+                                })
                         })
                         Divider()
                         Button(action: {
@@ -85,59 +81,74 @@ struct DocumentPopup: View {
                         }, label: {
                             Text("共有をやめる")
                                 .foregroundColor(.red)
-                        })
-                        .alert(isPresented: $shareOffAlert, content: {
-                            Alert(
-                                title: Text("共有をやめますか？"),
-                                message: Text("共有をやめると同じ共有キーでの共有ができなくなり、すでに共有しているユーザも閲覧することができなくなります。"),
-                                primaryButton: .cancel(Text("No")),
-                                secondaryButton: .default(
-                                    Text("Yes"),
-                                    action: {
-                                        // 共有の解除
-                                        document.note!.shareOff()
-                                    }
-                                )
-                            )
+                                .alert(isPresented: $shareOffAlert, content: {
+                                    Alert(
+                                        title: Text("共有をやめますか？"),
+                                        message: Text("共有をやめると同じ共有キーでの共有ができなくなり、すでに共有しているユーザが閲覧することができなくなります。"),
+                                        primaryButton: .cancel(Text("No")),
+                                        secondaryButton: .default(
+                                            Text("Yes"),
+                                            action: {
+                                                // 共有の解除
+                                                document.note!.shareOff()
+                                            }
+                                        )
+                                    )
+                                })
                         })
                     } else {
-                        // 取得した共有書き込みの場合
-                        Button("アップデート", action: {
-                            document.note!.downloadWriting()
-                        })
-                        Divider()
-                        Button("端末から削除", action: {
-                            document.note!.delete()
+                        // not shared
+                        Button("共有する", action: {
+                            // 共有キーの取得と書き込みのアップロード
+                            document.note!.shareOn()
                         })
                     }
-                } else {
+                    Divider()
                     Button(action: {
-                        // 共有キーの取得と書き込みのアップロード
-                        document.note!.shareOn()
+                        deleteNoteAlert.toggle()
                     }, label: {
-                        Text("共有する")
+                        Text("ノートの削除")
+                            .foregroundColor(.red)
+                            .alert(isPresented: $deleteNoteAlert, content: {
+                                Alert(
+                                    title: Text("ノートを削除しますか？"),
+                                    primaryButton: .cancel(Text("No")),
+                                    secondaryButton: .default(
+                                        Text("Yes"),
+                                        action: {
+                                            NoteManager.shared.deleteNote(id: document.note!.id)
+                                            showingSheet.toggle()
+                                        }
+                                    )
+                                )
+                            })
+                    })
+                } else {
+                    // 取得した共有書き込みの場合
+                    Button("アップデート", action: {
+                        document.note!.downloadWriting()
+                    })
+                    Divider()
+                    Button(action: {
+                        deleteNoteAlert.toggle()
+                    }, label: {
+                        Text("端末から削除")
+                            .foregroundColor(.red)
+                            .alert(isPresented: $deleteNoteAlert, content: {
+                                Alert(
+                                    title: Text("取得したデータを削除しますか？"),
+                                    primaryButton: .cancel(Text("No")),
+                                    secondaryButton: .default(
+                                        Text("Yes"),
+                                        action: {
+                                            NoteManager.shared.deleteNote(id: document.note!.id)
+                                            showingSheet.toggle()
+                                        }
+                                    )
+                                )
+                            })
                     })
                 }
-                Divider()
-                Button(action: {
-                    deleteNoteAlert.toggle()
-                }, label: {
-                    Text("ノートの削除")
-                    .foregroundColor(.red)
-                })
-                .alert(isPresented: $deleteNoteAlert, content: {
-                    Alert(
-                        title: Text("ノートを削除しますか？"),
-                        primaryButton: .cancel(Text("No")),
-                        secondaryButton: .default(
-                            Text("Yes"),
-                            action: {
-                                NoteManager.shared.deleteNote(id: document.note!.id)
-                                showingSheet.toggle()
-                            }
-                        )
-                    )
-                })
             } else {
                 // 本の場合
 //                Button(action: {
