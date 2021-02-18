@@ -163,25 +163,56 @@ struct DocumentPopup: View {
                 }, label: {
                     Text("ノートで開く")
                         .sheet(isPresented: $openAsNote, content: {
-                            NavigationView(content: {
-                                List {
-                                    ForEach(0..<document.book.notes.count) { index in
-                                        if index < document.book.notes.count {
-                                            Button(document.book.notes[index].title){
-                                                openAsNote.toggle()
-                                                showingSheet.toggle()
-                                                print("Debug : Open note with ID -> \(document.book.notes[index].id)")
-                                                navigateWithNoteId = document.book.notes[index].id
+                            ScrollView(.vertical){
+                                let count = document.book.notes.count
+                                let rowCount = (Double(count + 1) / Double(2)).rounded(.up)
+                                ForEach(0..<Int(rowCount)){ row in
+                                    Spacer()
+                                    HStack(alignment: .center, spacing: 8){
+                                        ForEach(0..<2){ column in
+                                            let index = row * 2 + column
+                                            if index == 0 {
+                                                // plus button
+                                                Button(action: {
+                                                    openAsNote.toggle()
+                                                    showingSheet.toggle()
+                                                    navigateAsNewNote.toggle()
+                                                }){
+                                                    Text("新規ノート")
+                                                }
+                                                .frame(width: 250, height: 360)
+                                                .frame(maxWidth: .infinity)
+                                                .shadow(color: Color("backgroundShadow3"), radius: 20, x: 0, y: 20)
+                                            }else if index - 1 < count {
+                                                // thumbnail
+                                                VStack {
+                                                    if let _uiImage = document.book.thumbnailUIImage {
+                                                        Image(uiImage: _uiImage)
+                                                            .resizable()
+                                                            .renderingMode(.original)
+                                                            .frame(width: 240, height: 330)
+                                                            .padding(.bottom, 30)
+                                                    }
+                                                    Text("\(document.book.notes[index - 1].title)")
+                                                        .offset(y: -32)
+                                                }
+//                                                }
+                                                .frame(height: 480)
+                                                .frame(maxWidth: .infinity)
+                                                .shadow(color: Color("backgroundShadow3"), radius: 20, x: 0, y: 20)
+                                                .onTapGesture {
+                                                    openAsNote.toggle()
+                                                    showingSheet.toggle()
+                                                    print("Debug : Open note with ID -> \(document.book.notes[index - 1].id)")
+                                                    navigateWithNoteId = document.book.notes[index - 1].id
+                                                }
+                                            } else {
+                                                Spacer().frame(maxWidth: .infinity)
                                             }
                                         }
                                     }
-                                    Button("新規ノート"){
-                                        openAsNote.toggle()
-                                        showingSheet.toggle()
-                                        navigateAsNewNote.toggle()
-                                    }
                                 }
-                            })
+                            }
                         })
 //                    NavigationLink(destination: DocumentRootView(documentId: document.id, isNote: document.isNote, openAsNewNote: true), isActive: $navigateAsNewNote){}
                 })

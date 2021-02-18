@@ -19,6 +19,8 @@ struct BookStruct: Identifiable {
     // Note info
     var notes: [NoteStruct] = []
     
+    var thumbnailUIImage: UIImage? = nil
+    
     init(id: Int){
         let entity: CoreDataEnumManager.EntityName = .book
         let coreData = CoreDataOperation()
@@ -37,6 +39,13 @@ struct BookStruct: Identifiable {
             title = fetchResults[0].title!
             authorId = fetchResults[0].author_id as! Int
             genreId = fetchResults[0].genre_id as! Int
+            
+            do {
+                let thumbnailData = try Data(contentsOf: (FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]).appendingPathComponent("thumbnail_\(id).png"))
+                thumbnailUIImage = UIImage(data: thumbnailData)
+            } catch let error {
+                print(error)
+            }
         } else {
             // no
             
