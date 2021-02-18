@@ -32,7 +32,7 @@ struct DocumentRootView: View {
     
     // note delete alert
     @State var deleteNoteAlert = false
-    @State var deleteIndexSet: IndexSet = IndexSet(integer: 0)
+    @State var deleteNoteId = 0
     // new note sheet.
     @State private var documentName: String = ""
     @State var addShown: Bool = false
@@ -173,65 +173,87 @@ struct DocumentRootView: View {
         }
         .sheet(isPresented: $addShown, content: {
             NavigationView(content: {
-                List {
-                    ForEach(0..<notes.count) { index in
-                        if index < notes.count {
-                            Button(
-                                action: {
-                                    editViewManager.loadView(
-                                        pdfKitView: $pdfKitView,
-                                        noteId: notes[index].id,
-                                        pageNum: (pdfKitView.pdfKitRepresentedView.pdfView.currentPage?.pageRef!.pageNumber)!
-                                    )
-                                    
-                                    document.note = NoteStruct(id: notes[index].id)
-                                    document.isNote = true
-                                    addShown.toggle()
-                                },
-                                label: {
-                                    Text(notes[index].title)
+                ScrollView(.vertical){
+                    let count = notes.count
+                    let rowCount = (Double(count + 1) / Double(2)).rounded(.up)
+                    ForEach(0..<Int(rowCount)){ row in
+                        Spacer()
+                        HStack(alignment: .center, spacing: 8){
+                            ForEach(0..<2){ column in
+                                let index = row * 2 + column
+                                if index == 0 {
+                                    // plus button
+                                    VStack {
+                                        NavigationLink(
+                                            destination:
+                                                VStack {
+                                                    Text("Enter note title:")
+                                                    
+                                                    TextField("Enter note title here...", text: $documentName, onCommit: {
+                                                        save(noteTitle: documentName)
+                                                    })
+                                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                    
+                                                    Button("Create") {
+                                                        save(noteTitle: documentName)
+                                                    }
+                                                }.padding(),
+                                            isActive: $sheetNavigated,
+                                            label: {
+                                                PlusButton(width: 180)
+                                            }
+                                        )
+                                    }
+                                    .frame(height: 480)
+                                    .frame(maxWidth: .infinity)
+                                    .shadow(color: Color("backgroundShadow3"), radius: 20, x: 0, y: 20)
+                                    .onTapGesture {
+                                        sheetNavigated.toggle()
+                                    }
+                                }else if index - 1 < count {
+                                    // thumbnail
+                                    let note = notes[index - 1]
+                                    thumbnailWithInfoIconsView(note: note, thumbnailUIImage: document.book.thumbnailUIImage)
+                                        .frame(height: 480)
+                                        .frame(maxWidth: .infinity)
+                                        .shadow(color: Color("backgroundShadow3"), radius: 20, x: 0, y: 20)
+                                        .onTapGesture {
+                                            editViewManager.loadView(
+                                                pdfKitView: $pdfKitView,
+                                                noteId: note.id,
+                                                pageNum: (pdfKitView.pdfKitRepresentedView.pdfView.currentPage?.pageRef!.pageNumber)!
+                                            )
+                                            
+                                            document.note = NoteStruct(id: note.id)
+                                            document.isNote = true
+                                            addShown.toggle()
+                                        }
+//                                    .onLongPressGesture {
+//
+//                                    }
+//                                    .popover(isPresented: ){
+//                                        Button("削除"){
+//                                            deleteNoteAlert.toggle()
+//                                        }
+//                                        .alert(isPresented: $deleteNoteAlert) {
+//                                            Alert(
+//                                                title: Text("ノートを削除しますか？"),
+//                                                message: Text("\(allNoteManager.notes[deleteNoteId].title)"),
+//                                                primaryButton: .cancel(Text("No")),
+//                                                secondaryButton: .default(Text("Yes"),action: {// TODO: show alert
+//                                                    // HomeListの表示を同期
+//                                                    allNoteManager.deleteNote(id: note.id)
+////                                                    notes.remove(at: note.id)
+//                                                })
+//                                            )
+//                                        }
+//                                    }
+                                } else {
+                                    Spacer().frame(maxWidth: .infinity)
                                 }
-                            )
+                            }
                         }
                     }
-                    .onDelete(perform: { indexSet in
-                        deleteIndexSet = indexSet
-                        deleteNoteAlert.toggle()
-                    })
-                    .alert(isPresented: $deleteNoteAlert) {
-                        Alert(
-                            title: Text("ノートを削除しますか？"),
-//                                        message: Text("\(allNoteManager.notes[deleteIndexSet.map({$0})[0]].title)"),
-                            primaryButton: .cancel(Text("No")),
-                            secondaryButton: .default(Text("Yes"),action: {// TODO: show alert
-                                let mapedIndexSet: [Int] = deleteIndexSet.map({$0})
-                                mapedIndexSet.forEach({ index in
-                                    // HomeListの表示を同期
-                                    allNoteManager.deleteNote(id: notes[index].id)
-                                    notes.remove(at: index)
-                                })
-                            })
-                        )
-                    }
-                    NavigationLink(
-                        destination:
-                            VStack {
-                                Text("Enter note title:")
-                                
-                                TextField("Enter note title here...", text: $documentName, onCommit: {
-                                    save(noteTitle: documentName)
-                                })
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                
-                                Button("Create") {
-                                    save(noteTitle: documentName)
-                                }
-                            }.padding(),
-                        isActive: $sheetNavigated,
-                        label: {
-                            Text("新規ノート")
-                        }
-                    )
                 }
             })
         })
