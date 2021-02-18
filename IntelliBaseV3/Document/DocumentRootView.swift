@@ -110,6 +110,7 @@ struct DocumentRootView: View {
                     .navigationBarItems(
                         leading:
                             Button(action: {
+                                showingMenu = false
                                 mode.wrappedValue.dismiss()
                             }){
                                 CircleButton(icon: "chevron.backward.square")
@@ -131,6 +132,7 @@ struct DocumentRootView: View {
                     .navigationBarItems(
                         leading:
                             Button(action: {
+                                showingMenu = false
                                 mode.wrappedValue.dismiss()
                             }){
                                 CircleButton(icon: "chevron.backward.square")
@@ -319,8 +321,8 @@ struct DocumentRootView: View {
             }
         })
         .background(Color("background1"))
-        .navigationBarHidden(!showingMenu)
         .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(!showingMenu)
         .edgesIgnoringSafeArea([.top, .bottom])
 //        .statusBar(hidden: true)
         .gesture(TapGesture(count: 1).onEnded({showingMenu.toggle()}))

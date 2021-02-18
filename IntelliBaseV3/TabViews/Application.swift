@@ -25,6 +25,7 @@ struct Application: View {
         ZStack(alignment: .top) {
             TabView{
                 HomeTabView()
+                    .navigationBarHidden(true)
                     .animation(Animation.linear)
                     .tabItem {
                         HStack {
@@ -32,6 +33,7 @@ struct Application: View {
                         }
                     }.tag(1)
                 LibraryTabView()
+                    .navigationBarHidden(true)
                     .animation(Animation.linear)
                     .tabItem {
                         VStack {
@@ -45,11 +47,11 @@ struct Application: View {
             
             HStack {
                 MenuButton(show: $show)
-                    .offset(x: -40, y: -70)
+                    .offset(x: -40, y: 0)
                 Spacer()
                 
                 MenuRight(show: $showProfile)
-                    .offset(x: -16, y: -70)
+                    .offset(x: -16, y: 0)
             }
             .edgesIgnoringSafeArea(.top)
             
