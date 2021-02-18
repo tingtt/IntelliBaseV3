@@ -173,25 +173,39 @@ struct DocumentPopup: View {
                                             let index = row * 2 + column
                                             if index == 0 {
                                                 // plus button
-                                                Button(action: {
+                                                VStack {
+                                                    PlusButton(width: 180)
+                                                }
+                                                .frame(height: 480)
+                                                .frame(maxWidth: .infinity)
+                                                .shadow(color: Color("backgroundShadow3"), radius: 20, x: 0, y: 20)
+                                                .onTapGesture {
                                                     openAsNote.toggle()
                                                     showingSheet.toggle()
                                                     navigateAsNewNote.toggle()
-                                                }){
-                                                    Text("新規ノート")
                                                 }
-                                                .frame(width: 250, height: 360)
-                                                .frame(maxWidth: .infinity)
-                                                .shadow(color: Color("backgroundShadow3"), radius: 20, x: 0, y: 20)
                                             }else if index - 1 < count {
                                                 // thumbnail
                                                 VStack {
+                                                    let note = document.book.notes[index - 1]
                                                     if let _uiImage = document.book.thumbnailUIImage {
-                                                        Image(uiImage: _uiImage)
-                                                            .resizable()
-                                                            .renderingMode(.original)
-                                                            .frame(width: 240, height: 330)
-                                                            .padding(.bottom, 30)
+                                                        ZStack {
+                                                            Image(uiImage: _uiImage)
+                                                                .resizable()
+                                                                .renderingMode(.original)
+                                                                .frame(width: 240, height: 330)
+                                                                .padding(.bottom, 30)
+                                                            HStack {
+                                                                EditedMark(icon: "pencil.and.outline")
+                                                                if note.share {
+                                                                    if  note.account_id == note.share_account_id {
+                                                                            EditedMark(icon: "link")
+                                                                    } else {
+                                                                        EditedMark(icon: "link.icloud")
+                                                                    }
+                                                                }
+                                                            }.frame(width: 250, height: 370, alignment: .topLeading)
+                                                        }
                                                     }
                                                     Text("\(document.book.notes[index - 1].title)")
                                                         .offset(y: -32)

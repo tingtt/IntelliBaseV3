@@ -59,9 +59,14 @@ struct DocumentThumbnailView: View {
                                         .rotation3DEffect(Angle(degrees:
                                                                     Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
                                     if document.note!.share {
-                                        EditedMark(icon: "link.icloud")
-                                            .rotation3DEffect(Angle(degrees:
-                                                                        Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
+                                        if document.note!.account_id == document.note!.share_account_id {
+                                            EditedMark(icon: "link")
+                                                .rotation3DEffect(Angle(degrees:
+                                                                            Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
+                                        } else {
+                                            EditedMark(icon: "link.icloud")
+                                                .rotation3DEffect(Angle(degrees:
+                                                                            Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))}
                                     }
                                     
                                 }

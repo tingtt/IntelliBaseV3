@@ -10,6 +10,8 @@ import SwiftUI
 struct PlusButton: View {
     
     var icon = "plus"
+    var width: CGFloat = 150
+    var height: CGFloat = 250
     
     var body: some View {
         return HStack {
@@ -17,7 +19,7 @@ struct PlusButton: View {
                 .foregroundColor(.primary)
                 .font(.system(size: 80))
         }
-        .frame(width: 150, height: 250)
+        .frame(width: width, height: height)
         .background(Color("button"))
         .cornerRadius(30)
         .shadow(color: Color("buttonShadow"), radius: 20, x: 0, y: 20)
