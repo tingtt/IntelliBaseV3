@@ -187,16 +187,28 @@ struct DocumentRootView: View {
                                         NavigationLink(
                                             destination:
                                                 VStack {
-                                                    Text("Enter note title:")
-                                                    
-                                                    TextField("Enter note title here...", text: $documentName, onCommit: {
+                                                    Image(systemName: "pencil.and.outline")
+                                                        .font(.system(size: 80))
+                                                        .foregroundColor(.primary)
+                                                        .padding()
+                                                    Text("ノートの新規作成")
+                                                        .font(.headline)
+                                                        .fontWeight(.heavy)
+                                                    TextField("ノートのタイトルを入力してください", text: $documentName, onCommit: {
                                                         save(noteTitle: documentName)
                                                     })
                                                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                    .padding()
                                                     
-                                                    Button("Create") {
-                                                        save(noteTitle: documentName)
-                                                    }
+                                                    Button(action: { save(noteTitle: documentName) }, label: {
+                                                        Text("作成")
+                                                            .bold()
+                                                            .frame(minWidth: 0, maxWidth: 100)
+                                                            .padding(.vertical)
+                                                            .accentColor(Color.white)
+                                                            .background(Color.blue)
+                                                            .cornerRadius(30)
+                                                    })
                                                 }.padding(),
                                             isActive: $sheetNavigated,
                                             label: {
