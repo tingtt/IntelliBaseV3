@@ -19,6 +19,8 @@ struct BookStruct: Identifiable {
     // Note info
     var notes: [NoteStruct] = []
     
+    var thumbnailUIImage: UIImage? = nil
+    
     init(id: Int){
         let entity: CoreDataEnumManager.EntityName = .book
         let coreData = CoreDataOperation()
@@ -37,6 +39,13 @@ struct BookStruct: Identifiable {
             title = fetchResults[0].title!
             authorId = fetchResults[0].author_id as! Int
             genreId = fetchResults[0].genre_id as! Int
+            
+            do {
+                let thumbnailData = try Data(contentsOf: (FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]).appendingPathComponent("thumbnail_\(id).png"))
+                thumbnailUIImage = UIImage(data: thumbnailData)
+            } catch let error {
+                print(error)
+            }
         } else {
             // no
             
@@ -92,6 +101,9 @@ struct BookStruct: Identifiable {
         let predicateAccount = NSPredicate(format: "account_id == %@", (CoreDataOperation().select(entity: .account, conditionStr: "login == true")[0] as! Account).id!)
         let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [predicateBookId, predicateAccount])
         req.predicate = andPredicate
+        
+        let sortDescripter = NSSortDescriptor(key: "update_date", ascending: false)
+        req.sortDescriptors = [sortDescripter]
         
         do {
             let writings: [Note] = try (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext.fetch(req) as! [Note]
