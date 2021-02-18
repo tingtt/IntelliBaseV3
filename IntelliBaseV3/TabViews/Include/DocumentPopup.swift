@@ -16,9 +16,14 @@ struct DocumentPopup: View {
     @State var shareToggle: Bool = false
     var navTitle: String = ""
     
-    init(showing: Binding<Bool>,bindedDocument: Binding<DocumentStruct>) {
+    @Binding var navigateAsNewNote: Bool
+    @Binding var navigateWithNoteId: Int?
+    
+    init(showing: Binding<Bool>,bindedDocument: Binding<DocumentStruct>, bindedNavigateFlag: Binding<Bool>, navigateWithNoteId: Binding<Int?>) {
         self._showingSheet = showing
         self._document = bindedDocument
+        self._navigateAsNewNote = bindedNavigateFlag
+        self._navigateWithNoteId = navigateWithNoteId
         if (document.isNote){
             self.navTitle = document.note!.title
         } else {
@@ -32,6 +37,8 @@ struct DocumentPopup: View {
     @State var shareOffAlert: Bool = false
     @State var keyRegenerateAlert: Bool = false
     @State var sharedInformationAlert: Bool = false
+    @State var openAsNote: Bool = false
+    @State var newNoteTiele: String = ""
     
     var body: some View {
         VStack{
@@ -151,12 +158,34 @@ struct DocumentPopup: View {
                 }
             } else {
                 // 本の場合
-//                Button(action: {
-//
-//                }, label: {
-//                    Text("ノートで開く")
-//                })
-//                Divider()
+                Button(action: {
+                    openAsNote.toggle()
+                }, label: {
+                    Text("ノートで開く")
+                        .sheet(isPresented: $openAsNote, content: {
+                            NavigationView(content: {
+                                List {
+                                    ForEach(0..<document.book.notes.count) { index in
+                                        if index < document.book.notes.count {
+                                            Button(document.book.notes[index].title){
+                                                openAsNote.toggle()
+                                                showingSheet.toggle()
+                                                print("Debug : Open note with ID -> \(document.book.notes[index].id)")
+                                                navigateWithNoteId = document.book.notes[index].id
+                                            }
+                                        }
+                                    }
+                                    Button("新規ノート"){
+                                        openAsNote.toggle()
+                                        showingSheet.toggle()
+                                        navigateAsNewNote.toggle()
+                                    }
+                                }
+                            })
+                        })
+//                    NavigationLink(destination: DocumentRootView(documentId: document.id, isNote: document.isNote, openAsNewNote: true), isActive: $navigateAsNewNote){}
+                })
+                Divider()
                 Button(action: {
                     // 本のストアページを開く
                     if let url = URL(string: HomePageUrl(lastDirectoryUrl: "Search", fileName: "product_detail.php", getParams: ["book_id":"\(document.book.id)"]).getFullPath()) {

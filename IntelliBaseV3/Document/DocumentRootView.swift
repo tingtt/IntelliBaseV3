@@ -42,6 +42,9 @@ struct DocumentRootView: View {
     @State var alertShown = false
     @State var updateStatus: String = ""
     
+    @State var openAsNewNote: Bool
+    @State var openAsNote: Bool
+    
     init(documentId: Int, isNote: Bool = false, openAsNewNote: Bool = false) {
         // PDFデータのパスを取得
         let document = DocumentStruct(id: documentId, isNote: isNote)
@@ -51,16 +54,12 @@ struct DocumentRootView: View {
         
         self._pdfKitView = State(initialValue: PDFKitView(url: dataPath))
         
+        self._openAsNewNote = State(initialValue: openAsNewNote)
+        self._openAsNote = State(initialValue: isNote)
+        
         if isNote {
             // init note edit view.
             editViewManager.loadView(pdfKitView: $pdfKitView, noteId: document.note!.id)
-        }
-        
-        if openAsNewNote {
-            addShown = true
-            if document.book.notes.count == 0 {
-                sheetNavigated = true
-            }
         }
     }
     
@@ -116,22 +115,11 @@ struct DocumentRootView: View {
                                 CircleButton(icon: "chevron.backward.square")
                             },
                         trailing:
-                            ZStack(alignment: .topLeading) {
-                                if notes.count == 0 {
-                                    Button(action: {
-                                        sheetNavigated.toggle()
-                                        addShown.toggle()
-                                    }) {
-                                        CircleButton(icon: "note.text.badge.plus")
-                                    }
-                                    
-                                } else {
-                                    Button(action: {
-                                        addShown.toggle()
-                                    }) {
-                                        CircleButton(icon: "note.text.badge.plus")
-                                    }
-                                }
+                            Button(action: {
+                                updateStatus = ""
+                                alertShown.toggle()
+                            }) {
+                                CircleButton(icon: "text.badge.xmark")
                             }
                     )
             } else {
@@ -196,6 +184,7 @@ struct DocumentRootView: View {
                                     
                                     document.note = NoteStruct(id: notes[index].id)
                                     document.isNote = true
+                                    addShown.toggle()
                                 },
                                 label: {
                                     Text(notes[index].title)
@@ -245,6 +234,13 @@ struct DocumentRootView: View {
             })
         })
         .onAppear(perform: {
+            if openAsNewNote {
+                addShown.toggle()
+                sheetNavigated.toggle()
+            } else if openAsNote {
+//                editViewManager.loadView(pdfKitView: $pdfKitView, noteId: document.note!.id)
+                print("Debug : isNote? -> \(document.isNote)")
+            }
             // 共有キーのアップデート、
             if document.isNote && document.note!.share && document.note!.account_id != document.note!.share_account_id {
                 // 取得した書き込みデータの場合、共有情報がアップデートされていないか確認する。

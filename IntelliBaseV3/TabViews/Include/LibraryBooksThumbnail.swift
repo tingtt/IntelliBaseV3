@@ -14,6 +14,8 @@ struct LibraryBooksThumbnail: View {
     @State var navSelection: Int? = nil
     @State var showingPopover: Bool = false
     @State var showingSheet: Bool = false
+    @State var navigateAsNewNote: Bool = false
+    @State var navigateWithNoteId: Int? = nil
     @State var document: DocumentStruct
     
     var thumbnailDataPath: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -81,14 +83,19 @@ struct LibraryBooksThumbnail: View {
             // https://stackoverflow.com/a/60138475
         }
         .popover(isPresented: $showingPopover) {
-            DocumentPopup(showing: $showingPopover,bindedDocument: self.$document)
+            DocumentPopup(showing: $showingPopover,bindedDocument: self.$document, bindedNavigateFlag: $navigateAsNewNote, navigateWithNoteId: $navigateWithNoteId)
         }
         .sheet(isPresented: $showingSheet) {
-            DocumentPopup(showing: $showingSheet,bindedDocument: self.$document)
+            DocumentPopup(showing: $showingSheet,bindedDocument: self.$document, bindedNavigateFlag: $navigateAsNewNote, navigateWithNoteId: $navigateWithNoteId)
         }
-//        .onAppear(perform: {
-//            print("Debug : thumbnail view loaded. id : \(self.document.id)")
-//        })
+        if !document.isNote {
+            // 新規ノートで開く用のNavigationLink
+            NavigationLink(destination: DocumentRootView(documentId: document.id, isNote: document.isNote, openAsNewNote: true), isActive: $navigateAsNewNote){}
+            ForEach(document.book.notes.indices) { index in
+                // 指定したIDのノートで開く用のNavigationLink
+                NavigationLink(destination: DocumentRootView(documentId: document.book.notes[index].id, isNote: true), tag: document.book.notes[index].id, selection: $navigateWithNoteId){}
+            }
+        }
     }
 }
 
