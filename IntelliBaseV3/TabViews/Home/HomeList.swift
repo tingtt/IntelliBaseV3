@@ -64,93 +64,86 @@ struct HomeList: View {
                     .font(.largeTitle)
                     .fontWeight(.heavy)
             }
-            if noteManager.mappedIds.count > 0 {
-                // ノートがあったら
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 6.0) {
-                        PlusButton(icon: "plus")
-                            .onTapGesture {
-                                showingPopover.toggle()
-                            }
-                            .popover(isPresented: $showingPopover){
-                                VStack{
-                                    Button(action: { getSharedWritingSheet.toggle() }) {
-                                        Text("共有キー入力")
-                                    }
-                                    .sheet(isPresented: $getSharedWritingSheet, content: {
-                                        VStack {
-                                            Image(systemName: "link.icloud")
-                                                .font(.system(size: 80))
-                                                .foregroundColor(.primary)
-                                                .padding()
-                                            Text("共有ノートの取得")
-                                                .font(.headline)
-                                                .fontWeight(.heavy)
-                                            TextField("共有キーを入力してください", text: $str)
-                                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                                .padding()
-                                            Button(action: {
-                                                let res: String? = noteManager.addSharedNote(shareKey: str)
-                                                if let _res = res {
-                                                    errorMessage = _res
-                                                    // 失敗時のアラート
-                                                    getSharedWritingAlert.toggle()
-                                                } else {
-                                                    getSharedWritingSheet.toggle()
-                                                }
-                                            }, label: {
-                                                Text("検索")
-                                                    .bold()
-                                                    .frame(minWidth: 0, maxWidth: 100)
-                                                    .padding(.vertical)
-                                                    .accentColor(Color.white)
-                                                    .background(Color.blue)
-                                                    .cornerRadius(30)
-                                            })
-                                            .alert(isPresented: $getSharedWritingAlert, content: {
-                                                if errorMessage.contains("本を所持していません") {
-                                                    return Alert(
-                                                        title: Text(errorMessage),
-                                                        primaryButton: .default(Text("ストアページを開く"), action: {
-                                                            // 本のストアページを開く
-                                                            let bookId = errorMessage[errorMessage.range(of: ":")!.upperBound...]
-                                                            if let url = URL(string: HomePageUrl(lastDirectoryUrl: "Search", fileName: "product_detail.php", getParams: ["book_id":"\(bookId)"]).getFullPath()) {
-                                                                UIApplication.shared.open(url)
-                                                            }
-                                                        }),
-                                                        secondaryButton: .default(Text("OK"), action: {})
-                                                    )
-                                                } else {
-                                                    return Alert(
-                                                        title: Text(errorMessage),
-                                                        dismissButton: .default(Text("OK"), action: {})
-                                                    )
-                                                }
-                                            })
-                                        }
-                                    })
-                                    Divider()
-                                    Button(action: { getSharedWritingSheet.toggle() }) {
-                                        Text("本からノートを作成")
-                                    }
-                                }
-                                .padding(.all)
-                            }
-                        Spacer()
-                        ForEach(noteManager.notes, id: \.id) { note in
-                            DocumentThumbnailView(id: note.id, isNote: true)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 6.0) {
+                    PlusButton(icon: "plus")
+                        .onTapGesture {
+                            showingPopover.toggle()
                         }
-                    }
-                    .padding(.leading, 30)
-                    .padding(.top, 30)
-                    .padding(.bottom, 40)
+                        .popover(isPresented: $showingPopover){
+                            VStack{
+                                Button(action: { getSharedWritingSheet.toggle() }) {
+                                    Text("共有キー入力")
+                                }
+                                .sheet(isPresented: $getSharedWritingSheet, content: {
+                                    VStack {
+                                        Image(systemName: "link.icloud")
+                                            .font(.system(size: 80))
+                                            .foregroundColor(.primary)
+                                            .padding()
+                                        Text("共有ノートの取得")
+                                            .font(.headline)
+                                            .fontWeight(.heavy)
+                                        TextField("共有キーを入力してください", text: $str)
+                                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                                            .padding()
+                                        Button(action: {
+                                            let res: String? = noteManager.addSharedNote(shareKey: str)
+                                            if let _res = res {
+                                                errorMessage = _res
+                                                // 失敗時のアラート
+                                                getSharedWritingAlert.toggle()
+                                            } else {
+                                                getSharedWritingSheet.toggle()
+                                            }
+                                        }, label: {
+                                            Text("検索")
+                                                .bold()
+                                                .frame(minWidth: 0, maxWidth: 100)
+                                                .padding(.vertical)
+                                                .accentColor(Color.white)
+                                                .background(Color.blue)
+                                                .cornerRadius(30)
+                                        })
+                                        .alert(isPresented: $getSharedWritingAlert, content: {
+                                            if errorMessage.contains("本を所持していません") {
+                                                return Alert(
+                                                    title: Text(errorMessage),
+                                                    primaryButton: .default(Text("ストアページを開く"), action: {
+                                                        // 本のストアページを開く
+                                                        let bookId = errorMessage[errorMessage.range(of: ":")!.upperBound...]
+                                                        if let url = URL(string: HomePageUrl(lastDirectoryUrl: "Search", fileName: "product_detail.php", getParams: ["book_id":"\(bookId)"]).getFullPath()) {
+                                                            UIApplication.shared.open(url)
+                                                        }
+                                                    }),
+                                                    secondaryButton: .default(Text("OK"), action: {})
+                                                )
+                                            } else {
+                                                return Alert(
+                                                    title: Text(errorMessage),
+                                                    dismissButton: .default(Text("OK"), action: {})
+                                                )
+                                            }
+                                        })
+                                    }
+                                })
+                                Divider()
+                                Button(action: { getSharedWritingSheet.toggle() }) {
+                                    Text("本からノートを作成")
+                                }
+                            }
+                            .padding(.all)
+                        }
                     Spacer()
+                    ForEach(noteManager.notes, id: \.id) { note in
+                        DocumentThumbnailView(id: note.id, isNote: true)
+                    }
                 }
-            } else {
-                // ノートがない場合
-                VStack{
-                    Text("ノートがありません")
-                }
+                .padding(.leading, 30)
+                .padding(.top, 30)
+                .padding(.bottom, 40)
+                Spacer()
             }
             
             HStack {
