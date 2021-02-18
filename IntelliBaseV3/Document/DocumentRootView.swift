@@ -187,31 +187,16 @@ struct DocumentRootView: View {
                                         NavigationLink(
                                             destination:
                                                 VStack {
-                                                    Image(systemName: "pencil.and.outline")
-                                                        .font(.system(size: 80))
-                                                        .foregroundColor(.primary)
-                                                        .padding()
-                                                    Text("ノートの新規作成")
-                                                        .font(.headline)
-                                                        .fontWeight(.heavy)
-                                                    TextField("ノートのタイトルを入力してください", text: $documentName, onCommit: {
+                                                    Text("Enter note title:")
+                                                    
+                                                    TextField("Enter note title here...", text: $documentName, onCommit: {
                                                         save(noteTitle: documentName)
                                                     })
                                                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                                                    .padding()
                                                     
-                                                    Button(action: { save(noteTitle: documentName) }, label: {
-                                                        Text("作成")
-                                                            .bold()
-                                                            .frame(minWidth: 0, maxWidth: 100)
-                                                            .padding(.vertical)
-                                                            .accentColor(Color.white)
-                                                            .background(Color.blue)
-                                                            .cornerRadius(30)
-                                                    })
-                    //                                Button("Create") {
-                    //                                    save(noteTitle: documentName)
-                    //                                }
+                                                    Button("Create") {
+                                                        save(noteTitle: documentName)
+                                                    }
                                                 }.padding(),
                                             isActive: $sheetNavigated,
                                             label: {
@@ -250,21 +235,6 @@ struct DocumentRootView: View {
 //                                        Button("削除"){
 //                                            deleteNoteAlert.toggle()
 //                                        }
-//                                        .alert(isPresented: $deleteNoteAlert) {
-                            }
-                        }
-                    }
-//                                                primaryButton: .cancel(Text("No")),
-//                                                secondaryButton: .default(Text("Yes"),action: {// TODO: show alert
-//                                                    // HomeListの表示を同期
-//                                                    allNoteManager.deleteNote(id: note.id)
-////                                                    notes.remove(at: note.id)
-//                                                })
-//                                            )
-//                                        }
-//                                    }
-                                } else {
-                                    Spacer().frame(maxWidth: .infinity)
 //                                        .alert(isPresented: $deleteNoteAlert) {
 //                                            Alert(
 //                                                title: Text("ノートを削除しますか？"),
