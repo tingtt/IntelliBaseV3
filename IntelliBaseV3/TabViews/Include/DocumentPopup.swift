@@ -242,9 +242,10 @@ struct DocumentPopup: View {
                 Divider()
                 Button(action: {
                     // 著者のページを開く
-                    if let url = URL(string: HomePageUrl(lastDirectoryUrl: "Search", fileName: "search.php", getParams: ["keyword":"\(document.book.auther.name)"]).getFullPath()) {
+                    if let url = URL(string: HomePageUrl(lastDirectoryUrl: "Search", fileName: "search.php", getParams: ["title":"\(String(describing: document.book.auther.name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!))"]).getFullPath()) {
                         UIApplication.shared.open(url)
                     }
+                    print(String(describing: document.book.auther.name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)))
                 }) {
                     Text("著者 : \(document.book.auther.name)")
                 }
