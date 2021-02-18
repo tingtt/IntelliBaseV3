@@ -93,6 +93,9 @@ struct BookStruct: Identifiable {
         let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [predicateBookId, predicateAccount])
         req.predicate = andPredicate
         
+        let sortDescripter = NSSortDescriptor(key: "update_date", ascending: false)
+        req.sortDescriptors = [sortDescripter]
+        
         do {
             let writings: [Note] = try (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext.fetch(req) as! [Note]
             for writing in writings {
