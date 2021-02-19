@@ -15,6 +15,11 @@ struct HomeList: View {
     var recentlyPurchasedBooks: [[Any]] = []
     var recommandBooks: [[Any]] = []
     
+    // 書き込んでいない本リスト
+    var neverWritedBooks: [BookStruct] = []
+    // 書き込みデータが有る本リスト
+    var writedBooks: [BookStruct] = []
+    
     var color = Color("background1")
     var courses = coursesData
     @State var showContent = false
@@ -35,12 +40,25 @@ struct HomeList: View {
         for purchase:Purchase in coreData.select(entity: .purchase, conditionStr: "account_id = \(accountId)", sort: ["id":false]) {
             recentlyPurchasedBooks.append([purchase.book_id as! Int])
         }
+        
+        for bookId in recentlyPurchasedBooks {
+            let bookStruct = BookStruct(id: bookId[0] as! Int)
+            if bookStruct.notes.count == 0 {
+                // 書き込みデータがない場合
+                neverWritedBooks.append(bookStruct)
+            } else {
+                // 書き込みデータがある場合
+                writedBooks.append(bookStruct)
+            }
+        }
     }
 
 //   var courses = coursesData
 //   @State var showContent = false
+    @State var newNoteWithBookSheet = false
+    @State var navigateNewNoteWithBookId: Int? = nil
     @State var getSharedWritingSheet = false
-    @State var str: String = ""
+    @State var inputShareKey: String = ""
     @State var getSharedWritingAlert = false
     @State var errorMessage = "共有キーが正しくありません"
 
@@ -64,65 +82,162 @@ struct HomeList: View {
                     .fontWeight(.heavy)
             }
             
+            // 本からノートを開く時用のNavigationLink
+            ForEach(neverWritedBooks.indices) { index in
+                NavigationLink(destination: DocumentRootView(documentId: neverWritedBooks[index].id, isNote: false, openAsNewNote: true), tag: neverWritedBooks[index].id, selection: $navigateNewNoteWithBookId){}
+            }
+            ForEach(writedBooks.indices) { index in
+                NavigationLink(destination: DocumentRootView(documentId: writedBooks[index].id, isNote: false, openAsNewNote: true), tag: writedBooks[index].id, selection: $navigateNewNoteWithBookId){}
+            }
+            
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 6.0) {
-                    PlusButton(icon: "plus")
-                        .onTapGesture {
-//                            showingPopover.toggle()
-                            getSharedWritingSheet.toggle()
-                        }
-                        .sheet(isPresented: $getSharedWritingSheet, content: {
-                            VStack {
-                                Image(systemName: "link.icloud")
-                                    .font(.system(size: 80))
-                                    .foregroundColor(.primary)
-                                    .padding()
-                                Text("共有ノートの取得")
-                                    .font(.headline)
-                                    .fontWeight(.heavy)
-                                TextField("共有キーを入力してください", text: $str)
-                                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                                    .padding()
-                                Button(action: {
-                                    let res: String? = noteManager.addSharedNote(shareKey: str)
-                                    if let _res = res {
-                                        errorMessage = _res
-                                        // 失敗時のアラート
-                                        getSharedWritingAlert.toggle()
-                                    } else {
-                                        getSharedWritingSheet.toggle()
-                                    }
-                                }, label: {
-                                    Text("検索")
-                                        .bold()
-                                        .frame(minWidth: 0, maxWidth: 100)
-                                        .padding(.vertical)
-                                        .accentColor(Color.white)
-                                        .background(Color.blue)
-                                        .cornerRadius(30)
-                                })
-                                .alert(isPresented: $getSharedWritingAlert, content: {
-                                    if errorMessage.contains("本を所持していません") {
-                                        return Alert(
-                                            title: Text(errorMessage),
-                                            primaryButton: .default(Text("ストアページを開く"), action: {
-                                                // 本のストアページを開く
-                                                let bookId = errorMessage[errorMessage.range(of: ":")!.upperBound...]
-                                                if let url = URL(string: HomePageUrl(lastDirectoryUrl: "Search", fileName: "product_detail.php", getParams: ["book_id":"\(bookId)"]).getFullPath()) {
-                                                    UIApplication.shared.open(url)
-                                                }
-                                            }),
-                                            secondaryButton: .default(Text("OK"), action: {})
-                                        )
-                                    } else {
-                                        return Alert(
-                                            title: Text(errorMessage),
-                                            dismissButton: .default(Text("OK"), action: {})
-                                        )
-                                    }
-                                })
+                    VStack {
+                        Spacer()
+                        PlusButton(icon: "plus", height: 120)
+                            .onTapGesture {
+                                newNoteWithBookSheet.toggle()
                             }
-                        })
+                            .sheet(isPresented: $newNoteWithBookSheet, content: {
+                                VStack(alignment: .leading) {
+                                    if neverWritedBooks.count > 0 {
+                                        Text("書き込んでいない本")
+                                            .font(.largeTitle)
+                                            .fontWeight(.heavy)
+                                            .padding([.leading, .top])
+                                        ScrollView(.horizontal, showsIndicators: false) {
+                                            HStack(spacing: 6.0) {
+                                                ForEach(neverWritedBooks.indices){ index in
+                                                    let book = neverWritedBooks[index]
+                                                    if let _uiImage = book.thumbnailUIImage {
+                                                        VStack(alignment: .leading) {
+                                                            GeometryReader { geometry in
+                                                                Image(uiImage: _uiImage)
+                                                                    .resizable()
+                                                                    .renderingMode(.original)
+                                                                    //.aspectRatio(contentMode: .fit)
+                                                                    .frame(width: 246, height: 335, alignment: .leading)
+                                                                    .padding(.bottom, 30)
+                                                                    .rotation3DEffect(Angle(degrees: Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
+                                                            }
+                                                            .frame(width: 246, height: 340)
+                                                        }
+                                                        .frame(width: 250, height: 340)
+                                                        .shadow(color: Color("backgroundShadow3"), radius: 20, x: 0, y: 16)
+                                                        .onTapGesture {
+                                                            // シートを閉じて本を新規書き込みで開く
+                                                            newNoteWithBookSheet.toggle()
+                                                            navigateNewNoteWithBookId = book.id
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            .padding(.leading, 30)
+                                            .padding(.top, 24)
+                                            .padding(.bottom, 40)
+                                            Spacer()
+                                        }
+                                    }
+                                    if writedBooks.count > 0 {
+                                        Text("その他の本")
+                                            .font(.largeTitle)
+                                            .fontWeight(.heavy)
+                                            .padding(.leading)
+                                        ScrollView(.horizontal, showsIndicators: false) {
+                                            HStack(spacing: 6.0) {
+                                                ForEach(writedBooks.indices){ index in
+                                                    let book = writedBooks[index]
+                                                    if let _uiImage = book.thumbnailUIImage {
+                                                        VStack(alignment: .leading) {
+                                                            GeometryReader { geometry in
+                                                                Image(uiImage: _uiImage)
+                                                                    .resizable()
+                                                                    .renderingMode(.original)
+                                                                    //.aspectRatio(contentMode: .fit)
+                                                                    .frame(width: 246, height: 335, alignment: .leading)
+                                                                    .padding(.bottom, 30)
+                                                                    .rotation3DEffect(Angle(degrees: Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
+                                                            }
+                                                            .frame(width: 246, height: 340)
+                                                        }
+                                                        .frame(width: 250, height: 340)
+                                                        .shadow(color: Color("backgroundShadow3"), radius: 20, x: 0, y: 16)
+                                                        .onTapGesture {
+                                                            // シートを閉じて本を新規書き込みで開く
+                                                            newNoteWithBookSheet.toggle()
+                                                            navigateNewNoteWithBookId = book.id
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            .padding(.leading, 30)
+                                            .padding(.top, 24)
+                                            .padding(.bottom, 40)
+                                            Spacer()
+                                        }
+                                    }
+                                }
+                            })
+                        Spacer()
+                        PlusButton(icon: "link.icloud", height: 120)
+                            .onTapGesture {
+    //                            showingPopover.toggle()
+                                getSharedWritingSheet.toggle()
+                            }
+                            .sheet(isPresented: $getSharedWritingSheet, content: {
+                                VStack {
+                                    Image(systemName: "link.icloud")
+                                        .font(.system(size: 80))
+                                        .foregroundColor(.primary)
+                                        .padding()
+                                    Text("共有ノートの取得")
+                                        .font(.headline)
+                                        .fontWeight(.heavy)
+                                    TextField("共有キーを入力してください", text: $inputShareKey)
+                                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                                        .padding()
+                                    Button(action: {
+                                        let res: String? = noteManager.addSharedNote(shareKey: inputShareKey)
+                                        if let _res = res {
+                                            errorMessage = _res
+                                            // 失敗時のアラート
+                                            getSharedWritingAlert.toggle()
+                                        } else {
+                                            getSharedWritingSheet.toggle()
+                                        }
+                                    }, label: {
+                                        Text("検索")
+                                            .bold()
+                                            .frame(minWidth: 0, maxWidth: 100)
+                                            .padding(.vertical)
+                                            .accentColor(Color.white)
+                                            .background(Color.blue)
+                                            .cornerRadius(30)
+                                    })
+                                    .alert(isPresented: $getSharedWritingAlert, content: {
+                                        if errorMessage.contains("本を所持していません") {
+                                            return Alert(
+                                                title: Text(errorMessage),
+                                                primaryButton: .default(Text("ストアページを開く"), action: {
+                                                    // 本のストアページを開く
+                                                    let bookId = errorMessage[errorMessage.range(of: ":")!.upperBound...]
+                                                    if let url = URL(string: HomePageUrl(lastDirectoryUrl: "Search", fileName: "product_detail.php", getParams: ["book_id":"\(bookId)"]).getFullPath()) {
+                                                        UIApplication.shared.open(url)
+                                                    }
+                                                }),
+                                                secondaryButton: .default(Text("OK"), action: {})
+                                            )
+                                        } else {
+                                            return Alert(
+                                                title: Text(errorMessage),
+                                                dismissButton: .default(Text("OK"), action: {})
+                                            )
+                                        }
+                                    })
+                                }
+                            })
+                        Spacer()
+                    }
                     Spacer()
                     ForEach(noteManager.notes, id: \.id) { note in
                         DocumentThumbnailView(id: note.id, isNote: true)

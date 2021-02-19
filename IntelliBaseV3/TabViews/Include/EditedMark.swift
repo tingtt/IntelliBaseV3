@@ -15,9 +15,9 @@ struct EditedMark: View {
         HStack {
             Image(systemName: icon)
                 .foregroundColor(.primary)
-                .font(.system(size: 20))
+                .font(.system(size: 25))
         }
-        .frame(width: 40, height: 40)
+        .frame(width: 50, height: 50)
         .background(Color("button"))
         .cornerRadius(30)
         .shadow(color: Color("buttonShadow"), radius: 20, x: 0, y: 20)
