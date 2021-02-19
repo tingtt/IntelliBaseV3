@@ -164,7 +164,8 @@ struct DocumentPopup: View {
                     Text("ノートで開く")
                         .sheet(isPresented: $openAsNote, content: {
                             ScrollView(.vertical){
-                                let count = document.book.notes.count
+                                let notesOfBook = NoteManager.shared.getNoteOfBookId(bookId: document.book.id)
+                                let count = notesOfBook.count
                                 let rowCount = (Double(count + 1) / Double(2)).rounded(.up)
                                 ForEach(0..<Int(rowCount)){ row in
                                     Spacer()
@@ -185,9 +186,9 @@ struct DocumentPopup: View {
                                                     navigateAsNewNote.toggle()
                                                 }
                                             }else if index - 1 < count {
+                                                let note = notesOfBook[index - 1]
                                                 // thumbnail
                                                 VStack {
-                                                    let note = document.book.notes[index - 1]
                                                     if let _uiImage = document.book.thumbnailUIImage {
                                                         ZStack {
                                                             Image(uiImage: _uiImage)
@@ -207,7 +208,7 @@ struct DocumentPopup: View {
                                                             }.frame(width: 250, height: 370, alignment: .topLeading)
                                                         }
                                                     }
-                                                    Text("\(document.book.notes[index - 1].title)")
+                                                    Text("\(note.title)")
                                                         .offset(y: -32)
                                                 }
 //                                                }
@@ -217,8 +218,8 @@ struct DocumentPopup: View {
                                                 .onTapGesture {
                                                     openAsNote.toggle()
                                                     showingSheet.toggle()
-                                                    print("Debug : Open note with ID -> \(document.book.notes[index - 1].id)")
-                                                    navigateWithNoteId = document.book.notes[index - 1].id
+                                                    print("Debug : Open note with ID -> \(note.id)")
+                                                    navigateWithNoteId = note.id
                                                 }
                                             } else {
                                                 Spacer().frame(maxWidth: .infinity)

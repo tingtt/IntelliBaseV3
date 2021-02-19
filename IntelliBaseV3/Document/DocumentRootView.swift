@@ -174,7 +174,8 @@ struct DocumentRootView: View {
         .sheet(isPresented: $addShown, content: {
             NavigationView(content: {
                 ScrollView(.vertical){
-                    let count = notes.count
+                    let notesOfBook = NoteManager.shared.getNoteOfBookId(bookId: document.book.id)
+                    let count = notesOfBook.count
                     let rowCount = (Double(count + 1) / Double(2)).rounded(.up)
                     ForEach(0..<Int(rowCount)){ row in
                         Spacer()
@@ -224,7 +225,7 @@ struct DocumentRootView: View {
                                     }
                                 }else if index - 1 < count {
                                     // thumbnail
-                                    let note = notes[index - 1]
+                                    let note = notesOfBook[index - 1]
                                     thumbnailWithInfoIconsView(note: note, thumbnailUIImage: document.book.thumbnailUIImage)
                                         .frame(height: 480)
                                         .frame(maxWidth: .infinity)

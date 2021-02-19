@@ -143,4 +143,16 @@ class NoteManager: ObservableObject {
         }
         print("Debug : \(mappedIds)")
     }
+    
+    // 本のIDからノート一覧の取得
+    func getNoteOfBookId(bookId: Int) -> [NoteStruct] {
+        var resNotes: [NoteStruct] = []
+        for note: NoteStruct in notes {
+            if note.book_id == bookId {
+                resNotes.append(note)
+            }
+        }
+        
+        return resNotes
+    }
 }
