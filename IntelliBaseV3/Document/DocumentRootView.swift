@@ -124,38 +124,45 @@ struct DocumentRootView: View {
                             }
                     )
             } else {
-                pdfKitView
-                    .blur(radius: 5)
-                    .scaleEffect(self.nowScalingValue)
-                    .position(x: position.width, y: position.height)
-                    .gesture(SimultaneousGesture(pinch, drag))
-                    .navigationBarItems(
-                        leading:
-                            Button(action: {
-                                showingMenu = false
-                                mode.wrappedValue.dismiss()
-                            }){
-                                CircleButton(icon: "chevron.backward.square")
-                            },
-                        trailing:
-                            ZStack(alignment: .topLeading) {
-                                if notes.count == 0 {
-                                    Button(action: {
-                                        sheetNavigated.toggle()
-                                        addShown.toggle()
-                                    }) {
-                                        CircleButton(icon: "note.text.badge.plus")
-                                    }
-                                    
-                                } else {
-                                    Button(action: {
-                                        addShown.toggle()
-                                    }) {
-                                        CircleButton(icon: "note.text.badge.plus")
+                ZStack {
+                    pdfKitView
+                        .blur(radius: 5)
+                        .scaleEffect(self.nowScalingValue)
+                        .position(x: position.width, y: position.height)
+                        .gesture(SimultaneousGesture(pinch, drag))
+                        .navigationBarItems(
+                            leading:
+                                Button(action: {
+                                    showingMenu = false
+                                    mode.wrappedValue.dismiss()
+                                }){
+                                    CircleButton(icon: "chevron.backward.square")
+                                },
+                            trailing:
+                                ZStack(alignment: .topLeading) {
+                                    if notes.count == 0 {
+                                        Button(action: {
+                                            sheetNavigated.toggle()
+                                            addShown.toggle()
+                                        }) {
+                                            CircleButton(icon: "note.text.badge.plus")
+                                        }
+                                        
+                                    } else {
+                                        Button(action: {
+                                            addShown.toggle()
+                                        }) {
+                                            CircleButton(icon: "note.text.badge.plus")
+                                        }
                                     }
                                 }
-                            }
-                    )
+                        )
+                    Text("Sample")
+                        .font(.system(size: 200, weight: .black, design: .default))
+                        .rotationEffect(Angle(degrees: -50))
+                        .foregroundColor(Color.gray)
+                        .opacity(0.3)
+                }
             }
             HStack {
                 Button(action: {

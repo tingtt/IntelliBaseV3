@@ -29,6 +29,11 @@ struct DocumentEditView: View {
     var body: some View {
         ZStack {
             pdfKitView.blur(radius: 5)
+            Text("Sample")
+                .font(.system(size: 200, weight: .black, design: .default))
+                .rotationEffect(Angle(degrees: -50))
+                .foregroundColor(Color.gray)
+                .opacity(0.3)
             ForEach(canvasManager.currentPageIndex, id: \.self){ index in
                 if index < canvasManager.canvases.count {
                     canvasManager.canvases[index]
