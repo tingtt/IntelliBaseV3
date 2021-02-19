@@ -15,6 +15,11 @@ struct HomeList: View {
     var recentlyPurchasedBooks: [[Any]] = []
     var recommandBooks: [[Any]] = []
     
+    // 書き込んでいない本リスト
+    var neverWritedBooks: [BookStruct] = []
+    // 書き込みデータが有る本リスト
+    var writedBooks: [BookStruct] = []
+    
     var color = Color("background1")
     var courses = coursesData
     @State var showContent = false
@@ -34,6 +39,17 @@ struct HomeList: View {
 //        print("Debug : Load recently purchased books.")
         for purchase:Purchase in coreData.select(entity: .purchase, conditionStr: "account_id = \(accountId)", sort: ["id":false]) {
             recentlyPurchasedBooks.append([purchase.book_id as! Int])
+        }
+        
+        for bookId in recentlyPurchasedBooks {
+            let bookStruct = BookStruct(id: bookId[0] as! Int)
+            if bookStruct.notes.count == 0 {
+                // 書き込みデータがない場合
+                neverWritedBooks.append(bookStruct)
+            } else {
+                // 書き込みデータがある場合
+                writedBooks.append(bookStruct)
+            }
         }
     }
 
@@ -74,7 +90,74 @@ struct HomeList: View {
                                 newNoteWithBookSheet.toggle()
                             }
                             .sheet(isPresented: $newNoteWithBookSheet, content: {
-                                
+                                VStack(alignment: .leading) {
+                                    if neverWritedBooks.count > 0 {
+                                        Text("書き込んでいない本")
+                                            .font(.largeTitle)
+                                            .fontWeight(.heavy)
+                                            .padding([.leading, .top])
+                                        ScrollView(.horizontal, showsIndicators: false) {
+                                            HStack(spacing: 6.0) {
+                                                ForEach(neverWritedBooks.indices){ index in
+                                                    let book = neverWritedBooks[index]
+                                                    if let _uiImage = book.thumbnailUIImage {
+                                                        VStack(alignment: .leading) {
+                                                            GeometryReader { geometry in
+                                                                Image(uiImage: _uiImage)
+                                                                    .resizable()
+                                                                    .renderingMode(.original)
+                                                                    //.aspectRatio(contentMode: .fit)
+                                                                    .frame(width: 246, height: 335, alignment: .leading)
+                                                                    .padding(.bottom, 30)
+                                                                    .rotation3DEffect(Angle(degrees: Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
+                                                            }
+                                                            .frame(width: 246, height: 340)
+                                                        }
+                                                        .frame(width: 250, height: 340)
+                                                        .shadow(color: Color("backgroundShadow3"), radius: 20, x: 0, y: 16)
+                                                    }
+                                                }
+                                            }
+                                            .padding(.leading, 30)
+                                            .padding(.top, 24)
+                                            .padding(.bottom, 40)
+                                            Spacer()
+                                        }
+                                    }
+                                    if writedBooks.count > 0 {
+                                        Text("その他の本")
+                                            .font(.largeTitle)
+                                            .fontWeight(.heavy)
+                                            .padding(.leading)
+                                        ScrollView(.horizontal, showsIndicators: false) {
+                                            HStack(spacing: 6.0) {
+                                                ForEach(writedBooks.indices){ index in
+                                                    let book = writedBooks[index]
+                                                    if let _uiImage = book.thumbnailUIImage {
+                                                        VStack(alignment: .leading) {
+                                                            GeometryReader { geometry in
+                                                                Image(uiImage: _uiImage)
+                                                                    .resizable()
+                                                                    .renderingMode(.original)
+                                                                    //.aspectRatio(contentMode: .fit)
+                                                                    .frame(width: 246, height: 335, alignment: .leading)
+                                                                    .padding(.bottom, 30)
+                                                                    .rotation3DEffect(Angle(degrees: Double(geometry.frame(in: .global).minX - 30) / -40), axis: (x: 0, y: 10.0, z: 0))
+                                                            }
+                                                            .frame(width: 246, height: 340)
+                                                        }
+                                                        .frame(width: 250, height: 340)
+                                                        .shadow(color: Color("backgroundShadow3"), radius: 20, x: 0, y: 16)
+                                                    }
+                                                }
+                                            }
+                                            .padding(.leading, 30)
+                                            .padding(.top, 24)
+                                            .padding(.bottom, 40)
+                                            Spacer()
+                                        }
+                                    }
+                                }
                             })
                         Spacer()
                         PlusButton(icon: "link.icloud", height: 120)
