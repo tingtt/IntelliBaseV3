@@ -56,6 +56,7 @@ struct HomeList: View {
 //   var courses = coursesData
 //   @State var showContent = false
     @State var newNoteWithBookSheet = false
+    @State var navigateNewNoteWithBookId: Int? = nil
     @State var getSharedWritingSheet = false
     @State var inputShareKey: String = ""
     @State var getSharedWritingAlert = false
@@ -79,6 +80,14 @@ struct HomeList: View {
                 Text("最近のノート")
                     .font(.largeTitle)
                     .fontWeight(.heavy)
+            }
+            
+            // 本からノートを開く時用のNavigationLink
+            ForEach(neverWritedBooks.indices) { index in
+                NavigationLink(destination: DocumentRootView(documentId: neverWritedBooks[index].id, isNote: false, openAsNewNote: true), tag: neverWritedBooks[index].id, selection: $navigateNewNoteWithBookId){}
+            }
+            ForEach(writedBooks.indices) { index in
+                NavigationLink(destination: DocumentRootView(documentId: writedBooks[index].id, isNote: false, openAsNewNote: true), tag: writedBooks[index].id, selection: $navigateNewNoteWithBookId){}
             }
             
             ScrollView(.horizontal, showsIndicators: false) {
@@ -115,6 +124,11 @@ struct HomeList: View {
                                                         }
                                                         .frame(width: 250, height: 340)
                                                         .shadow(color: Color("backgroundShadow3"), radius: 20, x: 0, y: 16)
+                                                        .onTapGesture {
+                                                            // シートを閉じて本を新規書き込みで開く
+                                                            newNoteWithBookSheet.toggle()
+                                                            navigateNewNoteWithBookId = book.id
+                                                        }
                                                     }
                                                 }
                                             }
@@ -148,6 +162,11 @@ struct HomeList: View {
                                                         }
                                                         .frame(width: 250, height: 340)
                                                         .shadow(color: Color("backgroundShadow3"), radius: 20, x: 0, y: 16)
+                                                        .onTapGesture {
+                                                            // シートを閉じて本を新規書き込みで開く
+                                                            newNoteWithBookSheet.toggle()
+                                                            navigateNewNoteWithBookId = book.id
+                                                        }
                                                     }
                                                 }
                                             }
