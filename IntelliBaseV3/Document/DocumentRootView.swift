@@ -268,6 +268,7 @@ struct DocumentRootView: View {
                         }
                     }
                 }
+                .navigationBarHidden(true)
             })
         })
         .onAppear(perform: {
