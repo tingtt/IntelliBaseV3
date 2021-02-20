@@ -25,7 +25,7 @@ struct DocumentRootView: View {
     @ObservedObject var editViewManager = EditViewManager()
     
     // menu
-    @State var showingMenu: Bool = false
+    @State var showingMenu: Bool = true
     // sacling
     @State var nowScalingValue: CGFloat = 1.0
     @State var lastScaleValue: CGFloat = 1.0
@@ -69,7 +69,7 @@ struct DocumentRootView: View {
     var drag: some Gesture {
         DragGesture()
         .onChanged{ value in
-            showingMenu = false
+//            showingMenu = false
             self.position = CGSize(
                 width: lastPosition.width
                     + value.translation.width,
@@ -85,7 +85,7 @@ struct DocumentRootView: View {
     var pinch: some Gesture {
         MagnificationGesture(minimumScaleDelta: 0.1)
             .onChanged { val in
-                showingMenu = false
+//                showingMenu = false
                 if lastScaleValue * val > 0.5 {
                     if self.lastScaleValue * val < 3 {
                         self.nowScalingValue = self.lastScaleValue * val
@@ -162,6 +162,8 @@ struct DocumentRootView: View {
                         .rotationEffect(Angle(degrees: -50))
                         .foregroundColor(Color.gray)
                         .opacity(0.3)
+                        .scaleEffect(self.nowScalingValue)
+                        .position(x: position.width, y: position.height)
                 }
             }
             HStack {
@@ -368,7 +370,7 @@ struct DocumentRootView: View {
         .navigationBarHidden(!showingMenu)
         .edgesIgnoringSafeArea([.top, .bottom])
 //        .statusBar(hidden: true)
-        .gesture(TapGesture(count: 1).onEnded({showingMenu.toggle()}))
+//        .gesture(TapGesture(count: 1).onEnded({showingMenu.toggle()}))
     }
     
     private func save(noteTitle: String) {
